@@ -34,3 +34,4 @@ Many things:
 - [Application layer](app/)
 - [API](api/)
 - [Tutorials](tutorials/)
+- [Swarm.js](swarm.js/)
