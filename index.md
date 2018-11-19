@@ -19,7 +19,7 @@ Key RON principles are:
 - **Efficiency**. RON data is optimized to make metadata overhead tolerable and real-time collaborative applications possible. It’s optimized machine first, human readability second.
 - **Causality**. Each RON operation explicitly references what version of an object it is based on. No matter how and when you get your data, you can always reconstruct the correct order events have happened in.
 
-RON is an answer to new reality where different agents join and leave network all the time and communicate to each other without any order and reliability guarantees. In other words, RON is lingua franca for Generation Internet.
+RON is an answer to the new reality where different agents join and leave network all the time and communicate with each other without any order or reliability guarantees. In other words, RON is lingua franca for Generation Internet.
 
 ## Quick look
 
