@@ -30,4 +30,4 @@ This RON frame creates two LWW objects and sets two fields in each:
 .
 ```
 
-For explanation, see [UUIDs](http://replicated.cc/uuid/) and [specification](http://replicated.cc/spec/).
+For explanation, see [UUIDs](http://replicated.cc/uuids/) and [specification](http://replicated.cc/specs/).
