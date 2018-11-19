@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Atoms
-in_section: spec
+in_section: specs
 ---
 
 # Atoms: integers, floats, strings

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Base 64×64
-in_section: uuid
+in_section: uuids
 ---
 
 # Base 64×64

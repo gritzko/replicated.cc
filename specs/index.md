@@ -1,7 +1,7 @@
 ---
 layout: default
 title: RON Specification
-section: spec
+section: specs
 ---
 
 # RON Serialization

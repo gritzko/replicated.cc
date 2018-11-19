@@ -1,7 +1,7 @@
 ---
 layout: default
 title: UUIDs
-section: uuid
+section: uuids
 ---
 
 # UUIDs
@@ -17,7 +17,7 @@ RON employs its own UUID flavours and custom efficient serialization. Unlike [R
 
 RON UUIDs are serialized as a pair of 64-bit integers encoded with custom base64 encoding:
 
-<img class="fig" src="/uuid/layout.png">
+<img class="fig" src="layout.png">
 
 The bit layout is semi-compatible with RFC 4122 (0 variant, NCS backward compatibility). Third and fourth bits of 9th byte are used to encode version (blue color), four most significant bits of 1st byte are used to encode variety (orange color).
 

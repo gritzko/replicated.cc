@@ -1,7 +1,7 @@
 ---
 layout: default
 title: JSON/CBOR
-in_section: spec
+in_section: specs
 ---
 
 # JSON and CBOR encoding

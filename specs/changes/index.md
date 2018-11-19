@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Transactional/atomic changes
-in_section: spec
+in_section: specs
 ---
 
 # Transactional/atomic changes

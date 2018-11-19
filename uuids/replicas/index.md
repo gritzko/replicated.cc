@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Replica IDs
-in_section: uuid
+in_section: uuids
 ---
 
 # Replica IDs

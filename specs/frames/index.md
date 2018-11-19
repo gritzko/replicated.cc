@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Frames
-in_section: spec
+in_section: specs
 ---
 
 # Frames

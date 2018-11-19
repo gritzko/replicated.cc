@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Nominal format
-in_section: spec
+in_section: specs
 ---
 
 # Nominal format

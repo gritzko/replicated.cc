@@ -35,5 +35,5 @@ This RON frame creates two LWW objects and sets two fields in each:
 .
 ```
 
-For explanation, see [UUIDs](/uuid/) and [specification](/spec/).
+For explanation, see [UUIDs](/uuids/) and [specification](/specs/).
 

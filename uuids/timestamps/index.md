@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Timestamps
-in_section: uuid
+in_section: uuids
 ---
 
 # Timestamps
