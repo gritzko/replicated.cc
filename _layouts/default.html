@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" prefix="og: http://ogp.me/ns#" xmlns:og="http://opengraphprotocol.org/schema/">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+  <meta name="viewport" content="width=640" />
+  <link href="/i/favicon-32.png" rel="icon" sizes="32x32">
+  <link href='/style.css?v=20181119' rel='stylesheet' type='text/css' />
+  <title>{{ page.title }} — RON</title>
+
+</head>
+<body>
+<div class="page {{ page.class }}">
+  <div class="menu">
+    <div class="menu_left">
+      <a href="/"><img src="/i/logo.png" style="height: 50px"></a>
+    </div>
+    <div class="menu_right">
+      <a href="/uuid/" class="menu_item{% if page.section == 'uuid' %} menu_item-selected{% endif %}{% if page.in_section == 'uuid' %} menu_item-inside{% endif %}">UUIDs</a>
+      <a href="/spec/" class="menu_item{% if page.section == 'spec' %} menu_item-selected{% endif %}{% if page.in_section == 'spec' %} menu_item-inside{% endif %}">Specification</a>
+      <a href="/rdt/" class="menu_item{% if page.section == 'rdt' %} menu_item-selected{% endif %}{% if page.in_section == 'rdt' %} menu_item-inside{% endif %}">RDTs</a>
+      <a href="/swarm/" class="menu_item{% if page.section == 'swarm' %} menu_item-selected{% endif %}{% if page.in_section == 'swarm' %} menu_item-inside{% endif %}">Swarm</a>
+    </div>
+  </div>
+  {{ content }}
+  <div class="footer">
+    © 2018 Victor Grishchenko
+  </div>
+</div>
+
+
+</body>
+</html>

@@ -1,3 +1,8 @@
+---
+layout: default
+title: Replicated Object Notation
+---
+
 # Replicated Object Notation
 
 Replicated Object Notation (RON) is a format for *distributed live data*. RON is suitable for optimized storage, efficient transmission, reliable negotiation and queries. RON was concieved as a network-native and efficient alternative to JSON and other serialization formats.
@@ -30,4 +35,5 @@ This RON frame creates two LWW objects and sets two fields in each:
 .
 ```
 
-For explanation, see [UUIDs](http://replicated.cc/uuid/) and [specification](http://replicated.cc/spec/).
+For explanation, see [UUIDs](/uuid/) and [specification](/spec/).
+
