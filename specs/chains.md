@@ -6,14 +6,20 @@ in_section: specs
 
 # Op chains
 
-A chain is a group of ops from the same origin with consecutive id where each next op references the previous one.
-Chains correspond to simple linear processes, like setting several fields of an object or typing in text.
+A chain is a sequence of ops where:
+* the origin is the same
+* ids (and ops) are consecutive and
+* each next op references the previous one.
+
+Chains correspond to simple linear processes, like setting several fields of an object in one go or typing in some text.
 While a chain is still a group of ops, RON adapts a shortcut notation for these, e.g.
+
 <pre>
 <font color="#6C6C6C">  1 </font><font color="#729FCF">@12345+origin</font> <font color="#3465A4">:prevop+origin</font> <font color="#8AE234"><b>&quot;Hello world&quot;</b></font>
 </pre>
-(Note double quotes, which is a notation for a chain of chars. Single quotes denote an atomic string.)
-This chain unrolls into:
+Note the double quotes, which is a notation for a chain of chars. Single quotes denote an atomic string.
+
+That chain unrolls into eleven ops:
 <pre>
 <font color="#6C6C6C">  3 </font><font color="#729FCF">@12345+origin</font> <font color="#3465A4">:prevop+origin</font> <font color="#4E9A06">&apos;H&apos;</font>
 <font color="#6C6C6C">  4 </font><font color="#729FCF">@1234500001+origin</font>           <font color="#4E9A06">&apos;e&apos;</font>
@@ -28,6 +34,11 @@ This chain unrolls into:
 <font color="#6C6C6C"> 13 </font><font color="#729FCF">@123450000A+origin</font>           <font color="#4E9A06">&apos;d&apos;</font>
 <font color="#6C6C6C"> 14 </font>
 </pre>
-Removals go in chains to, e.g. to remove the text above we send another chain:
+
+Removals go in chains too, e.g. to remove the text above we may send another chain:
+
 <pre><font color="#6C6C6C"> 15 </font><font color="#729FCF">@23456+origin</font> <font color="#3465A4">:12345-origin</font> <font color="#FFD7D7"><b>(11)</b></font></pre>
-(Note the reference has `-` instead of `+`. That means the tombstone flag is set, i.e. the referenced chain of 11 ops is removed.)
+
+Note the reference has `-` instead of `+`. 
+That means the tombstone flag is set, i.e. the referenced chain of 11 ops is removed.
+An undelete op will look the same, except the tombstone bit will be unset (the referenced op is brought back to life).
