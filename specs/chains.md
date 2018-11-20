@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Chains
-in_section: specs
+in\_section: specs
 ---
 
 # Op chains
@@ -9,7 +9,7 @@ in_section: specs
 A chain is a sequence of ops where:
 * the origin is the same
 * ids (and ops) are consecutive and
-* each next op references the previous one.
+* each next op references the previous one (for data ops) or ops reference consecutive ops (for removals, undos).
 
 Chains correspond to simple linear processes, like setting several fields of an object in one go or typing in some text.
 While a chain is still a group of ops, RON adapts a shortcut notation for these, e.g.
@@ -17,7 +17,7 @@ While a chain is still a group of ops, RON adapts a shortcut notation for these,
 <pre>
 <font color="#6C6C6C">  1 </font><font color="#729FCF">@12345+origin</font> <font color="#3465A4">:prevop+origin</font> <font color="#8AE234"><b>&quot;Hello world&quot;</b></font>
 </pre>
-Note the double quotes, which is a notation for a chain of chars. Single quotes denote an atomic string.
+Note the double quotes, which is the notation for a chain of chars. Single quotes denote an atomic string.
 
 That chain unrolls into eleven ops:
 <pre>
