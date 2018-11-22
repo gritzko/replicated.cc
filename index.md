@@ -28,28 +28,30 @@ Here is a simple object serialized in RON:
 <font color="#6C6C6C">  6 </font>        <font color="#4E9A06">&apos;RAM&apos;</font>           <font color="#4E9A06">&apos;16 GB DDR4 2666MHz&apos;</font><font color="#AF5F00">,</font>
 <font color="#6C6C6C">  7 </font>        <font color="#4E9A06">&apos;storage&apos;</font>       <font color="#4E9A06">&apos;512 GB SSD, PCIe-NVME M.2&apos;</font><font color="#AF5F00">,</font>
 <font color="#6C6C6C">  8 </font>        <font color="#4E9A06">&apos;graphics&apos;</font>      <font color="#4E9A06">&apos;NVIDIA GeForce GTX 1050Ti 4GB&apos;</font><font color="#AF5F00">,</font>
-<font color="#6C6C6C">  9 </font>        <font color="#729FCF">@1fLDk4+biQFvtGV</font>
-<font color="#6C6C6C"> 10 </font>        <font color="#4E9A06">&apos;wlan&apos;</font>          <font color="#4E9A06">&apos;Intel 9560 802.11AC vPro&apos;</font><font color="#AF5F00">,</font>
-<font color="#6C6C6C"> 11 </font>        <font color="#4E9A06">&apos;camera&apos;</font>        <font color="#4E9A06">&apos;IR &amp; 720p HD Camera with microphone&apos;</font><font color="#AF5F00">,</font>
+<font color="#6C6C6C">  9 </font><font color="#729FCF">@1fLDk4+biQFvtGV</font> <font color="#4E9A06">&apos;wlan&apos;</font> <font color="#4E9A06">&apos;Intel 9560 802.11AC vPro&apos;</font><font color="#AF5F00">,</font>
+<font color="#6C6C6C"> 10 </font>        <font color="#4E9A06">&apos;camera&apos;</font>        <font color="#4E9A06">&apos;IR &amp; 720p HD Camera with microphone&apos;</font><font color="#AF5F00">,</font>
+<font color="#6C6C6C"> 11 </font>
 <font color="#6C6C6C"> 12 </font>        <font color="#A8A8A8"><i>@sha3</i></font> <font color="#4E9A06">&apos;SfiKqD1atGU5xxv1NLp8uZbAcHQDcX~a1HVk5rQFy_nq&apos;</font><font color="#AF5F00">,</font>
 </pre>
 
 Key RON principles are:
 
-- **Immutability** - RON sees data as a collection of immutable timestamped ops. In the example above, every key-value pair is an op,
-        which may be addressed, transmitted, stored, applied or rolled back, garbage collected, etc etc.
+- **Immutability** - RON sees data as a collection of immutable timestamped ops. 
+        In the example above, every key-value pair is an op (lines 1-10).
+        An op may be addressed, transmitted, stored, applied or rolled back, garbage collected, etc etc.
         Both the object's state and any changes are collections of immutable ops.
 - **Integrity** - ops form a Merkle tree, so the data is integrity-checked to the last bit, if necessary (like in git).
         In the example, ten ops form a Merkle chain, so the hash of the last op covers them all.
 - **Addressability**. Everything: changes, versions, every piece of data is uniquely identified and globally referenceable.
-        Above, the first op has an id `1fLDV00000+biQFvtGV`, the second one is `1fLDV00001+biQFvtGV`, and so on.
-        The last two ops belong to a different changeset, so their ids are `1fLDk40000+biQFvtGV`, `1fLDk40001+biQFvtGV`.
+        Above, the first op has an id `1fLDV+biQFvtGV`, the second one is `1fLDV00001+biQFvtGV`, and so on.
+        The last two ops (9, 10) belong to a different changeset, so their ids are `1fLDk4+biQFvtGV`, `1fLDk40001+biQFvtGV`.
 - **Causality**. Each RON operation explicitly *references* what version of an object it is based on.
         No matter how and when you get your data, you can always reconstruct the correct order and location of data pieces.
 - **Efficiency**. RON data is optimized to make metadata overhead bearable.
         As an op is a very fine-grained unit of change, RON optimizes per-op metadata overhead in numerous ways.
         For example, both op ids and references are skipped if they go incrementally. In the example above, the second
         op mentions neither its own id (the first plus 1) nor its reference (the first op).
+        The binary RON serialization employs more sophisticated metadata compression techniques. 
 
 RON is an answer to the new reality: swarms of mobile devices communicating over unreliable wireless networks in an untrusted environment.
 
