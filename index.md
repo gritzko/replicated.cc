@@ -31,7 +31,7 @@ Here is a simple object serialized in RON:
 <font color="#6C6C6C">  9 </font>        <font color="#729FCF">@1fLDk4+biQFvtGV</font>
 <font color="#6C6C6C"> 10 </font>        <font color="#4E9A06">&apos;wlan&apos;</font>          <font color="#4E9A06">&apos;Intel 9560 802.11AC vPro&apos;</font><font color="#AF5F00">,</font>
 <font color="#6C6C6C"> 11 </font>        <font color="#4E9A06">&apos;camera&apos;</font>        <font color="#4E9A06">&apos;IR &amp; 720p HD Camera with microphone&apos;</font><font color="#AF5F00">,</font>
-<pre><font color="#6C6C6C"> 12 </font>        <font color="#A8A8A8"><i>@sha3</i></font> <font color="#4E9A06">&apos;SfiKqD1atGU5xxv1NLp8uZbAcHQDcX~a1HVk5rQFy_nq&apos;</font><font color="#AF5F00">,</font>
+<font color="#6C6C6C"> 12 </font>        <font color="#A8A8A8"><i>@sha3</i></font> <font color="#4E9A06">&apos;SfiKqD1atGU5xxv1NLp8uZbAcHQDcX~a1HVk5rQFy_nq&apos;</font><font color="#AF5F00">,</font>
 </pre>
 
 Key RON principles are:
