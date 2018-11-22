@@ -31,6 +31,7 @@ Here is a simple object serialized in RON:
 <font color="#6C6C6C">  9 </font>        <font color="#729FCF">@1fLDk4+biQFvtGV</font>
 <font color="#6C6C6C"> 10 </font>        <font color="#4E9A06">&apos;wlan&apos;</font>          <font color="#4E9A06">&apos;Intel 9560 802.11AC vPro&apos;</font><font color="#AF5F00">,</font>
 <font color="#6C6C6C"> 11 </font>        <font color="#4E9A06">&apos;camera&apos;</font>        <font color="#4E9A06">&apos;IR &amp; 720p HD Camera with microphone&apos;</font><font color="#AF5F00">,</font>
+<pre><font color="#6C6C6C"> 12 </font>        <font color="#A8A8A8"><i>@sha3</i></font> <font color="#4E9A06">&apos;SfiKqD1atGU5xxv1NLp8uZbAcHQDcX~a1HVk5rQFy_nq&apos;</font><font color="#AF5F00">,</font>
 </pre>
 
 Key RON principles are:
@@ -38,17 +39,19 @@ Key RON principles are:
 - **Immutability** - RON sees data as a collection of immutable timestamped ops. In the example above, every key-value pair is an op,
         which may be addressed, transmitted, stored, applied or rolled back, garbage collected, etc etc.
         Both the object's state and any changes are collections of immutable ops.
-- **Integrity** - ops form a Merkle tree, so the data is integrity-checked to the last bit (like in git).
+- **Integrity** - ops form a Merkle tree, so the data is integrity-checked to the last bit, if necessary (like in git).
+        In the example, ten ops form a Merkle chain, so the hash of the last op covers them all.
 - **Addressability**. Everything: changes, versions, every piece of data is uniquely identified and globally referenceable.
-- **Source and transport agnosticism**. It doesn’t matter where RON data comes from and how. 
-        Any node can read RON from the network, filesystem, database, message bus and/or local cache, in any combination,
-        and merge it correctly, as soon as it has all the pieces.
+        Above, the first op has an id `1fLDV00000+biQFvtGV`, the second one is `1fLDV00001+biQFvtGV`, and so on.
+        The last two ops belong to a different changeset, so their ids are `1fLDk40000+biQFvtGV`, `1fLDk40001+biQFvtGV`.
+- **Causality**. Each RON operation explicitly *references* what version of an object it is based on.
+        No matter how and when you get your data, you can always reconstruct the correct order and location of data pieces.
 - **Efficiency**. RON data is optimized to make metadata overhead bearable.
         As an op is a very fine-grained unit of change, RON optimizes per-op metadata overhead in numerous ways.
-- **Causality**. Each RON operation explicitly references what version of an object it is based on.
-        No matter how and when you get your data, you can always reconstruct the correct order and location of data pieces.
+        For example, both op ids and references are skipped if they go incrementally. In the example above, the second
+        op mentions neither its own id (the first plus 1) nor its reference (the first op).
 
-RON is an answer to the new reality of swarms of mobile devices communicating over unreliable wireless networks in an untrusted environment.
+RON is an answer to the new reality: swarms of mobile devices communicating over unreliable wireless networks in an untrusted environment.
 
 For more in-depth reading, please see an explanation of [RON UUIDs](/uuids/) and the [protocol specification](/specs/).
 [RON RDTs](/rdts/) is a convergent variant of [CRDTs](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type)
