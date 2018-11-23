@@ -77,13 +77,9 @@ RON is an answer to the new reality: swarms of mobile devices communicating over
 For more in-depth reading, please see:
 
 * an explanation of [RON UUIDs](/uuids/)
-* the [protocol specification](/specs/) and its serializations:
-        * text-based
-        * binary
-        * JSON-based
-        * CBOR
-* [RON Replicated Data Types](/rdts/), a convergent variant of 
-        [CRDTs](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type)
+* the [protocol specification](/specs/) and its serializations: text-based (above), binary, JSON-based, CBOR, nominal
+* [RON Replicated Data Types](/rdts/), an ["operational"](http://archagon.net/blog/2018/03/24/data-laced-with-history/)
+        variant of [CRDTs](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type)
         able to operate in different modes (op-based, state-based, delta-enabled).
 * [SwarmDB](/swarm/), a reference implementation of a RON-based syncable key-value store.
 
