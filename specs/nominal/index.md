@@ -24,16 +24,22 @@ The same applies to bizzare situations, e.g. C++ engine/parsers/builders running
 
 ## Overall layout
 
-The nominal format is made of 128-bit atoms, two 64-bit words each.
+The nominal format is made of 128-bit atoms, consisting of two 64-bit words each.
 Words use the 4+60 bit layout.
 Nominally, the byte layout is big-endian (e.g. a hash function expects big-endian words).
 Although, an implementation may use little-endian words if requested.
 All pictures assume big-endian words.
 
-In most cases, the origin word specifies a byte range in the original RON buffer (text RON, binary, JSON, CBOR).
+An op is a concatenation of its atoms, starting with its id and ref UUIDs.
+
+In all atoms except UUIDs, the origin word specifies a byte range in the original RON buffer (text RON, binary, JSON, CBOR).
 The maxumum allowed frame size is 1GB, so the byte range is given as two 30-bit unsigned ints for the offset and the length.
 The raw buffer is supposed to be available.
 
+Caveats:
+
+* String values only reside in the raw buffer.
+* UUID atoms are fully parsed, so no range provided.
 
 ## Frame header
 
@@ -76,7 +82,7 @@ mmmmmmmm mmmmmmmm mmmmmmmm mmmmmmmm cccccccc cccccccc cccccccc cccccccc
 11__oooo oooooooo oooooooo oooooooo oollllll llllllll llllllll llllllll
 ```
 
-## UUIDs
+## UUID atom
 
 A 128-bit RON UUID:
 
@@ -94,7 +100,7 @@ Bits 4-5 in byte 8 (`ss`) represent UUID *version*.
 (That is the usual RON UUID in-memory layout, except implementations are likely to use platform endiannes internally.)
 
 
-## Integers
+## Integer atom
 
 Bytes 0-7 (`iiii`) a 4-bit signed integer.
 
@@ -110,7 +116,7 @@ iiiiiiii iiiiiiii iiiiiiii iiiiiiii iiiiiiii iiiiiiii iiiiiiii iiiiiiii
 0101oooo oooooooo oooooooo oooooooo oollllll llllllll llllllll llllllll
 ```
 
-## Floats
+## Float atom
 
 Bytes 0-7 (`ffff`) contain a 64-bit float (should be IEEE 754).
 
@@ -123,7 +129,7 @@ ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff
 0111oooo oooooooo oooooooo oooooooo oollllll llllllll llllllll llllllll
 ```
 
-## Strings
+## String atom
 
 The value word contains string metrics: byte length `bbb` and codepoint length `ccc`.
 These metrics are relative to a pure UTF-8 string, all escapes etc replaced.
