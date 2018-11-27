@@ -4,7 +4,7 @@ title: RON Specification
 section: specs
 ---
 
-# RON Serialization
+## RON Serialization
 
 There are four different ways to represent RON structures:
 
@@ -18,7 +18,13 @@ There are four different ways to represent RON structures:
 3. [*Binary*](binary/) is for machine-to-machine communication and persistence.
 4. [*JSON/CBOR*](json/) is for systems where efficient parsers of JSON exist.
 
-# RON Communication protocol
+<img class="fig" src="formats.jpg">
+
+## RON crypto
+
+[Merkle hashing](hash/).
+
+## RON Communication protocol
 
 [Transactional/atomic changes](changes/).
 
