@@ -27,7 +27,7 @@ Key concerns of the algorithm are:
 * Ensure that different ops don't match to the same byte sequence and hence hash (mocking).
 * Ensure any serialization of an op maps to the same hash.
 
-<img class="fig" style="width:100%; transform: rotate(270deg);" src="merkle.jpg">
+<img class="fig" style="width:100%" src="merkle.jpg">
 
 ## Specifier (op key)
 
