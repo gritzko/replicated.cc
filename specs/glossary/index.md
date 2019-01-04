@@ -1,6 +1,6 @@
 # RON term glossary
 
-<img style="float: right; width: 25%;" src="dna.png">
+<a href="dna.png"><img style="float: right; width: 35%;" src="dna.png"></a>
 
 * RON UUID - a 128-bit globally unique identifier, one of four *versions*:
     * time-based (a logical/hybrid timestamp, 60 bits of timestamp, 60 bits of event *origin* id)
@@ -18,7 +18,11 @@
     * value
         * any number (zero or more) of value atoms (UUIDs, ints, strings, floats)
 
-Most other higher-value constructs are composed of ops:
+If we compare RON atoms to real (chemistry) atoms, then RON ops are "molecules", composed of "atoms".
+Then, an op log is our DNA - it contains all the replicated data.
+Other higher-value constructs are like polypeptides, proteins and suchlike - they are composed of ops.
+Fundamentally, they are subsets or projections of the op log (the DNA).
+A replicated op log is the foundation of all this machinery.
 
 * Chain - a sequence of ops from the same origin, where each next op references the previous one
           (in an *even* chain, each op id is the previous id + 1)
