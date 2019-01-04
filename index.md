@@ -20,19 +20,18 @@ Thanks to CRDTs and UUIDs, all changes merge and converge consistently.
 
 Here is a simple object serialized in RON:
 
-<pre>
-<font color="#ddc">  1 </font><font color="#729FCF">@1fLDV+biQFvtGV</font> <font color="#3465A4">:lww</font> <font color="#AF5F00">!</font>
-<font color="#ddc">  2 </font>    <font color="#4E9A06">&apos;id&apos;</font>        <font color="#4E9A06">&apos;20MF000CUS&apos;</font><font color="#AF5F00">,</font>
-<font color="#ddc">  3 </font>    <font color="#4E9A06">&apos;type&apos;</font>      <font color="#4E9A06">&apos;laptop&apos;</font><font color="#AF5F00">,</font>
-<font color="#ddc">  4 </font>    <font color="#4E9A06">&apos;cpu&apos;</font>       <font color="#4E9A06">&apos;i7-8850H&apos;</font><font color="#AF5F00">,</font>
-<font color="#ddc">  5 </font>    <font color="#4E9A06">&apos;display&apos;</font>   <font color="#4E9A06">&apos;15.6” UHD IPS multi-touch, 400nits&apos;</font><font color="#AF5F00">,</font>
-<font color="#ddc">  6 </font>    <font color="#4E9A06">&apos;RAM&apos;</font>       <font color="#4E9A06">&apos;16 GB DDR4 2666MHz&apos;</font><font color="#AF5F00">,</font>
-<font color="#ddc">  7 </font>    <font color="#4E9A06">&apos;storage&apos;</font>   <font color="#4E9A06">&apos;512 GB SSD, PCIe-NVME M.2&apos;</font><font color="#AF5F00">,</font>
-<font color="#ddc">  8 </font>    <font color="#4E9A06">&apos;graphics&apos;</font>  <font color="#4E9A06">&apos;NVIDIA GeForce GTX 1050Ti 4GB&apos;</font><font color="#AF5F00">,</font>
-<font color="#ddc">  9 </font><font color="#729FCF">@1fLDk4+biQFvtGV</font>
-<font color="#ddc"> 10 </font>    <font color="#4E9A06">&apos;wlan&apos;</font>      <font color="#4E9A06">&apos;Intel 9560 802.11AC vPro&apos;</font><font color="#AF5F00">,</font>
-<font color="#ddc"> 11 </font>    <font color="#4E9A06">&apos;camera&apos;</font>    <font color="#4E9A06">&apos;IR &amp; 720p HD Camera with microphone&apos;</font><font color="#AF5F00">,</font>
-<font color="#ddc"> 12 </font><font color="#A8A8A8"><i>@sha3</i></font> <font color="#4E9A06">&apos;SfiKqD1atGU5xxv1NLp8uZbAcHQDcX~a1HVk5rQFy_nq&apos;</font><font color="#AF5F00">,</font>
+<pre><span style="line">  1 </span><span style="id">@1fLDV+biQFvtGV</span> <span style="ref">:lww</span> <span style="term">!</span>
+<span style="line">  2 </span>    <span style="string">&apos;id&apos;</span>        <span style="string">&apos;20MF000CUS&apos;</span><span style="term">,</span>
+<span style="line">  3 </span>    <span style="string">&apos;type&apos;</span>      <span style="string">&apos;laptop&apos;</span><span style="term">,</span>
+<span style="line">  4 </span>    <span style="string">&apos;cpu&apos;</span>       <span style="string">&apos;i7-8850H&apos;</span><span style="term">,</span>
+<span style="line">  5 </span>    <span style="string">&apos;display&apos;</span>   <span style="string">&apos;15.6” UHD IPS multi-touch, 400nits&apos;</span><span style="term">,</span>
+<span style="line">  6 </span>    <span style="string">&apos;RAM&apos;</span>       <span style="string">&apos;16 GB DDR4 2666MHz&apos;</span><span style="term">,</span>
+<span style="line">  7 </span>    <span style="string">&apos;storage&apos;</span>   <span style="string">&apos;512 GB SSD, PCIe-NVME M.2&apos;</span><span style="term">,</span>
+<span style="line">  8 </span>    <span style="string">&apos;graphics&apos;</span>  <span style="string">&apos;NVIDIA GeForce GTX 1050Ti 4GB&apos;</span><span style="term">,</span>
+<span style="line">  9 </span><span style="id">@1fLDk4+biQFvtGV</span>
+<span style="line"> 10 </span>    <span style="string">&apos;wlan&apos;</span>      <span style="string">&apos;Intel 9560 802.11AC vPro&apos;</span><span style="term">,</span>
+<span style="line"> 11 </span>    <span style="string">&apos;camera&apos;</span>    <span style="string">&apos;IR &amp; 720p HD Camera with microphone&apos;</span><span style="term">,</span>
+<span style="line"> 12 </span><span style="comment"><i>@sha3</i></span> <span style="string">&apos;SfiKqD1atGU5xxv1NLp8uZbAcHQDcX~a1HVk5rQFy_nq&apos;</span><span style="term">,</span>
 </pre>
 
 Key RON principles are:
