@@ -24,6 +24,8 @@ Other higher-value constructs are like polypeptides, proteins and suchlike - the
 Fundamentally, they are either subsets or projections of the op log (the DNA).
 A replicated op log is the foundation of all this machinery.
 
+## Op-collection construct
+
 * Chain - a sequence of ops from the same origin, where each next op references the previous one
           (in an *even* chain, each op id is the previous id + 1)
 * Yarn - a linear log of all ops from the same origin (corresponds to a Lamport process)
@@ -33,7 +35,12 @@ A replicated op log is the foundation of all this machinery.
 * Patch - a group of ops modifying the same tree/object (causally consistent, i.e. referencing the existing ops of the tree or previous ops of the patch)
 * Frame - largely synonymous to a "write batch"; a group of ops to be applied atomically, in a single transaction
 * Chunk - a group of object's ops, preceded by the object's header, e.g. object state or a patch
-* Log - a causally ordered sequence of ops, like a database op log
+* Log - a causally ordered sequence of ops, like a database op log. While yarns are linearly ordered, a log only has partial (causal) order; different replicas of a log may go in slightly different orders.
 * Graph - a group of objects referencing each other
 * Graph patch - a group of object patches and full object states, a causally consistent change of an object graph
 * Segments - a log segment, a yarn segment, a chain segment, etc etc - a subset of the construct retaining its key features
+
+## Other terms
+
+* Annotation - an pseudo-op that is not itself a data change, but some derived/secondary information, related to some op (e.g. its hash or other metadata).
+* Vector timestamp - an array of time-based UUIDs, one per origin; a timestamp produced by vector clocks. 
