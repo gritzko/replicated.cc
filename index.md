@@ -20,18 +20,18 @@ Thanks to CRDTs and UUIDs, all changes merge and converge consistently.
 
 Here is a simple object serialized in RON:
 
-<pre><span style="line">  1 </span><span style="id">@1fLDV+biQFvtGV</span> <span style="ref">:lww</span> <span style="term">!</span>
-<span style="line">  2 </span>    <span style="string">&apos;id&apos;</span>        <span style="string">&apos;20MF000CUS&apos;</span><span style="term">,</span>
-<span style="line">  3 </span>    <span style="string">&apos;type&apos;</span>      <span style="string">&apos;laptop&apos;</span><span style="term">,</span>
-<span style="line">  4 </span>    <span style="string">&apos;cpu&apos;</span>       <span style="string">&apos;i7-8850H&apos;</span><span style="term">,</span>
-<span style="line">  5 </span>    <span style="string">&apos;display&apos;</span>   <span style="string">&apos;15.6” UHD IPS multi-touch, 400nits&apos;</span><span style="term">,</span>
-<span style="line">  6 </span>    <span style="string">&apos;RAM&apos;</span>       <span style="string">&apos;16 GB DDR4 2666MHz&apos;</span><span style="term">,</span>
-<span style="line">  7 </span>    <span style="string">&apos;storage&apos;</span>   <span style="string">&apos;512 GB SSD, PCIe-NVME M.2&apos;</span><span style="term">,</span>
-<span style="line">  8 </span>    <span style="string">&apos;graphics&apos;</span>  <span style="string">&apos;NVIDIA GeForce GTX 1050Ti 4GB&apos;</span><span style="term">,</span>
-<span style="line">  9 </span><span style="id">@1fLDk4+biQFvtGV</span>
-<span style="line"> 10 </span>    <span style="string">&apos;wlan&apos;</span>      <span style="string">&apos;Intel 9560 802.11AC vPro&apos;</span><span style="term">,</span>
-<span style="line"> 11 </span>    <span style="string">&apos;camera&apos;</span>    <span style="string">&apos;IR &amp; 720p HD Camera with microphone&apos;</span><span style="term">,</span>
-<span style="line"> 12 </span><span style="comment"><i>@sha3</i></span> <span style="string">&apos;SfiKqD1atGU5xxv1NLp8uZbAcHQDcX~a1HVk5rQFy_nq&apos;</span><span style="term">,</span>
+<pre><span class="line">  1 </span><span class="id">@1fLDV+biQFvtGV</span> <span class="ref">:lww</span> <span class="term">!</span>
+<span class="line">  2 </span>    <span class="string">&apos;id&apos;</span>        <span class="string">&apos;20MF000CUS&apos;</span><span class="term">,</span>
+<span class="line">  3 </span>    <span class="string">&apos;type&apos;</span>      <span class="string">&apos;laptop&apos;</span><span class="term">,</span>
+<span class="line">  4 </span>    <span class="string">&apos;cpu&apos;</span>       <span class="string">&apos;i7-8850H&apos;</span><span class="term">,</span>
+<span class="line">  5 </span>    <span class="string">&apos;display&apos;</span>   <span class="string">&apos;15.6” UHD IPS multi-touch, 400nits&apos;</span><span class="term">,</span>
+<span class="line">  6 </span>    <span class="string">&apos;RAM&apos;</span>       <span class="string">&apos;16 GB DDR4 2666MHz&apos;</span><span class="term">,</span>
+<span class="line">  7 </span>    <span class="string">&apos;storage&apos;</span>   <span class="string">&apos;512 GB SSD, PCIe-NVME M.2&apos;</span><span class="term">,</span>
+<span class="line">  8 </span>    <span class="string">&apos;graphics&apos;</span>  <span class="string">&apos;NVIDIA GeForce GTX 1050Ti 4GB&apos;</span><span class="term">,</span>
+<span class="line">  9 </span><span class="id">@1fLDk4+biQFvtGV</span>
+<span class="line"> 10 </span>    <span class="string">&apos;wlan&apos;</span>      <span class="string">&apos;Intel 9560 802.11AC vPro&apos;</span><span class="term">,</span>
+<span class="line"> 11 </span>    <span class="string">&apos;camera&apos;</span>    <span class="string">&apos;IR &amp; 720p HD Camera with microphone&apos;</span><span class="term">,</span>
+<span class="line"> 12 </span><span class="comment"><i>@sha3</i></span> <span class="string">&apos;SfiKqD1atGU5xxv1NLp8uZbAcHQDcX~a1HVk5rQFy_nq&apos;</span><span class="term">,</span>
 </pre>
 
 Key RON principles are:
