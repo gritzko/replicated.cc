@@ -45,9 +45,9 @@ sup { vertical-align: baseline; position: relative; top: -6px; }
 
 .nobullet > li { list-style-type: none; }
 
-span.line { background-color: #ddc; }
-span.string { background-color: #4e9a06; }
-span.id { background-color: #729FDF; }
-span.ref { background-color: #4475B4; }
-span.term { background-color: #AF5F00; }
-span.comment { background-color: #a8a8a8; font-style: italic; }
+span.line { color: #ddc; }
+span.string { color: #4e9a06; }
+span.id { color: #729FDF; }
+span.ref { color: #4475B4; }
+span.term { color: #AF5F00; }
+span.comment { color: #a8a8a8; font-style: italic; }
