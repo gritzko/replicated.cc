@@ -27,7 +27,7 @@ A replicated op log is the foundation of all this machinery.
 ## Op-collection construct
 
 * Chain - a sequence of ops from the same origin, where each next op references the previous one
-          (in an *even* chain, each op id is the previous id + 1)
+* Span - (chain span) - a chain where each op's id is exactly an increment of the previous id (`1gABC+origin, 1gABC00001+origin, 1gABC00002+origin...`)
 * Yarn - a linear log of all ops from the same origin (corresponds to a Lamport process)
 * Tree - a causally ordered group of ops forming a tree (each next op references some preceding op from the tree, except for the root op)
 * Object - largely synonymous to a tree, although op ordering depends on the data type (RDT)
