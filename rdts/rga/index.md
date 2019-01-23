@@ -13,7 +13,8 @@ text).  Overall, RON 2.1 RGA/CT follows the classic RGA/CT data structure:
 * a letter is a child of its preceding letter (at the time of insertion),
 * siblings are ordered by the logical timestamp (younger first).
 
-<img src="ct.png" style="float: right;"/> 
+<img src="ct.png" style="float: right; width: 50%;"/> 
+
 For simple cases, Fig.1 from the 
 [original 2008 CT paper](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.627.5286&rep=rep1&type=pdf)
 is still a valid illustration today.
@@ -104,4 +105,5 @@ becomes less local.
 
 ## Read next
 
-[TXT: Collaborative text](../txt/).
+...
+
