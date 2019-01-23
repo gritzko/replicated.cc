@@ -5,7 +5,7 @@
 * RON UUID - a 128-bit globally unique identifier, one of four *versions*:
     * time-based (a logical/hybrid timestamp, 60 bits of timestamp, 60 bits of event *origin* id)
     * name (a human readable name of some predefined concept, e.g. a data type or an error type)
-    * numeric (either a random number or a hash)
+    * numeric (either an arbitrary number or a hash)
 * Atom - an immutable value of one of four types:
     * RON UUID
     * Integer (64-bit signed)
