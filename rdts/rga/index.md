@@ -77,16 +77,16 @@ each op is caused by the previous one:
 
 The RON rendering for the chain might look like:
 <pre>
-<span style="line">  1 </span><span style="id">@1hMDg6+gYpLcnUnF6</span> <span style="ref">:rga</span> <span style="term">!</span>
-<span style="line">  2 </span>    <span style="string">&apos;a&apos;</span><span style="term">,</span>
-<span style="line">  3 </span>    <span style="string">&apos;b&apos;</span><span style="term">,</span>
-<span style="line">  4 </span>    <span style="string">&apos;c&apos;</span><span style="term">,</span>
-<span style="line">  5 </span>    <span style="string">&apos;d&apos;</span><span style="term">,</span>
-<span style="line">  6 </span><span style="rmid">@1hMDg60005-gYpLcnUnF6</span><span style="term">,</span>
-<span style="line">  7 </span>    <span style="term">,</span>
-<span style="line">  8 </span>    <span style="term">,</span>
-<span style="line">  9 </span><span style="id">@1hMDg60008+gYpLcnUnF6</span><span style="term">,</span>
-<span style="line"> 10 </span>    <span style="term">,</span>
+<span class="line">  1 </span><span class="id">@1hMDg6+gYpLcnUnF6</span> <span class="ref">:rga</span> <span class="term">!</span>
+<span class="line">  2 </span>    <span class="string">&apos;a&apos;</span><span class="term">,</span>
+<span class="line">  3 </span>    <span class="string">&apos;b&apos;</span><span class="term">,</span>
+<span class="line">  4 </span>    <span class="string">&apos;c&apos;</span><span class="term">,</span>
+<span class="line">  5 </span>    <span class="string">&apos;d&apos;</span><span class="term">,</span>
+<span class="line">  6 </span><span class="rmid">@1hMDg60005-gYpLcnUnF6</span><span class="term">,</span>
+<span class="line">  7 </span>    <span class="term">,</span>
+<span class="line">  8 </span>    <span class="term">,</span>
+<span class="line">  9 </span><span class="id">@1hMDg60008+gYpLcnUnF6</span><span class="term">,</span>
+<span class="line"> 10 </span>    <span class="term">,</span>
 </pre>
 
 The resulting text should be `abc`.
