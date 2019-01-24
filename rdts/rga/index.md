@@ -16,22 +16,28 @@ classic RGA/CT data structure:
 
 <img src="ct.png" style="float: right; width: 50%;"/> 
 
-For simple cases, Fig.1 from the 
-[original 2008 CT paper](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.627.5286&rep=rep1&type=pdf)
-is still a valid illustration today.
+For RGA/CT inner workings, Fig.1 from the [original 2008 CT
+paper](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.627.5286&rep=rep1&type=pdf)
+is still a valid illustration today.  Similarly, Fig. 18 from the [2011 INRIA
+paper](https://hal.inria.fr/inria-00555588/document) shows how RGA/CT works in
+its flattened form.
 
-The implementation follows the CT algorithms and not
-[RGA](https://t.co/xVxyNRFs3E).  Namely, RON 2.1 RGA/CT applies changes by
-parallel iteration of inputs (aka RON frame reduction).
-A similar method is used by
+<img src="inria.png" style="float: right; width: 50%;"/> 
+
+The 2.1 implementation continues the [CT
+line](http://www.st.ewi.tudelft.nl/victor/articles/ctre.pdf) of algorithms and
+not [RGA](https://t.co/xVxyNRFs3E).  Namely, RON 2.1 RGA/CT applies changes by
+parallel iteration of inputs (aka RON frame reduction).  A similar method is
+used by
 [Cassandra](https://github.com/apache/cassandra/blob/trunk/src/java/org/apache/cassandra/utils/MergeIterator.java)
 and other databases. Changes are batched as much as possible.  The reason for
-this behavior is to avoid the overhead of maintaining reference-based datastructures (trees, linked lists, etc).
-Instead, CT uses sequential access and flat datastructures as much as possible.
-Even in C++, maintaining a tree is plenty of overhead.  In higher-level
-languages (think Java/JavaScript) a tree may consume 100x more RAM than a
-flat buffer. A linked list is considered a worst-case datastructure for
-a garbage collector. Hence, flat buffers and sequential access.
+this behavior is to avoid the overhead of maintaining reference-based
+datastructures (trees, linked lists, etc).  Instead, CT uses sequential access
+and flat datastructures as much as possible.  Even in C++, maintaining a tree
+is plenty of overhead.  In higher-level languages (think Java/JavaScript) a
+tree may consume 100x more RAM than a flat buffer. A linked list is considered
+a worst-case datastructure for a garbage collector. Hence, flat buffers and
+sequential access.
 
 The RON 2.0 RGA/CT variant is the closest to 2.1, albeit there are
 significant differences in handling deletes and undeletes (see below).  Also,
