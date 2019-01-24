@@ -52,3 +52,5 @@ span.rmid { color: #a29FDF; }
 span.ref { color: #4475B4; }
 span.term { color: #AF5F00; }
 span.comment { color: #a8a8a8; font-style: italic; }
+span.str_span { color: #4e9a06; font-weight: bold; }
+span.rm_span { color: #a29FDF; font-weight: bold; }
