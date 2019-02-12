@@ -7,8 +7,7 @@ title: Replicated Object Notation
 
 Replicated Object Notation (RON) is a format for *distributed live data*. 
 RON's primary mission is continuous data synchronization.
-A RON object may naturally have any number of replicas,
-which may synchronize in real-time or intermittently or stay offline. 
+A RON object may naturally have any number of replicas, which may synchronize in real-time or intermittently. 
 
 [JSON](htp://json.org), [protobuf](https://developers.google.com/protocol-buffers/),
 and many other formats *implicitly assume* serialization of separate state snapshots.
@@ -18,14 +17,14 @@ Every object, every change, every version has a globally unique UUID.
 Pieces of data reference each other by UUIDs.
 Every RON data type is a CRDT.
 With RON metadata, state and updates could always be pieced together.
-It merges, it converges.
+It always merges, it always converges.
 
 Yet another way to look at it: RON is like a metric system for data.
 The [imperial system](https://en.wikipedia.org/wiki/Imperial_units)
-employs various usage-based units: foots, lines, furlongs, links, cables, etc.
+employed various usage-based units: foots, lines, furlongs, links, cables, etc.
 The [metric system](https://en.wikipedia.org/wiki/Metric_system)
 defines one unit (a meter), then derives other units from that.
-Similarly, data might be packed in usage-based units: snapshots,
+Similarly, data might be packed into usage-based units: snapshots,
 logs, chunks, batches, patches.
 RON defines an immutable *op*, then derives other units from that,
 be that data structures (arrays, maps, sets, etc) or storage/transmission units
@@ -33,7 +32,8 @@ be that data structures (arrays, maps, sets, etc) or storage/transmission units
 
 Here is a simple object serialized in RON:
 
-<pre><span class="line">  1 </span><span class="id">@1fLDV+biQFvtGV</span> <span class="ref">:lww</span> <span class="term">!</span>
+<pre>
+<span class="line">  1 </span><span class="id">@1fLDV+biQFvtGV</span> <span class="ref">:lww</span> <span class="term">!</span>
 <span class="line">  2 </span>    <span class="string">&apos;id&apos;</span>        <span class="string">&apos;20MF000CUS&apos;</span><span class="term">,</span>
 <span class="line">  3 </span>    <span class="string">&apos;type&apos;</span>      <span class="string">&apos;laptop&apos;</span><span class="term">,</span>
 <span class="line">  4 </span>    <span class="string">&apos;cpu&apos;</span>       <span class="string">&apos;i7-8850H&apos;</span><span class="term">,</span>
@@ -58,12 +58,8 @@ Key RON principles are:
         Every RON data structure (array, object, map, set, etc)
         is a collection of immutable ops.
         Similarly, every data storage or transmission unit is made of ops
-        (patch, state, chain, chunk, frame, object graph, log, yarn, etc).
-- **Integrity**, as ops form a [Merkle structure](https://en.wikipedia.org/wiki/Merkle_tree).
-        The data is integrity-checked to the last bit, if necessary, like
-        in git, BitTorrent, BitCoin and other such systems.
-        In the example above, ten ops form a Merkle chain, so the hash of the last op
-        (line #12) covers them all.
+        (patch, state, chain, chunk, frame, object graph, log, yarn, 
+        [etc](/specs/glossary/)).
 - **Addressability** of everything. Changes, versions, objects and every
         piece of data is uniquely identified and globally referenceable.
         Above, the first op has an id `1fLDV+biQFvtGV`, the second one is
@@ -77,6 +73,14 @@ Key RON principles are:
         the correct order and location of data pieces.
         Above, ops form an orderly chain, so references are skipped, except
         for the object creation op at line #1 which references its data type `lww`.
+        With no abbreviations, the object would look like a tabular log of ops, two
+        metadata UUIDs per op:
+<pre>
+<span class="line">  1 </span><span class="id">@1fLDV00000+biQFvtGV</span> <span class="ref">:lww</span> <span class="term">!</span>
+<span class="line">  2 </span><span class="id">@1fLDV00001+biQFvtGV</span>  <span class="ref">:1fLDV00000+biQFvtGV</span> <span class="string">&apos;id&apos;</span>        <span class="string">&apos;20MF000CUS&apos;</span><span class="term">,</span>
+<span class="line">  3 </span><span class="id">@1fLDV00002+biQFvtGV</span>  <span class="ref">:1fLDV00001+biQFvtGV</span> <span class="string">&apos;type&apos;</span>      <span class="string">&apos;laptop&apos;</span><span class="term">,</span>
+...
+</pre>
 - **Efficiency**. RON data is optimized to make metadata overhead bearable.
         An op is a very fine-grained unit of change.
         Thus, RON has to optimize per-op metadata overhead in numerous ways.
@@ -87,8 +91,13 @@ Key RON principles are:
         (the first plus 1) nor its reference (the first op).
         The binary variant of RON employs more sophisticated metadata
         compression techniques. 
+- **Integrity**, as ops form a [Merkle structure](https://en.wikipedia.org/wiki/Merkle_tree).
+        If necessary, the data is integrity-checked to the last bit, like
+        in git, BitTorrent, BitCoin and other such systems.
+        In the example above, ten ops form a Merkle chain, so the hash of the last op
+        (line #12) covers them all.
 
-RON is designed for swarms of mobile devices communicating over unreliable wireless networks in an untrusted environment.
+RON's vision is swarms of mobile devices communicating over unreliable wireless networks in an untrusted environment.
 
 For more in-depth reading, please see:
 
