@@ -75,11 +75,11 @@ Key RON principles are:
         for the object creation op at line #1 which references its data type `lww`.
         With no abbreviations, the object would look like a tabular log of ops, two
         metadata UUIDs per op:
-<pre>
+<pre style="font-size: 80%;">
 <span class="line">  1 </span><span class="id">@1fLDV00000+biQFvtGV</span> <span class="ref">:lww</span> <span class="term">!</span>
 <span class="line">  2 </span><span class="id">@1fLDV00001+biQFvtGV</span>  <span class="ref">:1fLDV00000+biQFvtGV</span> <span class="string">&apos;id&apos;</span>        <span class="string">&apos;20MF000CUS&apos;</span><span class="term">,</span>
 <span class="line">  3 </span><span class="id">@1fLDV00002+biQFvtGV</span>  <span class="ref">:1fLDV00001+biQFvtGV</span> <span class="string">&apos;type&apos;</span>      <span class="string">&apos;laptop&apos;</span><span class="term">,</span>
-...
+<span class="line">    ...</span>
 </pre>
 - **Efficiency**. RON data is optimized to make metadata overhead bearable.
         An op is a very fine-grained unit of change.
