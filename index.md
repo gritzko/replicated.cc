@@ -66,7 +66,9 @@ Key RON principles are:
         `1fLDV00001+biQFvtGV`, the third is `1fLDV00002+biQFvtGV`
         and so on (the notation skips incremental ids).
         The last two ops (#9-10 and #11) belong to a later changeset, so their
-        ids are `1fLDk4+biQFvtGV`, `1fLDk40001+biQFvtGV`.
+        ids are `1fLDk4+biQFvtGV`, `1fLDk40001+biQFvtGV`. <br/>
+        Note: RON has no notational nesting (no brackets).
+        Instead, data pieces reference each other by UUIDs, thus forming arbitrary graphs.
 - **Causality**. Each RON operation explicitly *references* what other op
         it is based on.
         No matter how and when you get your data, you can always reconstruct
@@ -76,7 +78,7 @@ Key RON principles are:
         With no abbreviations, the object would look like a tabular log of ops, two
         metadata UUIDs per op:
 <pre style="font-size: 80%;">
-<span class="line">  1 </span><span class="id">@1fLDV00000+biQFvtGV</span> <span class="ref">:lww</span> <span class="term">!</span>
+<span class="line">  1 </span><span class="id">@1fLDV00000+biQFvtGV</span> <span class="ref"> :lww</span> <span class="term">!</span>
 <span class="line">  2 </span><span class="id">@1fLDV00001+biQFvtGV</span>  <span class="ref">:1fLDV00000+biQFvtGV</span> <span class="string">&apos;id&apos;</span>        <span class="string">&apos;20MF000CUS&apos;</span><span class="term">,</span>
 <span class="line">  3 </span><span class="id">@1fLDV00002+biQFvtGV</span>  <span class="ref">:1fLDV00001+biQFvtGV</span> <span class="string">&apos;type&apos;</span>      <span class="string">&apos;laptop&apos;</span><span class="term">,</span>
 <span class="line">    ...</span>
