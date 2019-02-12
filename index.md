@@ -7,16 +7,28 @@ title: Replicated Object Notation
 
 Replicated Object Notation (RON) is a format for *distributed live data*. 
 RON's primary mission is continuous data synchronization.
+A RON object may naturally have any number of replicas,
+which may synchronize in real-time or intermittently or stay offline. 
 
 [JSON](htp://json.org), [protobuf](https://developers.google.com/protocol-buffers/),
-and many others, all imply serialization of state snapshots.
+and many other formats *implicitly assume* serialization of separate state snapshots.
 RON handles state and updates all the same: _state is change and change is state_.
-
-RON has versioning and addressing, all built in.
-Every RON object may naturally have any number of replicas,
-which may synchronize in real-time or live offline. 
+RON has metadata, versioning and addressing, all built in.
 Every object, every change, every version has a globally unique UUID.
-Thanks to CRDTs and UUIDs, all changes merge and converge consistently.
+Pieces of data reference each other by UUIDs.
+Every RON data type is a CRDT.
+With RON metadata, state and updates could always be pieced together.
+It merges, it converges.
+
+Yet another way to look at it: RON is like a metric system for data.
+The [imperial system](https://en.wikipedia.org/wiki/Imperial_units)
+employs various usage-based units: foots, lines, furlongs, links, cables, etc.
+The metric system defines one unit (a meter), then derives other units from that.
+Similarly, data might be packed in usage-based units: snapshots,
+logs, chunks, batches, patches.
+RON defines an immutable *op*, then derives other units from that,
+be that data structures (arrays, maps, sets, etc) or storage/transmission units
+(snapshots, batches/patches, logs).
 
 Here is a simple object serialized in RON:
 
