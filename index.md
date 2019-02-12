@@ -11,13 +11,11 @@ A RON object may naturally have any number of replicas, which may synchronize in
 
 [JSON](htp://json.org), [protobuf](https://developers.google.com/protocol-buffers/),
 and many other formats *implicitly assume* serialization of separate state snapshots.
+RON has versioning and addressing *metadata*, so state and updates could always be pieced together.
 RON handles state and updates all the same: _state is change and change is state_.
-RON has metadata, versioning and addressing, all built in.
 Every object, every change, every version has a globally unique UUID.
 Pieces of data reference each other by UUIDs.
-Every RON data type is a CRDT.
-With RON metadata, state and updates could always be pieced together.
-It always merges, it always converges.
+Every RON data type is a CRDT -- it always merges, it always converges.
 
 Yet another way to look at it: RON is like a metric system for data.
 The [imperial system](https://en.wikipedia.org/wiki/Imperial_units)
@@ -96,7 +94,7 @@ Key RON principles are:
 - **Integrity**, as ops form a [Merkle structure](https://en.wikipedia.org/wiki/Merkle_tree).
         If necessary, the data is integrity-checked to the last bit, like
         in git, BitTorrent, BitCoin and other such systems.
-        In the example above, ten ops form a Merkle chain, so the hash of the last op
+        In the example, ten ops form a Merkle chain, so the hash of the last op
         (line #12) covers them all.
 
 RON's vision is swarms of mobile devices communicating over unreliable wireless networks in an untrusted environment.
