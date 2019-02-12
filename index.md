@@ -75,6 +75,14 @@ Key RON principles are:
         the correct order and location of data pieces.
         Above, ops form an orderly chain, so references are skipped, except
         for the object creation op at line #1 which references its data type `lww`.
+- **Efficiency**. RON data is optimized to make metadata overhead bearable.
+        An op is a very fine-grained unit of change.
+        Thus, RON has to optimize per-op metadata overhead in numerous ways.
+        Op ids get skipped if they go incrementally.
+        References are skipped if they point to the previous op
+        (an op chain is a convenient default).
+        For example, the op at line #2 mentions neither its own id
+        (the first plus 1) nor its reference (the first op).
         With no abbreviations, the object would look like a tabular log of ops, two
         metadata UUIDs per op:
 <pre style="font-size: 80%;">
@@ -83,14 +91,6 @@ Key RON principles are:
 <span class="line">  3 </span><span class="id">@1fLDV00002+biQFvtGV</span>  <span class="ref">:1fLDV00001+biQFvtGV</span> <span class="string">&apos;type&apos;</span>      <span class="string">&apos;laptop&apos;</span><span class="term">,</span>
 <span class="line">    ...</span>
 </pre>
-- **Efficiency**. RON data is optimized to make metadata overhead bearable.
-        An op is a very fine-grained unit of change.
-        Thus, RON has to optimize per-op metadata overhead in numerous ways.
-        Above, op ids are skipped if they go incrementally.
-        References are skipped if they point to the previous op
-        (an op chain is a convenient default).
-        For example, the op at line #2 mentions neither its own id
-        (the first plus 1) nor its reference (the first op).
         The binary variant of RON employs more sophisticated metadata
         compression techniques. 
 - **Integrity**, as ops form a [Merkle structure](https://en.wikipedia.org/wiki/Merkle_tree).
