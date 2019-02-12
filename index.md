@@ -23,12 +23,13 @@ It merges, it converges.
 Yet another way to look at it: RON is like a metric system for data.
 The [imperial system](https://en.wikipedia.org/wiki/Imperial_units)
 employs various usage-based units: foots, lines, furlongs, links, cables, etc.
-The metric system defines one unit (a meter), then derives other units from that.
+The [metric system](https://en.wikipedia.org/wiki/Metric_system)
+defines one unit (a meter), then derives other units from that.
 Similarly, data might be packed in usage-based units: snapshots,
 logs, chunks, batches, patches.
 RON defines an immutable *op*, then derives other units from that,
 be that data structures (arrays, maps, sets, etc) or storage/transmission units
-(snapshots, batches/patches, logs).
+(snapshots, batches/patches, logs, [etc](/specs/glossary)).
 
 Here is a simple object serialized in RON:
 
@@ -51,21 +52,23 @@ Key RON principles are:
 - **Immutability** - RON sees data as a collection of immutable timestamped ops. 
         In the example above, we have an object state consisting of ten ops 
         (object creation op at line #1, the initial changeset #2 to #8,
-        another changeset of two ops #9+10 and #11).
+        another changeset of two ops #9/10 and #11).
         An op may be referenced, transmitted, stored, applied or rolled back,
         garbage collected, etc.
-        Virtually every RON data structure is a collection of immutable ops
+        Every RON data structure (array, object, map, set, etc)
+        is a collection of immutable ops.
+        Similarly, every data storage or transmission unit is made of ops
         (patch, state, chain, chunk, frame, object graph, log, yarn, etc).
-- **Integrity**, as ops form a Merkle tree.
+- **Integrity**, as ops form a [Merkle structure](https://en.wikipedia.org/wiki/Merkle_tree).
         The data is integrity-checked to the last bit, if necessary, like
         in git, BitTorrent, BitCoin and other such systems.
-        Above, ten ops form a Merkle chain, so the hash of the last op
+        In the example above, ten ops form a Merkle chain, so the hash of the last op
         (line #12) covers them all.
 - **Addressability** of everything. Changes, versions, objects and every
         piece of data is uniquely identified and globally referenceable.
         Above, the first op has an id `1fLDV+biQFvtGV`, the second one is
         `1fLDV00001+biQFvtGV`, the third is `1fLDV00002+biQFvtGV`
-        and so on (incremental ids are skipped).
+        and so on (the notation skips incremental ids).
         The last two ops (#9-10 and #11) belong to a later changeset, so their
         ids are `1fLDk4+biQFvtGV`, `1fLDk40001+biQFvtGV`.
 - **Causality**. Each RON operation explicitly *references* what other op
@@ -77,13 +80,15 @@ Key RON principles are:
 - **Efficiency**. RON data is optimized to make metadata overhead bearable.
         An op is a very fine-grained unit of change.
         Thus, RON has to optimize per-op metadata overhead in numerous ways.
-        Above, both op ids and references are skipped if they go incrementally.
+        Above, op ids are skipped if they go incrementally.
+        References are skipped if they point to the previous op
+        (an op chain is a convenient default).
         For example, the op at line #2 mentions neither its own id
         (the first plus 1) nor its reference (the first op).
         The binary variant of RON employs more sophisticated metadata
         compression techniques. 
 
-RON is an answer to the new reality: swarms of mobile devices communicating over unreliable wireless networks in an untrusted environment.
+RON is designed for swarms of mobile devices communicating over unreliable wireless networks in an untrusted environment.
 
 For more in-depth reading, please see:
 
