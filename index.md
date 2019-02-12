@@ -11,7 +11,7 @@ A RON object may naturally have any number of replicas, which may synchronize in
 
 [JSON](htp://json.org), [protobuf](https://developers.google.com/protocol-buffers/),
 and many other formats *implicitly assume* serialization of separate state snapshots.
-RON has versioning and addressing *metadata*, so state and updates could always be pieced together.
+RON has versioning and addressing *metadata*, so state and updates can always be pieced together.
 RON handles state and updates all the same: _state is change and change is state_.
 Every object, every change, every version has a globally unique UUID.
 Pieces of data reference each other by UUIDs.
