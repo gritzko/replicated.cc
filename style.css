@@ -45,6 +45,7 @@ sup { vertical-align: baseline; position: relative; top: -6px; }
 
 .nobullet > li { list-style-type: none; }
 
+span.name { color: #484; }
 span.line { color: #ddc; }
 span.string { color: #4e9a06; }
 span.uuid { color: #069a4e; }
