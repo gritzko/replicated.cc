@@ -47,6 +47,7 @@ sup { vertical-align: baseline; position: relative; top: -6px; }
 
 span.line { color: #ddc; }
 span.string { color: #4e9a06; }
+span.uuid { color: #069a4e; }
 span.int { color: #109a4e; }
 span.id { color: #729FDF; }
 span.rmid { color: #a29FDF; }
@@ -55,4 +56,4 @@ span.ref { color: #4475B4; }
 span.term { color: #AF5F00; }
 span.comment { color: #a8a8a8; font-style: italic; }
 span.str_span { color: #4e9a06; font-weight: bold; }
-span.rm_span { color: #a29FDF; font-weight: bold; }
+span.span { color: #a29FDF; font-weight: bold; }
