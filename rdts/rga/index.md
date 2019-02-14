@@ -85,24 +85,23 @@ each op is caused by the previous one:
 
 The RON rendering for the chain might look like:
 <pre>
-<span class="line">  1 </span><span class="id">@1hMDg6+gYpLcnUnF6</span> <span class="ref">:rga</span> <span class="term">!</span>
-<span class="line">  2 </span>    <span class="string">&apos;a&apos;</span><span class="term">,</span>
-<span class="line">  3 </span>    <span class="string">&apos;b&apos;</span><span class="term">,</span>
-<span class="line">  4 </span>    <span class="string">&apos;c&apos;</span><span class="term">,</span>
-<span class="line">  5 </span>    <span class="string">&apos;d&apos;</span><span class="term">,</span>
+<span class="line">  1 </span><span class="id">@1hMDg6+gYpLcnUnF6</span> <span class="line">:rga</span> <span class="term">!</span>
+<span class="line">  2 </span>    <span class="str_span">&apos;a&apos;</span><span class="term">,</span>
+<span class="line">  3 </span>    <span class="str_span">&apos;b&apos;</span><span class="term">,</span>
+<span class="line">  4 </span>    <span class="str_span">&apos;c&apos;</span><span class="term">,</span>
+<span class="line">  5 </span>    <span class="str_span">&apos;d&apos;</span><span class="term">,</span>
 <span class="line">  6 </span><span class="id">@1hMDg60005+gYpLcnUnF6</span>
-<span class="line">  7 </span>    <span class="uuid"><b>rm</b></span><span class="term">,</span>
-<span class="line">  8 </span>    <span class="uuid"><b>rm</b></span><span class="term">,</span>
-<span class="line">  9 </span>    <span class="uuid"><b>rm</b></span><span class="term">,</span>
+<span class="line">  7 </span>    <span class="string"><u style="text-decoration-style:single">rm</u></span><span class="term">,</span>
+<span class="line">  8 </span>    <span class="string"><u style="text-decoration-style:single">rm</u></span><span class="term">,</span>
+<span class="line">  9 </span>    <span class="string"><u style="text-decoration-style:single">rm</u></span><span class="term">,</span>
 <span class="line"> 10 </span><span class="id">@1hMDg60008+gYpLcnUnF6</span>
-<span class="line"> 11 </span>    <span class="uuid"><b>un</b></span><span class="term">,</span>
-<span class="line"> 12 </span>    <span class="uuid"><b>un</b></span><span class="term">,</span>
+<span class="line"> 11 </span>    <span class="string"><u style="text-decoration-style:single">un</u></span><span class="term">,</span>
+<span class="line"> 12 </span>    <span class="string"><u style="text-decoration-style:single">un</u></span><span class="term">,</span>
 </pre>
 
 If using the RON span notation:
 
-<pre>
-<span class="line">  1 </span><span class="id">@1hMDg6+gYpLcnUnF6</span> <span class="ref">:rga</span> <span class="term">!</span> <span class="str_span"><b>&quot;abcd&quot;</b></span> <span class="span"><b>(4)</b></span><span class="term">,</span> <span class="uuid"><b>rm</b></span> <span class="span"><b>(3)</b></span><span class="term">,</span> <span class="uuid"><b>un</b></span> <span class="span"><b>(2)</b></span><span class="term">,</span>
+<span class="line">  1 </span><span class="id">@1hMDg6+gYpLcnUnF6</span> <span class="line">:rga</span> <span class="term">!</span> <span class="span">(&apos;abcd&apos; 4)</span><span class="term">,</span> <span class="string"><u style="text-decoration-style:single">rm</u></span> <span class="span">(3)</span><span class="term">,</span> <span class="string"><u style="text-decoration-style:single">un</u></span> <span class="span">(2)</span><span class="term">,</span>
 </pre>
 
 The resulting text should be `abc`.
