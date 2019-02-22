@@ -74,8 +74,9 @@ AFAIU, it would be difficult to fuzz and stress at the same time.
 That is because stress tests do lots of actual disk writes; they are not stateless.
 That kind of a "combo" may be the solution.
 
-Overall, any interesting combos will be added to the continous itegration scripts.
-Those scripts are ran by this old gentleman, 24x7. We are not Google, we only have one or two of those.
-And given the Amazon EC2 prices (c4.2xlarge, dedicated), it will take this device just *a month* to break even.
+Overall, any interesting combos will be added to the continuous itegration scripts.
+This old gentleman runs those scripts 24x7. We are not Google, we don't have a cluster yet.
+Given the [Amazon EC2 prices](https://aws.amazon.com/ec2/purchasing-options/dedicated-instances/)
+(c4.2xlarge, dedicated), it will take this device just *a month* to break even.
 
 <img src="xeon.jpg" style="width: 100%"/>
