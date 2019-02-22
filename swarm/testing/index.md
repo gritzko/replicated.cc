@@ -1,19 +1,25 @@
-# swarmdb testing plan 
+# SwarmDB: testing plan 
 
 Databases are likely the 
 [most](https://www.sqlite.org/testing.html)
 heavily
 [tested](https://news.ycombinator.com/item?id=18442637)
 software products.
-Quite fortunately, swarmdb does not do any serious database things.
-It only adds CRDT data structures to RocksDB.
-That's why it only has four-five kinds of tests:
+Quite fortunately, SwarmDB does not do any serious database things
+(like custom allocators, thread pools and everything like that).
+It merely adds CRDT data structures to RocksDB.
+Well, and some other small things.
+
+That's why we only have 4-5 kinds of tests:
 
 ## Unit tests at `{ron,rdt,db}/test/`
 
-Unit tests minimally check the freshly written code.
-Often, tests are written before the code, just to solidify API.
-Their task is to make some basic sanity checks and initial debugging.
+Unit tests quickly check the freshly written code.
+Often, tests are written before the code to solidify the API.
+Their tasks are:
+
+1. do basic sanity checks and
+2. help with initial debugging.
 
 ## ACID (permutation) tests at `rdt/perm-test/`
 
@@ -32,11 +38,13 @@ The simplest way of testing a complete system is blackbox testing:
 we have a library of inputs and outputs, we feed inputs into the system,
 we compare the results.
 
+That is a form of [integration testing](https://en.wikipedia.org/wiki/Integration_testing).
+
 ## Stress tests at `db/stress-test/`
 
-The priority of this part is low, as most of heavylifting is done by RocksDB.
-Still, We must ensure that the system may consume high-volume streams of operations,
-handle unusually large objects, process larger datasets. 
+The priority of this part is low, as most of the heavylifting is done by RocksDB.
+Still, we must ensure that the system may consume high-volume streams of operations,
+handle unusually large objects, process larger datasets, etc. 
 Importantly, the system must politely reject any above-the-limit inputs.
 
 ## Fuzz tests at `{ron,rdt,db}/fuzz-test/`
@@ -47,26 +55,27 @@ Importantly, the system must politely reject any above-the-limit inputs.
 > crashes, failing built-in code assertions, or potential memory leaks. 
 
 [Fuzz testing](https://en.wikipedia.org/wiki/Fuzzing) is an epic topic.
-I started with [AFL](http://lcamtuf.coredump.cx/afl/), although that one seems seems to be EOLed.
-[Clang](http://llvm.org/docs/LibFuzzer.html) has a gorgeous fuzzer that plays along with clang sanitizers.
+I started with [AFL](http://lcamtuf.coredump.cx/afl/), although that one seems to be EOLed.
+[Clang](https://clang.llvm.org/) has a gorgeous [fuzzer](http://llvm.org/docs/LibFuzzer.html)
+which plays along with its equally gorgeous sanitizers.
 That produces a nice cumulative effect.
 
 ## Continuous integration
 
 Once different testing methods get employed in combination, the effect becomes even more cumulative :)
 For 5 types of tests, we have ~30 possible combinations and most of them actually make sense, as far as I can see.
-Actually, it is even more fun. Consider an example:
+Consider an example:
 
-1. stress testing generates a large synthetic input
-2. fuzz testing takes that as a starting point, increasing coverage by guided mutations
-3. the resulting dataset could be fed back into stress testing to increase its coverage
+1. Stress testing generates a large synthetic input;
+2. fuzz testing takes that as a starting point, expands code coverage by guided mutations;
+3. the resulting dataset could be fed back into stress testing to increase its coverage.
 
 AFAIU, it would be difficult to fuzz and stress at the same time.
 That is because stress tests do lots of actual disk writes; they are not stateless.
-This kind of a "combo" may solve that.
+That kind of a "combo" may be the solution.
 
 Overall, any interesting combos will be added to the continous itegration scripts.
 Those scripts are ran by this old gentleman, 24x7. We are not Google, we only have one or two of those.
-And given the Amazon EC2 prices (c4.2xlarge, dedicated), it will take this device *a month* to break even.
+And given the Amazon EC2 prices (c4.2xlarge, dedicated), it will take this device just *a month* to break even.
 
 <img src="xeon.jpg" style="width: 100%"/>
