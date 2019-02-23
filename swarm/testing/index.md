@@ -2,20 +2,20 @@
 
 SwarmDB is an embeddable synchronizing database.
 It is intended to run in production.
-Databases are likely the 
+It is hardly an exaggeration to say that databases are the 
 [most](https://www.sqlite.org/testing.html)
-heavily
+[heavily](https://www.memsql.com/blog/building-an-infinitely-scalable-testing-system/)
 [tested](https://news.ycombinator.com/item?id=18442637)
 software products.
 Hence, the bar is quite high in relation to testing.
 
 Quite fortunately, SwarmDB does not have to implement any serious database things
-(like custom allocators, thread pools and everything like that).
-It merely adds CRDT data structures and algorithms to [RocksDB](https://rocksdb.org/).
+(like custom allocators, thread pools, B-trees, on-disk storage formats, you name it).
+SwarmDB merely adds CRDT data structures and algorithms to [RocksDB](https://rocksdb.org/).
 [RocksDB](https://en.wikipedia.org/wiki/RocksDB) is a widely used, battle hardened database.
 Here, we stand on the shoulders of giants.
 
-That's why we only have 4-5 kinds of tests:
+That is why we only have 4-5 kinds of tests:
 
 ## Unit tests at `{ron,rdt,db}/test/*.cc`
 
