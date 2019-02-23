@@ -1,18 +1,23 @@
 # SwarmDB: testing plan 
 
+SwarmDB is an embeddable synchronizing database.
+It is intended to run in production.
 Databases are likely the 
 [most](https://www.sqlite.org/testing.html)
 heavily
 [tested](https://news.ycombinator.com/item?id=18442637)
 software products.
-Quite fortunately, SwarmDB does not do any serious database things
+Hence, the bar is quite high in relation to testing.
+
+Quite fortunately, SwarmDB does not have to implement any serious database things
 (like custom allocators, thread pools and everything like that).
-It merely adds CRDT data structures to RocksDB.
-Well, and some other small things.
+It merely adds CRDT data structures and algorithms to [RocksDB](https://rocksdb.org/).
+[RocksDB](https://en.wikipedia.org/wiki/RocksDB) is a widely used, battle hardened database.
+Here, we stand on the shoulders of giants.
 
 That's why we only have 4-5 kinds of tests:
 
-## Unit tests at `{ron,rdt,db}/test/`
+## Unit tests at `{ron,rdt,db}/test/*.cc`
 
 Unit tests quickly check the freshly written code.
 Often, tests are written before the code to solidify the API.
@@ -21,7 +26,7 @@ Their tasks are:
 1. do basic sanity checks and
 2. help with initial debugging.
 
-## ACID (permutation) tests at `rdt/perm-test/`
+## ACID (permutation) tests at `rdt/test/perm-*.cc`
 
 Replicated Data Types have to be associative, commutative, idempotent.
 How do we ensure that? Well, literally.
@@ -32,7 +37,7 @@ The reducer may not be able to merge every possible subset/permutation,
 but: it must handle error conditions correctly!
 After each run, we compare the results. They must stay the same.
 
-## Black box tests at `db/bb-test/`
+## Black box tests at `test/**/*.ron`
 
 The simplest way of testing a complete system is blackbox testing:
 we have a library of inputs and outputs, we feed inputs into the system,
@@ -40,14 +45,14 @@ we compare the results.
 
 That is a form of [integration testing](https://en.wikipedia.org/wiki/Integration_testing).
 
-## Stress tests at `db/stress-test/`
+## Stress tests at `db/test/stress-*.cc`
 
 The priority of this part is low, as most of the heavylifting is done by RocksDB.
 Still, we must ensure that the system may consume high-volume streams of operations,
 handle unusually large objects, process larger datasets, etc. 
 Importantly, the system must politely reject any above-the-limit inputs.
 
-## Fuzz tests at `{ron,rdt,db}/fuzz-test/`
+## Fuzz tests at `{ron,rdt,db}/test/fuzz-*.cc`
 
 > Fuzzing or fuzz testing is an automated software testing technique that
 > involves providing invalid, unexpected, or random data as inputs to a
