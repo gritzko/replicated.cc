@@ -14,7 +14,7 @@ SwarmDB provides strong eventual consistency (with causal CRDTs).
 Technically,  `SwarmDB = RocksDB + RON + RDTs`
 
 The reliance on RocksDB makes SwarmDB embeddable, but still able to bear high server-side loads.
-Everything that has LevelDB bindings could also have SwarmDB bindings.
+Everything that has LevelDB or RocksDB bindings could also have SwarmDB bindings.
 
 Caveat: SwarmDB is not a NoSQL database in the usual meaning.
 It is more like a versioned documents store.
