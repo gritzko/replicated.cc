@@ -4,34 +4,52 @@ title: Swarm
 section: swarm
 ---
 
-# Swarm
+# SwarmDB
 
-Swarm is a distributed, offline-ready reactive KV storage with eventual consistency and automatic conflict resolution. Think Git but for your entire database.
+First and foremost, SwarmDB is a proof-of-concept key-value RON store.
+In SwarmDB, every key is a RON UUID and every value is a RON frame.
+SwarmDB is versioned, replicated, offline-ready and it always synchronizes correctly.
+SwarmDB provides strong eventual consistency (causal CRDTs).
+
+Technically,  `SwarmDB = RocksDB + RON + RDT`.
+
+The reliance on RocksDB makes SwarmDB embeddable, still able to bear high server-side loads.
+Everything that has LevelDB bindings could have SwarmDB bindings too.
+
+Caveat: SwarmDB is not a NoSQL database in the usual meaning.
+It is more like a versioned documents store.
+SwarmDB has no query language in of the usual kind; it only serves key-value RON queries.
+
+SwarmDB is like `git` for your data, but there are certain differences.
+SwarmDB stores structured data (arrays, sets, maps, objects), not just binary blobs.
+It provides JSON, text, CSV and other interfaces using mappers, but it is not JSON or CSV.
+Inside, it is RON RDTs all the way down.
+
+Again, SwarmDB has a very advanced versioning/sync machinery, but a very rudimentary query language.
+It is not a MongoDB killer, but more like a syncable storage engine.
+
+SwarmDB can synchronize in arbitrary topologies, work offline or work in real-time, merge concurrent changes, etc.
+On top of SwarmDB one may build:
+
+* a collaborative editor or
+* a revision control system or
+* a NoSQL database or
+* a geo-distributed eventually consistent data cache,
+* a shared (decentralized) database,
+* a distributed Web project.
+
+SwarmDB itself is a syncable storage engine.
 
 <img class="fig" src="diagram.jpeg">
 
-## What does Swarm do?
-
-Swarm solves for you the hard problem of reliable and efficient data synchronization between multiple parties in a complex topologies. You hand your data to local Swarm instance and Swarm ensures it gets propagated to all interested parties. Swarm easily scales up to multitude of replicas and sessions, spanning to browsers, mobile devices and multi-region server deployments.
-
-Swarm also spends extra effort to guarantee data conflicts are resolved in a predictable, controllabe way. Even in a presence of concurrent writers and intermittent/offline network connections. Your data is always safe and where in needs to be, delivered just in time.
-
-## What is Swarm good for?
-
-Many things:
-
-- reactive database,
-- collaborative text editing,
-- distributed version control,
-- decentralized Web,
-- geo-distributed eventually consistent data store,
-- shared database run by multiple parties (e.g. a [two-sided market](http://lexicon.ft.com/Term?term=two_sided-markets) data exchange),
-- [super-peer network](http://ilpubs.stanford.edu:8090/594/1/2003-33.pdf).
-
 ## Documentation
+
+- [Testing](testing/)
+- [RON API](api/)
+
+TODO
 
 - [Storage](storage/)
 - [Application layer](app/)
-- [API](api/)
 - [Tutorials](tutorials/)
 - [Swarm.js](swarm.js/)
