@@ -18,7 +18,7 @@ section: impl
     [ron-schema](https://hackage.haskell.org/package/ron-schema),
     [ron-storage](https://hackage.haskell.org/package/ron-storage)
 * **Java**
-  (TODO)
+  * [java-ron](https://github.com/volyx/java-ron)
 * **JavaScript**
   * [swarm](https://github.com/gritzko/swarm)
 * **Rust**
