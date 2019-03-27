@@ -25,7 +25,7 @@ SwarmDB stores structured data (arrays, sets, maps, objects), not just binary bl
 It provides JSON, text, CSV and other interfaces using mappers, but it is not a JSON or a CSV store.
 Inside, it is RON RDTs all the way down.
 
-Again, SwarmDB has a very advanced versioning/sync machinery, but a very rudimentary query language.
+Again, SwarmDB has a very advanced versioning/sync machinery, but the query language is very rudimentary.
 It is not a MongoDB killer, but more like a syncable storage engine.
 
 SwarmDB can synchronize in arbitrary topologies, work offline or work in real-time, merge concurrent changes, etc.
