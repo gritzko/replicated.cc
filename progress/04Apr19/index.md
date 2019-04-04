@@ -1,28 +1,24 @@
 # RFP 5 "RON" 6-month progress report
 
-CRDT is a data replication/synchronization technology that needs no
-central "master" replica. As such, it is often considered an essential
-building block for distributed/decentralized systems.
-While the core principles of CRDT are clear, there is certainly a gap
-between theory and practice. Our research addresses the gap by
-focusing on the following topics:
+CRDT is a data replication/synchronization technology that needs no central
+"master" replica. As such, it is often considered an essential building
+block for distributed/decentralized systems.  While the core principles of
+CRDT are clear, there is certainly a gap between theory and practice. Our
+research addresses the gap by focusing on the following topics:
 
-1. log-structured (aka operational) CRDTs; those can "switch gears"
-between op-based, patch-based and state-based modes of operation
-(those correspond to real-time sync, periodic sync and full
-reconciliation).
-2. minimizing metadata overhead by employing chain structures; the
-effect is similar to the block-based approach, except the core model
-stays simple.
+1. log-structured (aka operational) CRDTs; those can "switch gears" between
+op-based, patch-based and state-based modes of operation (those correspond
+to real-time sync, periodic sync and full reconciliation).
+2. minimizing metadata overhead by employing chain structures; the effect
+is similar to the block-based approach, except the core model stays simple.
 3. a formal ACID 2.0 framework to mix different RDTs in the same
-environment (ACID ~ associative, commutative, idempotent,
-distributed).
+environment (ACID ~ associative, commutative, idempotent, distributed).
 4. finally, unifying Causal and Merkle structures (CRDTs and crypto).
 
 That work is divided into three layers:
 
-1. the foundation: an op-based formal data model and protocol
-(Replicated Object Notation),
+1. the foundation: an op-based formal data model and protocol (Replicated
+   Object Notation),
 2. replicated data types (RDTs) based on the RON model,
 3. on top of that, the (database) replication part.
 
@@ -32,21 +28,20 @@ For each of the layers, we provide three deliverables:
 2. algorithms with pragmatic complexity bounds, and
 3. a reference implementation.
 
-Overall, the aim is to make CRDTs a simple universal instrument within
-the reach of every developer. Our work is online at
-http://replicated.cc
+Overall, the aim is to make CRDTs a simple universal instrument within the
+reach of every developer. Our work is online at http://replicated.cc
 
 ## Progress report
 
 ```
 +--------------+---------------+---------------+---------------+
-|              |      RON      |      RDT      |    replica    |
+| Guesstimates |      RON      |      RDT      |    replica    |
 +--------------+---------------+---------------+---------------+
-|specification | 85% text based|50% lww,ct/rga | 50% branches  |
+|specification |      85%      |      50%      |      50%      |
 +--------------+---------------+---------------+---------------+
-|algorithms    |      100%     |     75%       |     50%       |
+|algorithms    |      100%     |      75%      |      50%      |
 +--------------+---------------+---------------+---------------+
-|implementation|      50%      |     50%       |     25%       |
+|implementation|      50%      |      50%      |      25%      |
 +--------------+---------------+---------------+---------------+
 ```
 
@@ -85,37 +80,68 @@ http://replicated.cc
       deep integration with RocksDB. Second, we will need bindings to
       higher level languages later on.
 
-Informally, we had to re-adjust primitives to address certain long-standing
+Informally speaking, the goal of the first half of the project was to make
+our LEGO bricks; a manageable coherent codebase we can build upon.  In the
+second half, we build with those bricks, focusing on use-case testing and
+performance optimization.  At this point, a sufficient set of bricks is
+complete and "frozen".  Any further additions to the RON/RDT part are
+either non-critical features (add more RDTs) or performance optimizations
+(binary serialization, chain span compression, etc).
+
+While the general framework of log-structured CRDTs was clear, a lot of
+work went into re-adjusting primitives to address certain long-standing
 problems (metadata size, merge algorithm performance).  That necessitated
-readjusting all the other elements (e.g. the Causal Tree data struture, the
-key-value storage architecture).
+readjustment of other elements further up the stack (e.g. the Causal Tree
+data struture, key-value storage layout changes). Once merge complexity is
+`O(NlogN)` to the input size and conflicts are impossible, merges are 
+truly frictionless.
 
-Similarly,  bitwise convergence and Merkle structures required a more
-strict and formal approach to everything (the nominal format, Unicode
-handling, endianness). That is plenty of tedious work.
+Blending CRDTs and Merkle structures was a separate line of work.  Bitwise
+convergence and hashing requires a very strict and formal approach to
+everything. Hence we introduced the nominal format, Unicode handling and
+endianness rules, et cetera.  That was plenty of tedious work. The
+resulting technique is rather novel: the crypto DAG is defined as an
+*overlay* of the data DAG; the data itself does not explicitly include
+hashes or other crypto primitives. That was necessitated by the fact our
+data graph is very fine-grained (op-based), so we can not afford to keep
+all the historical hashes and signatures; that is way too many. Ideally, we
+need the latest entries only, everything redundant being dropped ASAP.
+Once it is feasible to re-calculate the hashes, this approach saves a lot
+of storage space.
 
-The new exciting thing that is still evolving is *branches*.  It is an
-approach that generalizes branches (in the distributed version control
-sense) and dataset federation.  
+One new exciting thing that is still evolving is *branches*.  It is an
+unified approach that generalizes branches (in the distributed version
+control sense) and dataset federation. That was only made possible by
+the frictionless merge we discussed earlier.
 
-## Future work
+A significant part of the work is *mappers*. Those are stateless functions
+converting between RON and other formats (plain text, CSV, JSON). As
+mappers encapsulate CRDT/RON machinery, they greatly simplify the creation
+of APIs and bindings for various languages and platforms (priorities:
+golang, JavaScript/node.js and JavaScript/WebAssembly; there is some
+ongoing Haskell and Rust experimentation too).
 
-The goal of the first half of the project was to make our LEGO blocks; a
-manageable coherent codebase we can build upon.  At this point, the
-center of mass shifts to use-case testing and performance optimization.
-(For example, branches fall in to the former category, binary serialization
-falls into the latter.) 
+At this point, the focus shifts to use case testing, as any practical
+application of the technology provides valuable feedback and sets
+reasonable priorities. In that regard, we have one priority objective, one
+objective and one non-objective.
 
-A significant part of the future work is mappers.  Those are stateless
-components converting between RON and other formats (plain text, CSV,
-JSON). As mappers encapsulate CRDT/RON machinery, they greatly simplify
-the creation of APIs and bindings for various languages and platforms
-(priorities: golang, JavaScript/node.js and JavaScript/WebAssembly).
+1. The priority is a ["CRDT-based revision control
+system"](http://replicated.cc/swarm/dvcs). We don't plan to dethrone git
+yet, but we definitely want to learn strong and weak sides of the technlogy
+in this regard. If git is a "content-centric filesystem with a VCS
+interface", we are creating a "CRDT key-value store with a VCS interface".
+2. Another objective is a "federated package database", also described as
+"the npm database without npm, Inc". As package metadata follows the 
+dependency DAG, it is perfectly feasible to retrieve and process that data
+in a decentralized fashion.
+3. A clear non-objective is a standalone database with a query language.
+Any work in this direction is a no-no, simply to avoid de-focusing.
+We do a syncable embedded key-value store.
 
-
-
-Finally, there is a lot of work creating/updating the documentation on
-http://replicated.cc.
+Either way, we will seek community feedback by making a pre-release ASAP.
+We will do our best to shorten the lag between the actual code and the
+documentation on http://replicated.cc.
 
 
 -----
