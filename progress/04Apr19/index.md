@@ -138,9 +138,11 @@ objective and one non-objective.
   a VCS interface", we are creating a "CRDT key-value store with a VCS
   interface".
 2. Another objective is a "federated package database", also described as
-  "the npm database without npm, Inc". As package metadata follows the
+  "the npm database without npm, Inc". As package metadata obeys the
   package dependency DAG, it is perfectly feasible to retrieve and process
-  that data in a decentralized fashion.
+  that data in a decentralized fashion. (The one hosting the package
+  should cache its dependencies too. If the data is verifiable,
+  one needs neither recursive retrieval nor central database.)
 3. A clear non-objective is a standalone database with a query language.
   Any work in this direction is a no-no, simply to avoid de-focusing.
   We do a syncable embedded key-value store.
