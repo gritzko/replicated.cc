@@ -29,7 +29,8 @@ For each of the layers, we provide three deliverables:
 3. a reference implementation.
 
 Overall, the aim is to make CRDTs a simple universal instrument within the
-reach of every developer. Our work is online at http://replicated.cc
+reach of every developer. Our work is online at 
+[http://replicated.cc](http://replicated.cc).
 
 ## Progress report
 
@@ -46,15 +47,17 @@ reach of every developer. Our work is online at http://replicated.cc
 ```
 
 1. Replicated Object Notation: stable. The notation is subdivided into the
-   [nominal format](http://replicated.cc/specs/nominal/) and various
-   serialization formats. Algorithms and hashes are defined on the nominal
-   format, which is zero-liberty, bit-precise. Serializations focus on
-   practical issues: compression and performance (the binary format), human
-   readability (text) or compatibility (JSON/CBOR).
+[nominal format](http://replicated.cc/specs/nominal/) and various
+serialization formats. The nominal format is zero-liberty, bit-precise.
+Algorithms and hashes are defined on that. Serializations focus on
+practical issues: compression and performance (the binary format), human
+readability (text) or compatibility (JSON/CBOR).
 
     * RON-spec: the nominal format is finished, frozen. The text based
-      version is mainly finished, short of some optimizations. The binary
-      version needs work, JSON/CBOR versions are merely outlined.
+      format is mainly finished, short of some optimizations; the
+      [formal grammar](https://github.com/gritzko/ron-cxx/blob/master/ragel/text-grammar.rl)
+      is frozen either way. The binary format still needs work,
+      JSON/CBOR formats are merely outlined.
     * RON-algo: finished, frozen (serialization-independent).
     * RON-code: API is done, the text-based variant of the protocol is done
       and frozen (fuzz-tested). The rest of the code is made in a way to
@@ -65,20 +68,20 @@ reach of every developer. Our work is online at http://replicated.cc
     * RDT-spec: some RDTs had to be reworked to make them chain compression
       friendly. That is partly [documented](http://replicated.cc/rdts/rga).
       Although, a proper formal bit-precise specification is future work.
-    * RDT-algo: finished parts are frozen. The key element here is the
+    * RDT-algo: finished parts are frozen. The key element is the `O(NlogN)`
       iterator-heap merge algorithm.
     * RDT-code: a variety of RDTs still need to be implemented. 
 
 3. Replica: theory solved, implementation in progress.
 
-    * Replica-spec: stable parts are the RocksDB-based key-value storage,
-      connection state machine. The branch machinery is reasonably stable.
+    * Replica-spec: some parts are stable (the key-value storage layout,
+      connection state machine). The branch machinery is reasonably stable.
     * Replica-algo: patch production and data deduplication will need some
       work, the rest is reasonably stable.
     * Replica-code: [progressing](https://github.com/gritzko/ron-cxx/db/).
-      The implementation is done in C++ for two reasons. First, we need
-      deep integration with RocksDB. Second, we will need bindings to
-      higher level languages later on.
+      The implementation is done in C++ for two reasons. First, to
+      integrae with RocksDB which does all the heavylifting for us.
+      Second, to make bindings to higher level languages the usual way.
 
 Informally speaking, the goal of the first half of the project was to make
 our LEGO bricks; a manageable coherent codebase we can build upon.  In the
@@ -89,25 +92,27 @@ either non-critical features (add more RDTs) or performance optimizations
 (binary serialization, chain span compression, etc).
 
 While the general framework of log-structured CRDTs was clear, a lot of
-work went into re-adjusting primitives to address certain long-standing
-problems (metadata size, merge algorithm performance).  That necessitated
-readjustment of other elements further up the stack (e.g. the Causal Tree
-data struture, key-value storage layout changes). Once merge complexity is
-`O(NlogN)` to the input size and conflicts are impossible, merges are 
-truly frictionless.
+work went into re-adjusting primitives to address such long-standing
+problems as CRDT metadata size and merge algorithm performance.  That
+necessitated readjustment of other elements further up the stack (e.g. the
+Causal Tree data struture, key-value storage layout). Our reward here is a
+breed of RDTs with conflict-free `O(NlogN)` merge, where big-O does not
+treacherously hide a constant too big. Such RDT merges are truly
+frictionless, so we may run them in the core of a database.
 
-Blending CRDTs and Merkle structures was a separate line of work.  Bitwise
-convergence and hashing requires a very strict and formal approach to
+Blending CRDTs and Merkle structures was a separate line of work.
+Bit-precise convergence requires a very strict and formal approach to
 everything. Hence we introduced the nominal format, Unicode handling and
 endianness rules, et cetera.  That was plenty of tedious work. The
 resulting technique is rather novel: the crypto DAG is defined as an
 *overlay* of the data DAG; the data itself does not explicitly include
 hashes or other crypto primitives. That was necessitated by the fact our
-data graph is very fine-grained (op-based), so we can not afford to keep
-all the historical hashes and signatures; that is way too many. Ideally, we
-need the latest entries only, everything redundant being dropped ASAP.
-Once it is feasible to re-calculate the hashes, this approach saves a lot
-of storage space.
+data graph is very fine-grained (op-based). We can not afford to keep all
+the historical hashes and signatures; that is way too much of
+incompressible data. Ideally, we want to keep the latest entries only,
+everything redundant being dropped ASAP. As long as it is convenient to
+re-calculate the hashes, their explicit storage is unnecessary.  (That does
+not prevent us from armoring any outer links with content hashes!)
 
 One new exciting thing that is still evolving is *branches*.  It is an
 unified approach that generalizes branches (in the distributed version
@@ -116,10 +121,10 @@ the frictionless merge we discussed earlier.
 
 A significant part of the work is *mappers*. Those are stateless functions
 converting between RON and other formats (plain text, CSV, JSON). As
-mappers encapsulate CRDT/RON machinery, they greatly simplify the creation
-of APIs and bindings for various languages and platforms (priorities:
-golang, JavaScript/node.js and JavaScript/WebAssembly; there is some
-ongoing Haskell and Rust experimentation too).
+mappers encapsulate all the CRDT/RON machinery, they greatly simplify the
+creation of APIs and bindings for various languages and platforms
+(priorities: golang, JavaScript/node.js and JavaScript/WebAssembly; there
+is some ongoing Haskell and Rust experimentation too).
 
 At this point, the focus shifts to use case testing, as any practical
 application of the technology provides valuable feedback and sets
@@ -127,22 +132,24 @@ reasonable priorities. In that regard, we have one priority objective, one
 objective and one non-objective.
 
 1. The priority is a ["CRDT-based revision control
-system"](http://replicated.cc/swarm/dvcs). We don't plan to dethrone git
-yet, but we definitely want to learn strong and weak sides of the technlogy
-in this regard. If git is a "content-centric filesystem with a VCS
-interface", we are creating a "CRDT key-value store with a VCS interface".
+  system"](http://replicated.cc/swarm/dvcs). We don't plan to dethrone git
+  yet, but we definitely want to learn strong and weak sides of the
+  technology in this regard. If git is a "content-centric filesystem with
+  a VCS interface", we are creating a "CRDT key-value store with a VCS
+  interface".
 2. Another objective is a "federated package database", also described as
-"the npm database without npm, Inc". As package metadata follows the 
-dependency DAG, it is perfectly feasible to retrieve and process that data
-in a decentralized fashion.
+  "the npm database without npm, Inc". As package metadata follows the
+  package dependency DAG, it is perfectly feasible to retrieve and process
+  that data in a decentralized fashion.
 3. A clear non-objective is a standalone database with a query language.
-Any work in this direction is a no-no, simply to avoid de-focusing.
-We do a syncable embedded key-value store.
+  Any work in this direction is a no-no, simply to avoid de-focusing.
+  We do a syncable embedded key-value store.
 
 Either way, we will seek community feedback by making a pre-release ASAP.
 We will do our best to shorten the lag between the actual code and the
 documentation on http://replicated.cc.
 
+Thanks for reading!
 
 -----
 
