@@ -21,7 +21,7 @@ Yet another way to look at it: RON is like a metric system for data.
 The [imperial system](https://en.wikipedia.org/wiki/Imperial_units)
 employed various usage-based units: foots, lines, furlongs, links, cables, etc.
 The [metric system](https://en.wikipedia.org/wiki/Metric_system)
-defines one unit (a meter), then derives other units from that.
+defines one unit (the meter), then derives other units from that.
 Similarly, data might be packed into usage-based units: snapshots,
 logs, chunks, batches, patches.
 RON defines an immutable *op*, then derives other units from that,
@@ -31,7 +31,7 @@ be that data structures (arrays, maps, sets, etc) or storage/transmission units
 Here is a simple object serialized in RON:
 
 <pre>
-<span class="line">  1 </span><span class="id">@1fLDV+biQFvtGV</span> <span class="ref">:lww</span> <span class="term">!</span>
+<span class="line">  1 </span><span class="id">@1fLDV+biQFvtGV</span> <span class="ref">:lww</span> <span class="term">,</span>
 <span class="line">  2 </span>    <span class="string">&apos;id&apos;</span>        <span class="string">&apos;20MF000CUS&apos;</span><span class="term">,</span>
 <span class="line">  3 </span>    <span class="string">&apos;type&apos;</span>      <span class="string">&apos;laptop&apos;</span><span class="term">,</span>
 <span class="line">  4 </span>    <span class="string">&apos;cpu&apos;</span>       <span class="string">&apos;i7-8850H&apos;</span><span class="term">,</span>
@@ -42,7 +42,7 @@ Here is a simple object serialized in RON:
 <span class="line">  9 </span><span class="id">@1fLDk4+biQFvtGV</span>
 <span class="line"> 10 </span>    <span class="string">&apos;wlan&apos;</span>      <span class="string">&apos;Intel 9560 802.11AC vPro&apos;</span><span class="term">,</span>
 <span class="line"> 11 </span>    <span class="string">&apos;camera&apos;</span>    <span class="string">&apos;IR &amp; 720p HD Camera with microphone&apos;</span><span class="term">,</span>
-<span class="line"> 12 </span><span class="comment"><i>@sha3</i></span> <span class="string">&apos;SfiKqD1atGU5xxv1NLp8uZbAcHQDcX~a1HVk5rQFy_nq&apos;</span><span class="term">,</span>
+<span class="line"> 12 </span><span class="comment"><i>@sha3</i></span> <span class="string">&apos;SfiKqD1atGU5xxv1NLp8uZbAcHQDcX~a1HVk5rQFy_nq&apos;</span><span class="term">;</span>
 </pre>
 
 Key RON principles are:
@@ -86,7 +86,7 @@ Key RON principles are:
         With no abbreviations, the object would look like a tabular log of ops, two
         metadata UUIDs per op:
 <pre style="font-size: 80%;">
-<span class="line">  1 </span><span class="id">@1fLDV00000+biQFvtGV</span> <span class="ref"> :lww</span> <span class="term">!</span>
+<span class="line">  1 </span><span class="id">@1fLDV00000+biQFvtGV</span> <span class="ref"> :lww</span> <span class="term">,</span>
 <span class="line">  2 </span><span class="id">@1fLDV00001+biQFvtGV</span>  <span class="ref">:1fLDV00000+biQFvtGV</span> <span class="string">&apos;id&apos;</span>        <span class="string">&apos;20MF000CUS&apos;</span><span class="term">,</span>
 <span class="line">  3 </span><span class="id">@1fLDV00002+biQFvtGV</span>  <span class="ref">:1fLDV00001+biQFvtGV</span> <span class="string">&apos;type&apos;</span>      <span class="string">&apos;laptop&apos;</span><span class="term">,</span>
 <span class="line">    ...</span>
