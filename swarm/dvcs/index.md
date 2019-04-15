@@ -173,7 +173,7 @@ vi sketches.txt
 ### Sketch 2
 
 ```bash
-$ swarmdb create
+$ swarmdb create as one
 You started a yarn
 1kE7sJ0w28+gYpLcnUnF6
 
@@ -212,7 +212,7 @@ $ echo "Hello beautiful" > hello.txt
 
 $ swarmdb see
 seen changes to hello.txt
-1kE8Ze0009+i0GQOo9VsK
+1kE8Ze0009+gYpLcnUnF6
 
 $ swarmdb merge another as merged
 merged 1kE85B0005+gYpLcnUnF6 and 1kE8Ze0009+i0GQOo9VsK
@@ -221,8 +221,25 @@ merged 1kE85B0005+gYpLcnUnF6 and 1kE8Ze0009+i0GQOo9VsK
 $ cat hello.txt
 Hello beautiful world
 
-$ swarmdb branches
-1kE85B0005+gYpLcnUnF6    one
-1kE8Ze0009+i0GQOo9VsK    another
+$ swarmdb show branches
+1kE8Pp0005+i0GQOo9VsK    another
+1kE8Ze0009+gYpLcnUnF6    one
 1kE8hv4QqQ+JnlcB2j5IT    merged
+```
+
+### Sketch 3
+
+full command grammar
+
+```
+create yarn as tag
+fork branch as tag
+see file as tag
+map txt from 12345+orig to hello.txt
+hop branch to tag
+query form diff of 12345+orig
+query form txt of `swarmdb new ct`
+
+map csv from 2345+orig to table.csv
+map json from bigdoc
 ```
