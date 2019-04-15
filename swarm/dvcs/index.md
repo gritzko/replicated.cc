@@ -188,6 +188,7 @@ seen changes to hello.txt
 
 $ swarmdb see hello.txt
 see no changes
+1kE85B0005+gYpLcnUnF6
 
 $ swarmdb fork as another
 forked a yarn off 1kE85B0005+gYpLcnUnF6
@@ -202,8 +203,9 @@ $ swarmdb see
 seen changes to hello.txt
 1kE8Pp0005+i0GQOo9VsK
 
-$ swarmdb hop gY
-hopped to branch gYpLcnUnF6
+$ swarmdb hop one
+hopped to branch one
+1kE85B0005+gYpLcnUnF6
 
 $ cat hello.txt
 Hello
@@ -214,7 +216,7 @@ $ swarmdb see
 seen changes to hello.txt
 1kE8Ze0009+gYpLcnUnF6
 
-$ swarmdb merge another as merged
+$ swarmdb merge another as both
 merged 1kE85B0005+gYpLcnUnF6 and 1kE8Ze0009+i0GQOo9VsK
 1kE8hv4QqQ+JnlcB2j5IT
 
@@ -224,7 +226,7 @@ Hello beautiful world
 $ swarmdb show branches
 1kE8Pp0005+i0GQOo9VsK    another
 1kE8Ze0009+gYpLcnUnF6    one
-1kE8hv4QqQ+JnlcB2j5IT    merged
+1kE8hv4QqQ+JnlcB2j5IT    both
 ```
 
 ### Sketch 3
@@ -232,14 +234,15 @@ $ swarmdb show branches
 full command grammar
 
 ```
-create yarn as tag
-fork branch as tag
-see file as tag
-map txt from 12345+orig to hello.txt
-hop branch to tag
-query form diff of 12345+orig
-query form txt of `swarmdb new ct`
+create  branch
+fork    branch   off branch
+see     'file.txt'
+map     txt      of 12345+orig    as hello.txt
+hop     branch
+diff    12345+orig
+show    txt of `swarmdb new ct`
 
-map csv from 2345+orig to table.csv
-map json from bigdoc
+map csv of 2345+orig to table.csv
+map json of bigdoc
+map 'bigdoc.json'
 ```
