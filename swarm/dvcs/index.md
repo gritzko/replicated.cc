@@ -71,9 +71,9 @@ significant non-developer use of the technology.
 
 A classic revision control system enables collaboration on the
 "email timescale".  You make changes, you create a commit, your
-push it.  A commit is "big thing".  SwarmDB is a letter-precise
+push it.  A commit is a "big thing".  SwarmDB is a letter-precise
 revision control technology; it may enable collaboration on the
-"chat timescale".  There are no separatel commits in this model.
+"chat timescale".  There are no separate "commits" in this model.
 In SwarmDB, *a version is just a number* referencing an
 arbitrary point in the project's history.  
 
@@ -134,6 +134,7 @@ This part of the project is purely exploratory.
 
 ## CLI interface sketches
 
+### Sketch #1
 
 ```bash
 # Create a replica and a yarn
@@ -169,5 +170,59 @@ vi sketches.txt
 ./swarmdb push ws://10.20.30.40/
 ```
 
+### Sketch 2
 
+```bash
+$ swarmdb create
+You started a yarn
+1kE7sJ0w28+gYpLcnUnF6
 
+$ swarmdb map hello.txt
+*ct #1kE82u+gYpLcnUnF6 is mapped to hello.txt (mapper: plain text)
+
+$ echo Hello > hello.txt
+
+$ swarmdb see hello.txt
+seen changes to hello.txt
+1kE85B0005+gYpLcnUnF6
+
+$ swarmdb see hello.txt
+see no changes
+
+$ swarmdb fork as another
+forked a yarn off 1kE85B0005+gYpLcnUnF6
+1kE8Im1892+i0GQOo9VsK
+
+$ cat hello.txt
+Hello
+
+$ echo "Hello world" > hello.txt
+
+$ swarmdb see
+seen changes to hello.txt
+1kE8Pp0005+i0GQOo9VsK
+
+$ swarmdb hop gY
+hopped to branch gYpLcnUnF6
+
+$ cat hello.txt
+Hello
+
+$ echo "Hello beautiful" > hello.txt
+
+$ swarmdb see
+seen changes to hello.txt
+1kE8Ze0009+i0GQOo9VsK
+
+$ swarmdb merge another as merged
+merged 1kE85B0005+gYpLcnUnF6 and 1kE8Ze0009+i0GQOo9VsK
+1kE8hv4QqQ+JnlcB2j5IT
+
+$ cat hello.txt
+Hello beautiful world
+
+$ swarmdb branches
+1kE85B0005+gYpLcnUnF6    one
+1kE8Ze0009+i0GQOo9VsK    another
+1kE8hv4QqQ+JnlcB2j5IT    merged
+```
