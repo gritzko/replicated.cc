@@ -9,7 +9,7 @@ Replicated Object Notation (RON) is a format for *distributed live data*.
 RON's primary mission is continuous data synchronization.
 A RON object may naturally have any number of replicas, which may synchronize in real-time or intermittently. 
 [JSON](htp://json.org), [protobuf](https://developers.google.com/protocol-buffers/),
-and many other formats *implicitly assume* serialization of separate state snapshots.
+and many other formats implicitly assume serialization of separate state *snapshots*.
 RON has versioning and addressing *metadata*, so state and updates can be always pieced together.
 RON handles state and updates all the same: _state is change and change is state_.
 
@@ -17,7 +17,7 @@ Every RON object, every change, every version has a globally unique UUID.
 There is no nesting in the RON syntax. Pieces of data reference each other by UUIDs.
 RON itself is a [regular language](https://en.wikipedia.org/wiki/Regular_language);
 its syntax is as simple as the one of [ini files](https://en.wikipedia.org/wiki/INI_file).
-Thanks to references, RON can express any nesting and, in general, arbitrary graphs of objects.
+Thanks to the references, RON can express any nesting and, in general, arbitrary graphs of objects.
 
 RON UUIDs are effectively [hybrid timestamps](https://cse.buffalo.edu/tech-reports/2014-04.pdf).
 That makes RON very suitable for expressing distributed/partial-order
@@ -28,16 +28,14 @@ Yet another way to look at it: RON is like the [metric system](https://en.wikipe
 The [imperial system](https://en.wikipedia.org/wiki/Imperial_units)
 employed various usage-based units: foots, lines, furlongs, links, cables, etc.
 The metric system defines one unit (the meter), then derives other units from that.
-Similarly, data might be packed into usage-based units: snapshots,
-logs, chunks, batches, patches.
 RON defines the immutable *op*, then derives other units from that,
 be that data structures (arrays, maps, sets, etc) or storage/transmission units
-(snapshots, batches/patches, logs, [etc](/specs/glossary)).
+(snapshots, logs, batches, patches, [etc](/specs/glossary)).
 
 Here is a simple object serialized in RON:
 
 <pre>
-<span class="line">  1 </span><span class="id">@1fLDV+biQFvtGV</span> <span class="ref">:lww</span> <span class="term">,</span>
+<span class="line">  1 </span><span class="id">@1fLDV+biQFvtGV</span> <span class="ref">:lww</span><span class="term">,</span>
 <span class="line">  2 </span>    <span class="string">&apos;id&apos;</span>        <span class="string">&apos;20MF000CUS&apos;</span><span class="term">,</span>
 <span class="line">  3 </span>    <span class="string">&apos;type&apos;</span>      <span class="string">&apos;laptop&apos;</span><span class="term">,</span>
 <span class="line">  4 </span>    <span class="string">&apos;cpu&apos;</span>       <span class="string">&apos;i7-8850H&apos;</span><span class="term">,</span>
