@@ -76,18 +76,20 @@ Key RON principles are:
         No matter how and when you get your data, you can always reconstruct
         the correct order and location of data pieces.
         Above, ops form an orderly chain, so references are skipped, except
-        for the object creation op at line #1 which references its data type `lww`.
-- **Efficiency**. RON data is optimized to make metadata overhead bearable.
+        for the object creation op at line #1 which references its data type `lww`
+        That is last-write-wins, a simple key-value object.
+        There are many other [types](/rdts).
+- **Efficiency**. 
         An op is a very fine-grained unit of change.
         Thus, RON has to optimize per-op metadata overhead in numerous ways.
         Op ids get skipped if they go incrementally.
         References are skipped if they point to the previous op
         (an op chain is a convenient default).
-        For example, the op at line #2 mentions neither its own id
-        (the first plus 1) nor its reference (the first op).
+        For example, ops at lines #2-#8 mention neither their own ids
+        (the first plus 1) nor their references (always the preceding op).
         The binary variant of RON employs more sophisticated metadata
         compression techniques. 
-        With no abbreviations, the object would look like a tabular log of ops, two
+        Without the abbreviations, the object would look like a tabular log of ops, two
         metadata UUIDs per op:
 <pre style="font-size: 80%;">
 <span class="line">  1 </span><span class="id">@1fLDV00000+biQFvtGV</span> <span class="ref"> :lww</span> <span class="term">,</span>
@@ -96,12 +98,12 @@ Key RON principles are:
 <span class="line">    ...</span>
 </pre>
 - **Integrity**, as ops form a [Merkle structure](https://en.wikipedia.org/wiki/Merkle_tree).
-        If necessary, the data is integrity-checked to the last bit, like
+        If necessary, the data is integrity-checked to the last bit like
         in git, BitTorrent, BitCoin and other such systems.
         In the example, ten ops form a Merkle chain, so the hash of the last op
         (line #12) covers them all.
 
-RON's vision is swarms of mobile devices communicating over unreliable wireless networks in an untrusted environment.
+RON's guiding vision is swarms of mobile devices communicating over unreliable wireless networks in an untrusted environment.
 
 For more in-depth reading, please see:
 
