@@ -8,23 +8,29 @@ title: Replicated Object Notation
 Replicated Object Notation (RON) is a format for *distributed live data*. 
 RON's primary mission is continuous data synchronization.
 A RON object may naturally have any number of replicas, which may synchronize in real-time or intermittently. 
-
 [JSON](htp://json.org), [protobuf](https://developers.google.com/protocol-buffers/),
 and many other formats *implicitly assume* serialization of separate state snapshots.
-RON has versioning and addressing *metadata*, so state and updates can always be pieced together.
+RON has versioning and addressing *metadata*, so state and updates can be always pieced together.
 RON handles state and updates all the same: _state is change and change is state_.
-Every object, every change, every version has a globally unique UUID.
-Pieces of data reference each other by UUIDs.
-Every RON data type is a CRDT -- it always merges, it always converges.
 
-Yet another way to look at it: RON is like a metric system for data.
+Every RON object, every change, every version has a globally unique UUID.
+There is no nesting in the RON syntax. Pieces of data reference each other by UUIDs.
+RON itself is a [regular language](https://en.wikipedia.org/wiki/Regular_language);
+its syntax is as simple as the one of [ini files](https://en.wikipedia.org/wiki/INI_file).
+Thanks to references, RON can express any nesting and, in general, arbitrary graphs of objects.
+
+RON UUIDs are effectively [hybrid timestamps](https://cse.buffalo.edu/tech-reports/2014-04.pdf).
+That makes RON very suitable for expressing distributed/partial-order
+data structures, especially [CRDTs](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type).
+Thanks to that, different data pieces and versions are always mergeable.
+
+Yet another way to look at it: RON is like the [metric system](https://en.wikipedia.org/wiki/Metric_system) but for data.
 The [imperial system](https://en.wikipedia.org/wiki/Imperial_units)
 employed various usage-based units: foots, lines, furlongs, links, cables, etc.
-The [metric system](https://en.wikipedia.org/wiki/Metric_system)
-defines one unit (the meter), then derives other units from that.
+The metric system defines one unit (the meter), then derives other units from that.
 Similarly, data might be packed into usage-based units: snapshots,
 logs, chunks, batches, patches.
-RON defines an immutable *op*, then derives other units from that,
+RON defines the immutable *op*, then derives other units from that,
 be that data structures (arrays, maps, sets, etc) or storage/transmission units
 (snapshots, batches/patches, logs, [etc](/specs/glossary)).
 
