@@ -173,12 +173,16 @@ vi sketches.txt
 ### Sketch 2
 
 ```bash
-$ swarmdb create as one
+$ swarmdb create as One
 You started a yarn
 1kE7sJ0w28+gYpLcnUnF6
 
+$ swarmdb new ct as hello
+Created a new Causal Tree object tagged hello
+1kE82u+gYpLcnUnF6
+
 $ swarmdb map hello.txt
-*ct #1kE82u+gYpLcnUnF6 is mapped to hello.txt (mapper: plain text)
+*ct #1kE82u+gYpLcnUnF6 is mapped to hello.txt (by the txt mapper)
 
 $ echo Hello > hello.txt
 
@@ -190,8 +194,8 @@ $ swarmdb see hello.txt
 see no changes
 1kE85B0005+gYpLcnUnF6
 
-$ swarmdb fork as another
-forked a yarn off 1kE85B0005+gYpLcnUnF6
+$ swarmdb fork as Another
+forked a yarn tagged Another off 1kE85B0005+gYpLcnUnF6
 1kE8Im1892+i0GQOo9VsK
 
 $ cat hello.txt
@@ -203,8 +207,8 @@ $ swarmdb see
 seen changes to hello.txt
 1kE8Pp0005+i0GQOo9VsK
 
-$ swarmdb hop one
-hopped to branch one
+$ swarmdb hop One
+hopped to the branch One
 1kE85B0005+gYpLcnUnF6
 
 $ cat hello.txt
@@ -216,17 +220,34 @@ $ swarmdb see
 seen changes to hello.txt
 1kE8Ze0009+gYpLcnUnF6
 
-$ swarmdb merge another as both
+$ swarmdb merge Another as Both
 merged 1kE85B0005+gYpLcnUnF6 and 1kE8Ze0009+i0GQOo9VsK
 1kE8hv4QqQ+JnlcB2j5IT
 
 $ cat hello.txt
 Hello beautiful world
 
-$ swarmdb show branches
-1kE8Pp0005+i0GQOo9VsK    another
-1kE8Ze0009+gYpLcnUnF6    one
-1kE8hv4QqQ+JnlcB2j5IT    both
+$ swarmdb list branches
+1kE8Pp0005+i0GQOo9VsK    Another
+1kE8Ze0009+gYpLcnUnF6    One
+1kE8hv4QqQ+JnlcB2j5IT    Both
+
+$ swarmdb query txt of 1kE8Ze0009+gYpLcnUnF6
+Hello beautiful
+
+$ swarmdb recover 1kE8Pp0005+i0GQOo9VsK as ANOTHER0LD
+Recovered version 1kE8Pp0005 of Another
+1kE8Pp0005+i0GQOo9VsK
+
+$ swarmdb query txt of hello
+Hello world
+
+$ swarmdb list snapshots
+1kE8Pp0005+i0GQOo9VsK   ANOTHER0LD
+
+$ swarmdb list objects
+1kE82u+gYpLcnUnF6       hello
+
 ```
 
 ### Sketch 3
@@ -234,11 +255,13 @@ $ swarmdb show branches
 full command grammar
 
 ```
-create  branch
-fork    branch   off branch
+create  Branch
+fork    Branch   off Branch
 see     'file.txt'
+see     Branch
+see     12345+yarn
 map     txt      of 12345+orig    as hello.txt
-hop     branch
+hop     Branch
 diff    12345+orig
 show    txt of `swarmdb new ct`
 
