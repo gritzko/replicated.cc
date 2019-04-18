@@ -26,21 +26,26 @@ A replicated op log is the foundation of all this machinery.
 
 ## Op-collection construct
 
-* Chain - a sequence of ops from the same origin, where each next op references the previous one
-* Span - (chain span) - a chain where each op's id is exactly an increment of the previous id (`1gABC+origin, 1gABC00001+origin, 1gABC00002+origin...`)
-* Yarn - a linear log of all ops from the same origin (corresponds to a Lamport process)
-* Tree - a causally ordered group of ops forming a tree (each next op references some preceding op from the tree, except for the root op)
-* Object - largely synonymous to a tree, although op ordering depends on the data type (RDT)
-* Header - the object creation op (its id becomes the object's id; the header op is the root of the object's op tree)
-* Patch - a group of ops modifying the same tree/object (causally consistent, i.e. referencing the existing ops of the tree or previous ops of the patch)
-* Frame - largely synonymous to a "write batch"; a group of ops to be applied atomically, in a single transaction
-* Chunk - a group of object's ops, preceded by the object's header, e.g. object state or a patch
-* Log - a causally ordered sequence of ops, like a database op log. While yarns are linearly ordered, a log only has partial (causal) order; different replicas of a log may go in slightly different orders.
-* Graph - a group of objects referencing each other
-* Graph patch - a group of object patches and full object states, a causally consistent change of an object graph
-* Segments - a log segment, a yarn segment, a chain segment, etc etc - a subset of the construct retaining its key features
+* Yarn - a linear log of all ops from the same origin (corresponds to a Lamport process).
+* Chain - a fragment of a yarn where each next op references the previous one.
+* Span - (chain span) - a chain where each op's id is exactly an increment of the previous id (`1gABC+origin, 1gABC00001+origin, 1gABC00002+origin...`).
+* Tree - a causally ordered group of ops forming a tree (each next op references some preceding op from the tree, except for the root op).
+* Object - largely synonymous to a tree where the root references the data type (RDT).
+* Object log - a causally ordered log of the object's ops.
+* Object state - an RDT-ordered sequence of the object's ops (e.g. an RGA/CT text object will follow the text order). 
+* Header - the object creation op (its id becomes the object's id; the header op is the root of the object's op tree).
+* Patch - a group of ops modifying the same tree/object (causally consistent, i.e. referencing the tree or the patch ops).
+* Frame - largely synonymous to a "write batch"; a group of ops to be applied atomically, in a single transaction.
+* Chunk - a group of related ops within a frame, e.g. object state or a patch.
+* Log - a causally ordered sequence of ops, like a database op log.
+  While a separate yarn is linearly ordered (a Lamport process), a log of many yarns is partially ordered (distributed processes).
+  Hence, different replicas of a log may go in slightly different orders while obeying causality.
+* Graph - a group of objects referencing each other.
+* Graph patch - a group of object patches and full object states, a causally consistent change of an object graph.
 
 ## Other terms
 
-* Annotation - an pseudo-op that is not itself a data change, but some derived/secondary information, related to some op (e.g. its hash or other metadata).
+* Local order - a de-facto linear order of a partially ordered datastructure, as observed on the local replica.
+* Annotation - an pseudo-op that is not itself a data-event, but some ascribed information related to some op (e.g. a comment).
+* Deriveds - pseudo-ops, a result of a pure-function derivation from the original data-event ops (e.g. the output of mappers).
 * Vector timestamp - an array of time-based UUIDs, one per origin; a timestamp produced by vector clocks. 
