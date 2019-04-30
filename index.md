@@ -89,7 +89,7 @@ Key RON principles are:
         (the first plus 1) nor their references (always the preceding op).
         The binary variant of RON employs more sophisticated metadata
         compression techniques. 
-        Without the abbreviations, the object would look like a tabular log of ops, two
+        With no abbreviations, the object would look like a tabular log of ops, two
         metadata UUIDs per op:
 <pre style="font-size: 80%;">
 <span class="line">  1 </span><span class="id">@1fLDV00000+biQFvtGV</span> <span class="ref"> :lww</span> <span class="term">,</span>
