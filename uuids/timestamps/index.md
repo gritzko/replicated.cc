@@ -14,7 +14,7 @@ RON serializes timestamps of variable precision using calendar-aware `MMDHmSssnn
 - We do not use Unix time (number of milliseconds since 1970) because Swarm timestamps are [hybrid](https://cse.buffalo.edu/tech-reports/2014-04.pdf) (logical, calendar-aware). Human-understable timestamps are more important than easy calculation of time intervals or a bit of extra precision.
 - You can generate 4,096,000 distinct timestamps for each second.
 - When appropriate (e.g. it doesn’t affect sequentiality), timestamps might be shortened by zeroing the tail (drop sequence number, then milliseconds, etc). E.g. sequence number only makes sense if you generate more than one timestamp in the same *millisecond*.
-- `~` is a special timestamp value, never (+infinity).
+- Tilde `~` is a special timestamp value, never (+infinity).
 
 Examples:
 

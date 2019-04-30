@@ -12,14 +12,15 @@ RON employs its own UUID flavours and custom efficient serialization. Unlike [R
 
 - can be sorted lexicographically,
 - can be efficiently compressed,
-- can function as lamport clocks,
+- can function as [Lamport/logical](https://en.wikipedia.org/wiki/Lamport_timestamps)/[hybrid](https://muratbuffalo.blogspot.com/2014/07/hybrid-logical-clocks.html) timestamps,
 - can represent human-friendly string constants.
 
 RON UUIDs are serialized as a pair of 64-bit integers encoded with custom base64 encoding:
 
 <img class="fig" src="layout.png">
 
-The bit layout is semi-compatible with RFC 4122 (0 variant, NCS backward compatibility). Third and fourth bits of 9th byte are used to encode version (blue color), four most significant bits of 1st byte are used to encode variety (orange color).
+The bit layout is semi-compatible with [RFC 4122](https://tools.ietf.org/html/rfc4122) (0 variant, NCS backward compatibility).
+Third and fourth bits of 9th byte are used to encode version (blue color), four most significant bits of 1st byte are used to encode variety (orange color).
 
 ## Versions
 
