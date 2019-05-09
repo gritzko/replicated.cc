@@ -30,7 +30,7 @@ Flag bits of the m.s.word denote the *variety*, see below.
 Interpretation of the payload depends on the flag bits.
 Most often, *value* is the actual value (e.g. a timestamp), while *origin* is a replica id.
 
-```
+<pre style="font-size: 80%">
 value:   vvvv.... ........ ........ ........  ........ ........ ........ ........ 
 origin:  00VV.... ........ ........ ........  ........ ........ ........ ........ 
 
@@ -38,7 +38,7 @@ flag bits:
   00    RFC4122 variant
   VV    version bits
   vvvv  variety bits
-```
+</pre>
 
 ## Flag bit coding
 
