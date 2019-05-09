@@ -85,7 +85,7 @@ each op is caused by the previous one:
 
 The RON rendering for the chain might look like:
 <pre>
-<span class="line">  1 </span><span class="id">@1hMDg6+gYpLcnUnF6</span> <span class="name">:rga</span> <span class="term">,</span>
+<span class="line">  1 </span><span class="id">@1hMDg6+gYpLcnUnF6</span> <span class="name">:rga</span><span class="term">,</span>
 <span class="line">  2 </span>    <span class="str_span">&apos;a&apos;</span><span class="term">,</span>
 <span class="line">  3 </span>    <span class="str_span">&apos;b&apos;</span><span class="term">,</span>
 <span class="line">  4 </span>    <span class="str_span">&apos;c&apos;</span><span class="term">,</span>
@@ -102,7 +102,7 @@ The RON rendering for the chain might look like:
 If using the RON span notation:
 
 <pre>
-<span class="line">  1 </span><span class="id">@1hMDg6+gYpLcnUnF6</span> <span class="name">:rga</span> <span class="term">,</span> <span class="span">(&apos;abcd&apos; 4)</span><span class="term">,</span> <span class="string"><u style="text-decoration-style:single">rm</u></span> <span class="span">(3)</span><span class="term">,</span> <span class="string"><u style="text-decoration-style:single">un</u></span> <span class="span">(2)</span><span class="term">;</span>
+<span class="line">  1 </span><span class="id">@1hMDg6+gYpLcnUnF6</span> <span class="name">:rga</span><span class="term">,</span> <span class="span">(&apos;abcd&apos; 4)</span><span class="term">,</span> <span class="string"><u style="text-decoration-style:single">rm</u></span> <span class="span">(3)</span><span class="term">,</span> <span class="string"><u style="text-decoration-style:single">un</u></span> <span class="span">(2)</span><span class="term">;</span>
 </pre>
 
 The resulting text should be `abc`.

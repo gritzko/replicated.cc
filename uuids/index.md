@@ -7,24 +7,43 @@ section: uuids
 # UUIDs
 
 RON relies heavily on UUIDs to globally and unambigously address every thing it operates with: operations, patches, versions, objects, hashes etc.
+Because RON relies on UUIDs so heavily, it has to employ its own UUID flavor.
+The bit layout is backwards-compatible with [RFC 4122](https://tools.ietf.org/html/rfc4122) (128 bits, RFC4122-reserved flag values).
+Unlike [RFC 4122](https://tools.ietf.org/html/rfc4122), time-based RON UUIDs can function as [Lamport/logical](https://en.wikipedia.org/wiki/Lamport_timestamps)/[hybrid](https://muratbuffalo.blogspot.com/2014/07/hybrid-logical-clocks.html) timestamps -- this nuance is critical for CRDTs and RON.
 
-RON employs its own UUID flavours and custom efficient serialization. Unlike [RFC 4122](https://tools.ietf.org/html/rfc4122), RON UUIDs:
+Additionally, the textual RON UUID serialization has some nice features too.
 
-- can be sorted lexicographically,
-- can be efficiently compressed,
-- can function as [Lamport/logical](https://en.wikipedia.org/wiki/Lamport_timestamps)/[hybrid](https://muratbuffalo.blogspot.com/2014/07/hybrid-logical-clocks.html) timestamps,
-- can represent human-friendly string constants.
+1. RON UUIDs are compact, thanks to Base64 and abbreviations. RON UUIDs are 23 chars max, typically less. RFC4122 is 43 chars of hex. MS GUIDs are 45 chars.
+    Compare: `1fLDV+biQFvtGV` and `{G4G3G2G1-G6G5-G8G7-G9G10-G11G12G13G14G15G16}`.
+2. RON UUIDs are meaningfully sorted lexicographically, thanks to the sortable variant of Base64.
+3. Very much like RFC4122 UUIDs, RON UUIDs go in different versions: time-based event ids, time-based derived ids, hashes/numbers, and human-friendly string constants (names).
+    For example, RON RT identifiers are perfectly human readable: `lww`, `rga`, etc. Same applies to error ids (e.g. `NOTFOUND$~~~~~~~~~~`) and other global/transcendent constants.
 
-RON UUIDs are serialized as a pair of 64-bit integers encoded with custom base64 encoding:
+To minimize the confusion, RON UUID bit layout is defined in terms of two 64-bit words.
+The most significant word is *value* while the least-significant is *origin*.
+Each word's most-significant four bits are flags, the rest is payload.
+In accordance with RFC4122 (as much as it is possible), two m.s.b. of the origin are set to zero.
+That corresponds to RFC4122 variant bits 00, thus overriding the RFC4122-reserved value "NCS backward compatibility".
+We assume there are no [Apollo](https://en.wikipedia.org/wiki/Apollo_Computer) NCS UUIDs left in circulation.
+The following two bits of the origin denote the RON UUID *version*.
+Flag bits of the m.s.word denote the *variety*, see below.
+Interpretation of the payload depends on the flag bits.
+Most often, *value* is the actual value (e.g. a timestamp), while *origin* is a replica id.
 
-<img class="fig" src="layout.png">
+```
+value:   vvvv.... ........ ........ ........  ........ ........ ........ ........ 
+origin:  00VV.... ........ ........ ........  ........ ........ ........ ........ 
 
-The bit layout is semi-compatible with [RFC 4122](https://tools.ietf.org/html/rfc4122) (0 variant, NCS backward compatibility).
-Third and fourth bits of 9th byte are used to encode version (blue color), four most significant bits of 1st byte are used to encode variety (orange color).
+flag bits:
+  00    RFC4122 variant
+  VV    version bits
+  vvvv  variety bits
+```
 
-## Versions
+## Flag bit coding
 
-Two <span style="background-color: #1787FA; color: white; padding: 0 8px; border-radius: 4px; ">version bits</span> are encoded using `$`, `%`, `+` or `-` as separator:
+In the textual form, two version bits are encoded as a middle separator e.g. `@1hTDE6+test` or `NOTFOUND$~~~~~~~~~~`.
+
 
 <ul class="nobullet">
   <li><code>$</code> for <code>00</code>: human readable names,</li>
@@ -33,11 +52,9 @@ Two <span style="background-color: #1787FA; color: white; padding: 0 8px; border
   <li><code>-</code> for <code>11</code>: derived events (same as event).</li>
 </ul>
 
-## Varieties
+Four variety bits are encoded using single hex digit `0`..`F` followed by a slash `/`.
 
-Four <span style="background-color: #FD6B21; color: white; padding: 0 8px; border-radius: 4px; ">variety bits</span> are encoded using single hex digit `0`..`F` followed by a slash `/`.
-
-Variety flavour is defined by version.
+Interpretation of varieties depends on the version.
 
 Variety of zero `0` can be omitted.
 
