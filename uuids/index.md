@@ -6,10 +6,10 @@ section: uuids
 
 # UUIDs
 
-RON relies heavily on UUIDs to globally and unambigously address every thing it operates with: operations, patches, versions, objects, hashes etc.
-Because RON relies on UUIDs so heavily, it has to employ its own UUID flavor.
-The bit layout is backwards-compatible with [RFC 4122](https://tools.ietf.org/html/rfc4122) (128 bits, RFC4122-reserved flag values).
-Unlike [RFC 4122](https://tools.ietf.org/html/rfc4122), time-based RON UUIDs can function as [Lamport/logical](https://en.wikipedia.org/wiki/Lamport_timestamps)/[hybrid](https://muratbuffalo.blogspot.com/2014/07/hybrid-logical-clocks.html) timestamps -- this nuance is critical for CRDTs and RON.
+RON relies heavily on UUIDs to globally and unambigously identify its every construct: operations, objects, patches, versions, branches, snapshots etc.
+Because RON employs UUIDs so heavily, it benefits greatly from using its own variant of UUID.
+The RON UUID bit layout is backwards-compatible with [RFC 4122](https://tools.ietf.org/html/rfc4122) (128 bits, RFC4122-reserved flag values).
+But unlike [RFC 4122](https://tools.ietf.org/html/rfc4122), time-based RON UUIDs can function as [Lamport/logical](https://en.wikipedia.org/wiki/Lamport_timestamps)/[hybrid](https://muratbuffalo.blogspot.com/2014/07/hybrid-logical-clocks.html) timestamps -- this nuance is critical for RON and CRDTs in general.
 
 Additionally, the textual RON UUID serialization has some nice features too.
 
@@ -17,7 +17,7 @@ Additionally, the textual RON UUID serialization has some nice features too.
     Compare: `1fLDV+biQFvtGV` and `{G4G3G2G1-G6G5-G8G7-G9G10-G11G12G13G14G15G16}`.
 2. RON UUIDs are meaningfully sorted lexicographically, thanks to the sortable variant of Base64.
 3. Very much like RFC4122 UUIDs, RON UUIDs go in different versions: time-based event ids, time-based derived ids, hashes/numbers, and human-friendly string constants (names).
-    For example, RON RT identifiers are perfectly human readable: `lww`, `rga`, etc. Same applies to error ids (e.g. `NOTFOUND$~~~~~~~~~~`) and other global/transcendent constants.
+    For example, RON RDT identifiers are perfectly human readable: `lww`, `rga`, etc. Same applies to error ids (e.g. `NOTFOUND$~~~~~~~~~~`) and other global/transcendent constants.
 
 To minimize the confusion, RON UUID bit layout is defined in terms of two 64-bit words.
 The most significant word is *value* while the least-significant is *origin*.
@@ -53,12 +53,12 @@ In the textual form, two version bits are encoded as a middle separator e.g. `@1
 </ul>
 
 Four variety bits are encoded using single hex digit `0`..`F` followed by a slash `/`.
+Variety of zero `0` can be omitted.
 
 Interpretation of varieties depends on the version.
 
-Variety of zero `0` can be omitted.
 
-### Varieties for version `$` (names):
+Varieties for version `$` (names) are:
 
 <ul class="nobullet">
   <li><code>0000</code>: transcendental/hardcoded name (<code>lww</code>, <code>rga</code>) or a scoped name (<code>myvar$gritzko</code>),</li>
@@ -74,7 +74,7 @@ Variety of zero `0` can be omitted.
   <li><code>1111</code>: ISO 3166 country code (<code>F/RU</code>, <code>F/FRA</code>...).</li>
 </ul>
 
-### Varieties for version `%` (numbers and hashes):
+Varieties for version `%` (numbers and hashes) are:
 
 <ul class="nobullet">
   <li><code>0000</code>..<code>0011</code>: Decimal index (up to <code>9999999999%</code>, also 2D indices <code>4%5</code>),</li>
@@ -86,9 +86,9 @@ Variety of zero `0` can be omitted.
   <li><code>1100</code>..<code>1111</code>: Crypto id, public key fingerprint.</li>
 </ul>
 
-### Varieties for versions `+` and `-` (events).
+Varieties for versions `+` and `-` (events) are a combination of timestamp variety (m.s.bits) and origin variety:
 
-Timestamp type:
+Timestamp varieties are:
 
 <ul class="nobullet">
   <li><code>00__</code>: Base64 calendar (<code>MMDHmSsnn</code>),</li>
@@ -96,7 +96,7 @@ Timestamp type:
   <li><code>10__</code>: Epoch (RFC 4122 epoch, 100ns since 1582),</li>
 </ul>
 
-bitwise and with replica id assignment rule:
+Origin varieties are:
 
 <ul class="nobullet">
   <li><code>__00</code>: trie-forked,</li>
