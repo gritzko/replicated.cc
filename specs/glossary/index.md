@@ -45,7 +45,10 @@ A replicated op log is the foundation of all this machinery.
 
 ## Other terms
 
-* Local order - a de-facto linear order of a partially ordered datastructure, as observed on the local replica.
 * Annotation - an pseudo-op that is not itself a data-event, but some ascribed information related to some op (e.g. a comment).
 * Deriveds - pseudo-ops, a result of a pure-function derivation from the original data-event ops (e.g. the output of mappers).
+* Local order - a de-facto linear order of a partially ordered datastructure, as observed on the local replica.
+* Mapper - a stateless object converting (mapping) data between RON and external representations, e.g. plain text, CSV, JSON.
+    Mappers may support full-state reads (e.g. provide plain text for an RGA object), updates (provide patches for the text),
+    full state writes (accept plain text, generate RON ops) or partial writes (accept a patch, generate ops).
 * Vector timestamp - an array of time-based UUIDs, one per origin; a timestamp produced by vector clocks. 
