@@ -7,7 +7,7 @@ in\_section: rdts
 # LWW: Last-Write-Wins Object
 
 LWW is the simplest & most popular distributed data type, but it isn't the most intelligent.
-An LWW is a key-value object, with Unicode-encoded strings as keys, and any arbitrary atoms as values. Values may also be atom tuples.
+An LWW is a key-value object, with Unicode-encoded strings as keys, and any arbitrary [atoms](/specs/atoms) as values. Values may also be atom tuples.
 The write with a later timestamp "wins", overriding any other operations that have happened to the same key before.
 Nested objects are implemented as UUID references.
 
