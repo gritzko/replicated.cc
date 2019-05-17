@@ -51,4 +51,6 @@ A replicated op log is the foundation of all this machinery.
 * Mapper - a stateless object converting (mapping) data between RON and external representations, e.g. plain text, CSV, JSON.
     Mappers may support full-state reads (e.g. provide plain text for an RGA object), updates (provide patches for the text),
     full state writes (accept plain text, generate RON ops) or partial writes (accept a patch, generate ops).
-* Vector timestamp - an array of time-based UUIDs, one per origin; a timestamp produced by vector clocks. 
+
+{:#vector-timestamp} Vector timestamp
+: an array of time-based UUIDs, one per origin; a timestamp produced by vector clocks. 
