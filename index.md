@@ -53,7 +53,7 @@ Key RON principles are:
 
 - **Immutability** - RON sees data as a collection of immutable timestamped ops. 
         In the example above, we have an object state consisting of ten ops 
-        (object creation op at line #1, the initial changeset #2 to #8,
+        (object creation op at line #1, seven ops in the initial changeset #2 to #8,
         another changeset of two ops #9/10 and #11).
         An op may be referenced, transmitted, stored, applied or rolled back,
         garbage collected, etc.

@@ -6,9 +6,9 @@ section: rdts
 
 # Replicated Data Types
 
-RDT are Swarm term for object types. Each object has an associated RDT specified at creation time. Swarm uses that RDT to correctly process individual operations and reduce them in a consistent object state.
+RDTs are a Swarm term for object types. Each object has an associated RDT specified at creation time. Swarm uses that RDT to correctly process individual operations and reduce them to a consistent object state.
 
-Internally RDT works as pure functions: `f(state_frame, change_frame) → new_state_frame`. Here frames are either empty frames or single ops or products of past reductions by the same RDT.
+Internally, RDTs works as pure functions: `f(state_frame, change_frame) → new_state_frame`. Where frames are either empty frames or single ops, or products of past reductions by the same RDT.
 
 RDTs are:
 
@@ -25,16 +25,16 @@ A `change_frame` could be an op, a patch or a complete state. Hence, a baseline 
 
 ## Mappers
 
-A mappers are Swarm term for “views” in a database. A mapper translates a replicated object's state in RON format into other formats:
+A mapper is a Swarm term akin to a “view” in a database. A mapper translates a replicated object's state in RON format into other formats:
 
 - Mappers turn Swarm objects into JSON or XML documents, C++, JavaScript or other objects.
-- Mappers are two-way interfaces to raw RDTs. You can read object’s view through mappers and “write” into mappers. Mapper will convert all operations internally into RDT operations.
+- Mappers are two-way interfaces to raw RDTs. You can read a view of an object from its mapper and “write” into its mapper. A mapper will convert all operations internally into RDT operations.
 - Mappers can be pipelined, e.g. one can build a full RON → JSON → HTML [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) app using just mappers.
 
 ## Built-in RDTs
 
 - [LWW: Last-Write-Wins Object](lww/)
-- [RGA: Replicated Growable Array](rga/)
+- [RGA/CT: Replicated Growable Array / Causal Tree](rga/)
 - [TXT: Collaborative text](txt/)
 - [Sets](set/)
 - [Counters](counter/)

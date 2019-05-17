@@ -45,7 +45,7 @@ A replicated op log is the foundation of all this machinery.
 
 ## Other terms
 
-* Annotation - an pseudo-op that is not itself a data-event, but some ascribed information related to some op (e.g. a comment).
+* Annotation - a pseudo-op that is not itself a data-event, but some ascribed information related to some op (e.g. a comment).
 * Deriveds - pseudo-ops, a result of a pure-function derivation from the original data-event ops (e.g. the output of mappers).
 * Local order - a de-facto linear order of a partially ordered datastructure, as observed on the local replica.
 * Mapper - a stateless object converting (mapping) data between RON and external representations, e.g. plain text, CSV, JSON.
