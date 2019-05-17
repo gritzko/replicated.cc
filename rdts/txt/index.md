@@ -43,7 +43,7 @@ Delete 3 characters starting from position 1:
 @130+origin :129+origin 1 3;.
 ```
 
-Note that all positions in insert/delete ops are version-relative. Position `1` means first character in a version of text that corresponds to object version `128+origin`.
+Note that all positions in insert/delete ops are version-relative. Position `1` means first character in a version of text that corresponds to object version `129+origin`.
 
 Response to delete will be:
 
