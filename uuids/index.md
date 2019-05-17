@@ -16,17 +16,17 @@ Additionally, the textual RON UUID serialization has some nice features too.
 1. RON UUIDs are compact, thanks to Base64 and abbreviations. RON UUIDs are 23 chars max, typically less. RFC4122 is 43 chars of hex. MS GUIDs are 45 chars.
     Compare: `1fLDV+biQFvtGV` and `{G4G3G2G1-G6G5-G8G7-G9G10-G11G12G13G14G15G16}`.
 2. RON UUIDs are meaningfully sorted lexicographically, thanks to the sortable variant of Base64.
-3. Very much like RFC4122 UUIDs, RON UUIDs go in different versions: time-based event ids, time-based derived ids, hashes/numbers, and human-friendly string constants (names).
-    For example, RON RDT identifiers are perfectly human readable: `lww`, `rga`, etc. Same applies to error ids (e.g. `NOTFOUND$~~~~~~~~~~`) and other global/transcendent constants.
+3. Very much like RFC4122 UUIDs, RON UUIDs come in different versions: time-based event ids, time-based derived ids, hashes/numbers, and human-friendly string constants (names).
+    For example, referencing a type of RON RDT can be done with a perfectly human-readable identifier: `lww`, `rga`, etc. The same applies to error identifiers (e.g. `NOTFOUND$~~~~~~~~~~`) and other global/transcendent constants.
 
 To minimize the confusion, RON UUID bit layout is defined in terms of two 64-bit words.
 The most significant word is *value* while the least-significant is *origin*.
 Each word's most-significant four bits are flags, the rest is payload.
-In accordance with RFC4122 (as much as it is possible), two m.s.b. of the origin are set to zero.
+In accordance with RFC4122 (as much as it is possible), two most-significant bits of the origin are set to zero.
 That corresponds to RFC4122 variant bits 00, thus overriding the RFC4122-reserved value "NCS backward compatibility".
 We assume there are no [Apollo](https://en.wikipedia.org/wiki/Apollo_Computer) NCS UUIDs left in circulation.
 The following two bits of the origin denote the RON UUID *version*.
-Flag bits of the m.s.word denote the *variety*, see below.
+Flag bits of the most-significant word denote the *variety*, see below.
 Interpretation of the payload depends on the flag bits.
 Most often, *value* is the actual value (e.g. a timestamp), while *origin* is a replica id.
 
