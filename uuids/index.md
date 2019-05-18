@@ -14,8 +14,8 @@ But unlike [RFC 4122](https://tools.ietf.org/html/rfc4122), time-based RON UUIDs
 
 Additionally, the textual RON UUID serialization has some nice features too.
 
-1. RON UUIDs are compact, thanks to Base64 and abbreviations. RON UUIDs are 23 chars max, typically less. RFC4122 is 43 chars of hex. MS GUIDs are 45 chars.
-    Compare: `1fLDV+biQFvtGV` and `{G4G3G2G1-G6G5-G8G7-G9G10-G11G12G13G14G15G16}`.
+1. RON UUIDs are compact, thanks to Base64 and abbreviations. RON UUIDs are 23 chars max, typically less. RFC4122 is 36 chars of hex. MS GUIDs are 38 chars.
+    Compare: `1fLDV+biQFvtGV` and `{f81d4fae-7dec-11d0-a765-00a0c91e6bf6}`.
 2. RON UUIDs are meaningfully sorted lexicographically, thanks to the sortable variant of Base64.
 3. Very much like RFC4122 UUIDs, RON UUIDs come in different versions: time-based event ids, time-based derived ids, hashes/numbers, and human-friendly string constants (names).
     For example, referencing a type of RON RDT can be done with a perfectly human-readable identifier: `lww`, `rga`, etc. The same applies to error identifiers (e.g. `NOTFOUND$~~~~~~~~~~`) and other global/transcendent constants.
