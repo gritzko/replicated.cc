@@ -6,7 +6,7 @@ in_section: specs
 
 # Frames
 
-Frame is a sequence of operations (e.g. object state is a frame, patch is a frame etc).
+A frame is a sequence of ops (operations). A particular sequence of ops might entail a patch, or an object state, but the general term for a complete sequence is the "frame" (see "Frame substructures" below.)
 
 Ops in a frame always travel together.
 
@@ -16,13 +16,13 @@ Frames end with dot `.`.
 
 ## Raw frame
 
-Raw frame is just a group of operations client sends to the peer. It contains delta, or patch — list of changes that client wants to be applied.
+A raw frame is just a group of operations client sends to the peer. It contains delta, or patch — list of changes that client wants to be applied.
 
 Syntax:
 
-- Raw frame is just a list of ops.
+- A raw frame is just a list of ops.
 - Each op ends with a `;` (raw operation).
-- Frame ends with a dot `.`.
+- The frame ends with a dot `.`.
 
 ```
 @1D4ICCC+XU5eRJ :1D4ICCA+XU5eRJ 'y' 'A';
@@ -33,14 +33,14 @@ Syntax:
 
 ## Reduced frame
 
-Reduced frames are how state is stored internally in SwarmDB. They contain state: object creation and all the opeartions that follow it, sorted in linear order.
+Reduced frames are how state is stored internally in SwarmDB. They contain state: object creation and all the operations that follow it, sorted in linear order.
 
 Syntax:
 
 - Reduced frame consists of one or more chunks.
 - Each chunk has a header (object creation op ending with `!`).
 - Header is followed by zero or more operations on the same object (ending with `,`).
-- Reduced frame still ends with `.`.
+- Reduced frame also ends with `.`.
 
 Here are two chunks in a single frame:
 
@@ -54,7 +54,7 @@ Here are two chunks in a single frame:
 .
 ```
 
-Minimal frame would consist of just a header:
+A minimal frame would consist of just a header (and ending in `.`):
 
 ```
     @1D4ICCA+XU5eRJ :lww!.
@@ -62,7 +62,7 @@ Minimal frame would consist of just a header:
 
 ## Compression
 
-Operations in frames could be compressed by omitting repeating UUIDs of matching types. E.g. if object id of an operation matches object id on the previous op, we can just skip it. This is purely mechanical compression that carries no semantic.
+Operations in frames could be compressed by omitting repeating UUIDs of matching types. E.g. if the object id of an operation matches the object id of the previous op, we can just skip it. This is purely mechanical compression that carries no semantic meaning.
 
 ```
 *lww #1D4ICCA+XU5eRJ @1D4ICCA+XU5eRJ :lww!
@@ -73,7 +73,7 @@ Operations in frames could be compressed by omitting repeating UUIDs of matching
 *lww #1D4IDD0+XU5eRJ @1D4IDD2+XU5eRJ :1D4IDD0+XU5eRJ 'b' 'Y',.
 ```
 
-As we see, all reducer UUIDs are the same, so we can only specify it on the first operation:
+As we can see, all the reducer UUIDs are the same, so we need only specify it on the first operation:
 
 ```
 *lww #1D4ICCA+XU5eRJ @1D4ICCA+XU5eRJ :lww!
@@ -84,7 +84,7 @@ As we see, all reducer UUIDs are the same, so we can only specify it on the firs
      #1D4IDD0+XU5eRJ @1D4IDD2+XU5eRJ :1D4IDD0+XU5eRJ 'b' 'Y',.
 ```
 
-Object ids are the same on 1-3 and 4-6 operations. Removing redundant ones:
+Object ids are the same on ops 1 thru 3, and similarly for ops 4 thru 6. Removing redundant ones, we get:
 
 ```
 *lww #1D4ICCA+XU5eRJ @1D4ICCA+XU5eRJ :lww!
@@ -95,7 +95,7 @@ Object ids are the same on 1-3 and 4-6 operations. Removing redundant ones:
                      @1D4IDD2+XU5eRJ :1D4IDD0+XU5eRJ 'b' 'Y',.
 ```
 
-Finally, as you can see, last two operations share the same reference id. Let’s drop last one:
+Finally, as we can see, the last two operations share the same reference id. Let’s drop the last one:
 
 ```
 *lww #1D4ICCA+XU5eRJ @1D4ICCA+XU5eRJ :lww!
@@ -106,11 +106,11 @@ Finally, as you can see, last two operations share the same reference id. Let’
                      @1D4IDD2+XU5eRJ                 'b' 'Y',.
 ```
 
-With this simple technique we were able to reduce frame size by 30%.
+With this simple technique we were able to reduce the size of the frame by 30%.
 
 ## Frame substructures
 
-Depending on how ops are grouped, following structures might be found inside frame:
+Depending on how ops are grouped, the following structures might be found inside a frame:
 
 *Chains* — sequences of consecutive ops from the same origin.
 
