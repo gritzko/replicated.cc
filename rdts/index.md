@@ -6,7 +6,7 @@ section: rdts
 
 # Replicated Data Types
 
-In RON, an RDT is the data type that an object inherits from. Each object has an associated RDT specified at creation time (e.g. the root op might be `:lww` or `:rga`). RON uses the rules associated with that RDT to correctly process individual operations and reduce them to a consistent object state.
+In RON, an RDT is the data type that an object >>>inherits from<<<. Each object has an associated RDT specified at creation time (e.g. the root op might be `:lww` or `:rga`). RON uses the rules associated with that RDT to correctly process individual operations and reduce them to a consistent object state.
 
 Internally, RDTs works as pure functions: `f(state_frame, change_frame) → new_state_frame`. Where frames are either empty frames or single ops, or products of past reductions by the same RDT. A `change_frame` could be an op, a patch or a complete state.
 
@@ -30,17 +30,17 @@ One of the central features of RDTs is the ability to “switch gears” from pu
   <tbody>
   <tr>
     <td>Op-based</td>
-    <td>`f(state, op)`</td>
+    <td><pre>f(state, op)</pre></td>
     <td>Real-time Sync</td>
   </tr>
   <tr>
     <td>Patch-based</td>
-    <td>`f(state, patch)`</td>
+    <td><pre>f(state, patch)</pre></td>
     <td>Periodic Sync</td>
   </tr>
   <tr>
     <td>State-based</td>
-    <td>`f(state1, state2)`</td>
+    <td><pre>f(state1, state2)</pre></td>
     <td>Full Reconciliation</td>
   </tr>
   </tbody>
@@ -48,21 +48,24 @@ One of the central features of RDTs is the ability to “switch gears” from pu
 
 ## Mappers
 
-A mapper is a Swarm term akin to a “view” in a database. A mapper translates a replicated object's state in RON format into other formats:
+A mapper is a RON term akin to a “view” in a database. A mapper translates a replicated object's state in RON format into other formats:
 
-- Mappers turn Swarm objects into JSON or XML documents, C++, JavaScript or other objects.
-- Mappers are two-way interfaces to raw RDTs. You can read a view of an object from its mapper and “write” into its mapper. A mapper will convert all operations internally into RDT operations.
+- Mappers turn RON objects into JSON or XML documents, C++, JavaScript or other objects.
+- Mappers are two-way interfaces to raw RDTs. You can read a view of an object from its mapper and “write” into its mapper. A mapper will convert all operations internally into RON RDT operations.
 - Mappers can be pipelined, e.g. one can build a full RON → JSON → HTML [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) app using just mappers.
 
-## Built-in RDTs
+## Basic RDTs
 
 - [LWW: Last-Write-Wins Object](lww/)
 - [RGA/CT: Replicated Growable Array / Causal Tree](rga/)
-- [TXT: Collaborative text](txt/)
 - [Sets](set/)
 - [Counters](counter/)
-- [Binary blobs](blob/)
+
+## Basic mappers
+
+- [TXT: Collaborative text](txt/)
 
 ## See also
 
-[RON-RDT Composition](composition/).
+- [RON-RDT Composition](composition/)
+- [Binary blobs](blob/)
