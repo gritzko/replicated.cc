@@ -12,7 +12,11 @@ A frame may contain a multitude of [chunks](/specs/glossary#chunk) - object stat
 Frames can’t be split (but they can be joined together).
 
 In the textual RON, frames end with a `.` dot.
-Chunks within a frame end with a semicolon `;` (events) an exclamation mark `!` (assertions/new writes) or question mark `?` (queries).
+Chunks within a frame end with their respective separators:
+
+*  a semicolon `;` for event chunks,
+*  an exclamation mark `!` for assertions/new writes, or
+*  a question mark `?` for query chunks.
 
 
 ## Event chunks
@@ -38,7 +42,7 @@ Here is an example of a frame containing one chunk, a state of a Last-Write-Wins
 </pre>
 
 
-## Assertions
+## Assertion chunks
 
 Assertions are events as they happen, before they get serialized as immutable ops.
 Asserions are only used between a RON replica and some external entity.
@@ -51,15 +55,15 @@ We don't like to fiddle with RGA, so we make a write through a `txt` mapper by i
 <pre><span class="line">  1 </span><span class="derived_id">@1l54hK-test</span> <span class="span">:txt</span> <span class="str_span">patch</span><span class="term">,</span> <span class="int">3</span> <span class="str_span">&apos;l&apos;</span> <span class="int">10</span> <span class="int">-1</span> <span class="int">10</span> <span class="str_span">&apos;!&apos;</span> <span class="term">!</span>
 </pre>
 
-## Queries
+## Query chunks
 
 Suppose, we'd like to read the hello-world text mentioned above.
-The,we should issue a query to a RON system:
+Then, we should issue a RON query:
 
 <pre><span class="line">  1 </span><span class="derived_id">@1l54hK-test</span> <span class="span">:txt</span> <span class="term">?</span>
 </pre>
 
-A query should be evaluated in the context of its frame, including all the effect of all the preceding ops.
+In SwarmDB, a query is evaluated in the context of its frame, including all the effect of all the preceding ops.
 
 ## Compression
 
@@ -72,7 +76,8 @@ The textual RON employs chain compression:
 
 This way, op spans only mention UUIDs in the first op, others are skipped. 
 
-In this example, a frame contains a single chunk which is an object state consisting of a single three-op span:
+In this example again, a frame contains a single chunk which is an object state consisting of a single three-op span. 
+The header mentions the event id `1D4ICCA+XU5eRJ` and a reference id `lww`. The other two ops don't.
 
 <pre><span class="line">  1 </span><span class="id">@1D4ICCA+XU5eRJ</span> <span class="span">:lww</span><span class="term">,</span>
 <span class="line">  2 </span>     <span class="str_span">&apos;x&apos;</span> <span class="int">356</span><span class="term">,</span>
