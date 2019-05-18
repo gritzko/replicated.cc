@@ -28,7 +28,7 @@ Yet another way to look at it: RON is like the [metric system](https://en.wikipe
 The [imperial system](https://en.wikipedia.org/wiki/Imperial_units)
 employed various usage-based units: foots, lines, furlongs, links, cables, etc.
 The metric system defines one unit (the meter), then derives other units from that.
-RON defines the immutable *op*, then derives other units from that,
+RON defines the immutable [operation](/specs/ops) ("op"), then derives other units from that,
 be that data structures (arrays, maps, sets, etc) or storage/transmission units
 (snapshots, logs, batches, patches, [etc](/specs/glossary)).
 
