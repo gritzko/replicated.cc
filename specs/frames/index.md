@@ -55,6 +55,25 @@ We don't like to fiddle with RGA, so we make a write through a `txt` mapper by i
 <pre><span class="line">  1 </span><span class="derived_id">@1l54hK-test</span> <span class="span">:txt</span> <span class="str_span">patch</span><span class="term">,</span> <span class="int">3</span> <span class="str_span">&apos;l&apos;</span> <span class="int">10</span> <span class="int">-1</span> <span class="int">10</span> <span class="str_span">&apos;!&apos;</span> <span class="term">!</span>
 </pre>
 
+As you might see, we order a deletion at position 10 and two insertions, at positions 3 and 10.
+That might be a risky practice, actually.
+We sent a patch, but we only mentioned the object id, not the object version.
+If there was any concurrent change, our offsets might be off.
+Probably, we should do it like this:
+
+<pre><span class="line">  1 </span> <span class="derived_id">@1l54hK-test</span> <span class="span">:txt</span> <span class="str_span">&apos;Hello world!&apos;</span> <span class="term">!</span>
+</pre>
+
+Well, if there was any concurrent change, we just overwrote it.
+Screw them.
+
+OK, let's try it once again, but this time we mention the exact version for the offsets: 
+
+<pre><span class="line">  1 </span><span class="derived_id">@1l54hK-test</span> <span class="span">:txt</span> <span class="str_span">patch at 1l55ku+test</span><span class="term">,</span> <span class="int">3</span> <span class="str_span">&apos;l&apos;</span> <span class="int">10</span> <span class="int">-1</span> <span class="int">10</span> <span class="str_span">&apos;!&apos;</span> <span class="term">!</span>
+</pre>
+
+Should be OK... unless someone did exactly the same changes concurrently... or slightly different changes maybe. Either way, RON does not guarantee semantic convergence because that would require a [Turing-test](https://en.wikipedia.org/wiki/Turing_test) capable solver. RON only guarantees replicated data type convergence, so use it wisely. 
+
 ## Query chunks
 
 Suppose, we'd like to read the hello-world text mentioned above.
