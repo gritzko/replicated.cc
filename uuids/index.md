@@ -6,7 +6,8 @@ section: uuids
 
 # UUIDs
 
-RON relies heavily on UUIDs to globally and unambigously identify its every construct: operations, objects, patches, versions, branches, snapshots etc.
+RON relies heavily on UUIDs to globally and unambigously identify its every construct: operations, objects, patches, versions, branches, snapshots etc. The RON UUID is one of several building blocks that lead to the immutable [op](/specs/ops).
+
 Because RON employs UUIDs so heavily, it benefits greatly from using its own variant of UUID.
 The RON UUID bit layout is backwards-compatible with [RFC 4122](https://tools.ietf.org/html/rfc4122) (128 bits, RFC4122-reserved flag values).
 But unlike [RFC 4122](https://tools.ietf.org/html/rfc4122), time-based RON UUIDs can function as [Lamport/logical](https://en.wikipedia.org/wiki/Lamport_timestamps)/[hybrid](https://muratbuffalo.blogspot.com/2014/07/hybrid-logical-clocks.html) timestamps -- this nuance is critical for RON and CRDTs in general.
