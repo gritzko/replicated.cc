@@ -36,8 +36,8 @@ datastructures (trees, linked lists, etc).  Instead, CT uses sequential access
 and flat datastructures as much as possible.  Even in C++, maintaining a tree
 is plenty of overhead.  In higher-level languages (think Java/JavaScript) a
 tree may consume 100x more RAM than a flat buffer. A linked list is considered
-a worst-case datastructure for a garbage collector. Hence, flat buffers and
-sequential access.
+a worst-case datastructure for a garbage collector. Hence, we aim to maximize
+the use of flat buffers and sequential access.
 
 The RON 2.0 RGA/CT variant is the closest to 2.1, albeit there are
 significant differences in handling deletes and undeletes (see below).  Also,
@@ -46,24 +46,25 @@ RGA/CT 2.0. The old version collapsed deletions into deleted ops.
 
 ## Delete/undelete
 
-2.1 delete/undeletes are backward-compatible; a detetion op might be attached
-to the deleted letter/atom/op, thus creating a tombstone. The deleted atom retains its position
-and id, so any concurrently created ops will not lose their attachment point.
+RON 2.1 delete/undeletes are backward-compatible; a deletion op might be attached
+to the deleted letter/atom/op, thus creating a tombstone. The deleted atom retains
+its position and id, so any concurrently created ops will not lose their attachment
+point.
 
 Those delete/undelete ops allow to implement undo/redo. Undo of insertion
 is deletion, undo of deletion is undeletion. As a letter must retain its id
 after it was undeleted, we use undeletion and not repeat insertion.
 
-The new 2.1 feature is chained deletions.  RON 2.1 relies on op
-[chains](/specs/glossary) a lot: it employs chain-based compression, hash
+The new RON 2.1 feature is chained deletions.  RON 2.1 relies on op
+[chains](/specs/glossary#chain) a lot: it employs chain-based compression, hash
 calculations are easier with chains, swarmdb storage model is chain-based.
 With RGA/CT, continuously inserted text naturally becomes a chain, hence all
 these optimizations work for insertions. Unfortunately, "old" RGA/CT deletions break
 this pattern. Deletes are interleaved with the deleted letters, hence all the
 optimizations break (other optimizations may work here, but those are not as
-good as those chain-based).
+good as those that are chain-based).
 
-2.1 chained deletions work as follows: a chain of deletes might be attached to
+RON 2.1 chained deletions work as follows: a chain of deletes might be attached to
 any letter; the first deletion will delete the root letter (as before), the
 next one targets the root's causal parent, the next affects the grandparent and
 so on.  Similarly, chains of undeletions get attached to deletions and affect
@@ -121,5 +122,4 @@ becomes less local.
 
 ## Read next
 
-...
-
+[TXT: Collaborative Text](../txt/).
