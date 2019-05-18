@@ -1,30 +1,30 @@
 # Merkle hashing
 
 Merkle hashing guarantees data integrity.
-It is used extensively in numerous high-profile project: git, BitTorrent, BitCoin and others.
-RON brings some new challenges.
+It is used extensively in numerous high-profile projects: git, BitTorrent, BitCoin and others.
+Bringing these integrity guarantees to RON introduces some new challenges.
 
 The first one is efficiency.
 RON ops are very fine grained pieces of data.
 A RON op is likely to be smaller than its hash.
-Hence, the hash overhead becomes a part of the bigger issue of metadata overhead.
+Hence, the overhead of computing hashes becomes a part of the bigger issue of metadata overhead.
 
 The second challenge is the multitude of RON serializations.
-A hash of a text frame would be different from the hash of the same frame in CBOR, etc.
+A hash of a frame serialized with a text mapper would be different from the hash of the same frame in CBOR, etc.
 Even within one serialization, there are various format options, such as whitespace and compression.
-For that reason, RON Merkle structure is defined on the [nominal format](nominal/).
-It mostly uses uncompressed 128-bit atoms, hence no optional elements.
+For that reason, RON Merkle hashing is defined on the [nominal format](nominal/).
+It primarily uses uncompressed 128-bit atoms, removing optional elements.
 
-Conveniently, the nominal format roughly matches the in-memory layout of a parsed op in compiled languages (e.g. C++, go, partially Java).
-Although, we assume the nominal format with big-endian 64-bit words here.
+Conveniently, the nominal format roughly matches the in-memory layout of a parsed op in many compiled languages (e.g. C++, go; partially Java).
+For this convenience to hold true, we assume the nominal format with big-endian 64-bit words here.
 That likely differs from the de-facto layout.
 
 This spec defines the data which has to be fed to a hash function to produce the op hash.
-It also defines the reuse of earlier hashes, thus defining a Merkle tree that matches the causal structure.
+It also defines the reuse of earlier hashes, thus defining a Merkle tree that matches the causal structure of RDT ops.
 
 Key concerns of the algorithm are:
 * Build a proper Merkle structure along the lines of the Lamport process/message graph.
-* Ensure that different ops don't match to the same byte sequence and hence hash (mocking).
+* Ensure that different ops don't match to the same byte sequence and hence collide hashes (mocking).
 * Ensure any serialization of an op maps to the same hash.
 
 <img class="fig" style="width:100%" src="merkle.jpg">
@@ -32,7 +32,7 @@ Key concerns of the algorithm are:
 ## Specifier (op key)
 
 The op's id and reference form the Merkle DAG structure of the op graph.
-The hashing function is fed two UUID+hash pairs, as produced for earlier ops by the same function:
+The hashing function is fed two UUID+hash pairs, as produced by earlier ops via the same function:
 * a pair of the op's own id (128-bit UUID) and a hash of the immediate preceding op from the same origin (yarn-previous).
 * a pair of the reference UUID and a hash of the referenced op.
 
@@ -52,7 +52,7 @@ The special case is strings, because:
 2. Unicode string serialization has some degrees of freedom, esp. the text representation that has escapes.
 3. Mocking.
 
-Thus, strings are fed as 128-bit atoms followed by arbitrary-length UTF-8 strings.
-The atom has codepoint length and byte length values set, origin ranges cleared.
-That is followed by the string itself, which must be a correct UTF-8 sequence of the specified byte/codepoint length.
+Thus, strings are fed as 128-bit atoms followed by arbitrary-length UTF-8 strings:
+* The atom has codepoint length and byte length values set, origin ranges cleared.
+* The string itself must be a correct UTF-8 sequence of the specified byte/codepoint length.
 
