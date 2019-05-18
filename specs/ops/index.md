@@ -6,40 +6,42 @@ in_section: specs
 
 # Operations
 
-Operations are the smallest atomic unit of RON protocol. Everything else is made of ops, including logs, object state, patches, chains, chunks, frames etc.
+An operation ("op") is the smallest transmissible unit within the RON protocol. Everything else is made of ops, including logs, object state, patches, chains, chunks, frames etc.
 
 ## Closed notation
 
-In its fullest form, operation is four UUIDs and zero or more atoms in payload:
+In its full form, the op is four RON UUIDs, followed by zero or more atoms (the "payload"):
 
 <img class="fig" src="closed.png">
 
-In RON Each UUID is marked with prefix denoting its type:
+In RON, each UUID is marked with a prefix denoting its type:
 
-- `*` starts a reducer id (a *name* variety UUID from a pre-defined list),
-- `#` starts an object id this operation is applied to,
-- `@` starts an operation id, unique for every created operation,
-- `:` starts a reference operation id. Swarm uses it to track causality relationships. Usually it’ll be a last operation replica has seen on particular object.
+- `*` starts a reducer id (a *name* variety UUID that comes from a pre-defined list),
+- `#` starts an object id, i.e. the id of the object this operation is applied to,
+- `@` starts an operation id, unique for every operation created,
+- `:` starts a reference operation id. Swarm uses it to track causality relationships. Usually it’ll be the last operation a replica has seen of a particular object.
 
-Payload is a space-separated list of zero or more atoms. Payloads are reducer-specific. Different reducers will expect different atoms in different order.
+The payload is a space-separated list of zero or more atoms. Payloads are reducer-specific. Different reducers will expect different atoms in different order.
 
 The example above corresponds roughly to the following JSON:
 
     { reducer_id:   "lww",
-      object_id:    "D4ICD0+XU5eRJ",
+      object_id:    "D4ICCF+XU5eRJ",
       operation_id: "D4ICD0+XU5eRJ",
       reference_id: "D4ICCF+XU5eRJ",
       payload:      ["xyz", 1099, 3.14, "A/UUID+0"] }
 
 ## Open notation
 
-Open notation is just a shorted version of closed one. Reducer id and object id are omitted in this case, as those could be deduced from full DB and reference id:
+Open notation is just a shortened version of the closed one. In this case, the reducer id and object id are omitted because they were able to be deduced from their context and other ops:
 
 <img class="fig" src="open.png">
 
+See [frame compression](/specs/frames#compression) for more information on open notation.
+
 ## Op patterns
 
-An UUID may be one of four *versions*: event, derived, name and hash. Consequently, an op may have one of 16 *patterns*, depending on the versions of its *id* and *reference*. RON defines following combinations:
+A RON UUID may be one of four *versions*: event, derived, name, or hash (see [UUID Flag bit coding](/uuids#flag-bit-coding)). Consequently, an op may have one of 16 *patterns*, depending on the versions of its *id* and *reference*. RON defines following combinations:
 
 <table>
   <thead>
