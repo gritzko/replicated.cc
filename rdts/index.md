@@ -6,22 +6,45 @@ section: rdts
 
 # Replicated Data Types
 
-RDTs are a Swarm term for object types. Each object has an associated RDT specified at creation time. Swarm uses that RDT to correctly process individual operations and reduce them to a consistent object state.
+In RON, an RDT is the data type that an object inherits from. Each object has an associated RDT specified at creation time (e.g. the root op might be `:lww` or `:rga`). RON uses the rules associated with that RDT to correctly process individual operations and reduce them to a consistent object state.
 
-Internally, RDTs works as pure functions: `f(state_frame, change_frame) → new_state_frame`. Where frames are either empty frames or single ops, or products of past reductions by the same RDT.
+Internally, RDTs works as pure functions: `f(state_frame, change_frame) → new_state_frame`. Where frames are either empty frames or single ops, or products of past reductions by the same RDT. A `change_frame` could be an op, a patch or a complete state.
 
-RDTs are:
+All RDTs are:
 
-- associative, e.g. `f(f(state, op1), op2) == f(state, patch)` where `patch == f(op1,op2)`,
-- commutative for concurrent ops (can tolerate causally consistent partial orders), e.g. `f(f(state,a),b) == f(f(state,b),a)`, assuming `a` and `b` originated concurrently at different replicas,
-- idempotent, e.g. `f(state, op1) == f(f(state, op1), op1) == f(state, f(op1, op1))`,
+- associative, e.g. `f(f(state_frame, op1), op2) == f(state_frame, patch)` where `patch == f(op1,op2)`,
+- commutative for concurrent ops (can tolerate causally consistent partial orders), e.g. `f(f(state_frame, a), b) == f(f(state_frame, b), a)`, assuming `a` and `b` originated concurrently at different replicas,
+- idempotent, e.g. `f(state_frame, op1) == f(f(state_frame, op1), op1) == f(state, f(op1, op1))`,
 - optionally, RDTs may have stronger guarantees, e.g. full commutativity (tolerates causality violations).
 
-A `change_frame` could be an op, a patch or a complete state. Hence, a baseline RDT can “switch gears” from pure op-based CRDT mode to state-based CRDT to delta-based:
+One of the central features of RDTs is the ability to “switch gears” from pure op-based CRDT mode, to patch-based CRDT, to state-based:
 
-- `f(state, op)` is op-based,
-- `f(state1, state2)` is state-based,
-- `f(state, patch)` is delta-based.
+<table>
+  <thead>
+  <tr>
+    <th>"Gear"</th>
+    <th>Function Application</th>
+    <th>When Useful</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Op-based</td>
+    <td>`f(state, op)`</td>
+    <td>Real-time Sync</td>
+  </tr>
+  <tr>
+    <td>Patch-based</td>
+    <td>`f(state, patch)`</td>
+    <td>Periodic Sync</td>
+  </tr>
+  <tr>
+    <td>State-based</td>
+    <td>`f(state1, state2)`</td>
+    <td>Full Reconciliation</td>
+  </tr>
+  </tbody>
+</table>
 
 ## Mappers
 
