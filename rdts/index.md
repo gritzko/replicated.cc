@@ -19,7 +19,7 @@ All RDTs are:
 
 One of the central features of RDTs is the ability to “switch gears” from pure op-based CRDT mode, to patch-based CRDT, to state-based:
 
-<table>
+<table style="margin: 0 auto">
   <thead>
   <tr>
     <th>"Gear"</th>
@@ -30,17 +30,17 @@ One of the central features of RDTs is the ability to “switch gears” from pu
   <tbody>
   <tr>
     <td>Op-based</td>
-    <td><pre>f(state, op)</pre></td>
+    <td><code>f(state, op)</code></td>
     <td>Real-time Sync</td>
   </tr>
   <tr>
     <td>Patch-based</td>
-    <td><pre>f(state, patch)</pre></td>
+    <td><code>f(state, patch)</code></td>
     <td>Periodic Sync</td>
   </tr>
   <tr>
     <td>State-based</td>
-    <td><pre>f(state1, state2)</pre></td>
+    <td><code>f(state1, state2)</code></td>
     <td>Full Reconciliation</td>
   </tr>
   </tbody>
