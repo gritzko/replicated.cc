@@ -6,121 +6,79 @@ in_section: specs
 
 # Frames
 
-A frame is a sequence of ops (operations). A particular sequence of ops might entail a patch, or an object state, but the general term for a complete sequence is the "frame" (see "Frame substructures" below.)
-
-Ops in a frame always travel together.
+A frame is a collection of ops (operations) applied/executed atomically: either all or nothing.
+A frame may contain a multitude of [chunks](/specs/glossary#chunk) - object states, separate ops, patches, queries and so on. 
 
 Frames can’t be split (but they can be joined together).
 
-Frames end with dot `.`.
+In the textual RON, frames end with a `.` dot.
+Chunks within a frame end with a semicolon `;` (events) an exclamation mark `!` (assertions/new writes) or question mark `?` (queries).
 
-## Raw frame
 
-A raw frame is just a group of operations client sends to the peer. It contains delta, or patch — list of changes that client wants to be applied.
+## Event chunks
 
-Syntax:
+As RON is an [event-sourced](https://martinfowler.com/eaaDev/EventSourcing.html) format, any relay of data is made by sending some collection of immutable ops.
+These ops express certain events that already happened.
+The final state of a system is a [reduction](https://en.wikipedia.org/wiki/Fold_\(higher-order_function\)) of those ops.
 
-- A raw frame is just a list of ops.
-- Each op ends with a `;` (raw operation).
-- The frame ends with a dot `.`.
+Those event ops may come in different groupings.
+Before any reduction, these are separate raw ops, or spans and chains of raw ops.
+After a reduction, ops form either an object state or a patch or some combination of these.
 
-```
-@1D4ICCC+XU5eRJ :1D4ICCA+XU5eRJ 'y' 'A';
-@1D4ICCA+XU5eRJ :lww;
-@1D4ICCB+XU5eRJ :1D4ICCA+XU5eRJ 'x' 1;
-.
-```
+A minimal object state  would consist of just a header (the object creation op):
+<pre><span class="line">  1 </span><span class="id">@1D4ICCA+XU5eRJ</span> <span class="span">:lww</span><span class="term">;</span> <span class="full_stop">.</span>
+</pre>
 
-## Reduced frame
+Here is an example of a frame containing one chunk, a state of a Last-Write-Wins object:
 
-Reduced frames are how state is stored internally in SwarmDB. They contain state: object creation and all the operations that follow it, sorted in linear order.
+<pre><span class="line">  1 </span><span class="id">@1D4ICCA+XU5eRJ</span> <span class="span">:lww</span><span class="term">,</span>
+<span class="line">  2 </span>     <span class="str_span">&apos;x&apos;</span> <span class="int">356</span><span class="term">,</span>
+<span class="line">  3 </span>     <span class="str_span">&apos;y&apos;</span> <span class="int">83</span><span class="term">;</span>
+<span class="line">  4 </span><span class="full_stop">.</span>
+</pre>
 
-Syntax:
 
-- Reduced frame consists of one or more chunks.
-- Each chunk has a header (object creation op ending with `!`).
-- Header is followed by zero or more operations on the same object (ending with `,`).
-- Reduced frame also ends with `.`.
+## Assertions
 
-Here are two chunks in a single frame:
+Assertions are events as they happen, before they get serialized as immutable ops.
+Asserions are only used between a RON replica and some external entity.
+Effectively, that is a part of the external API of a RON system.
+While being serialized as ops, assertions don't have event UUIDs, they are not immutable, they are not relay-able.
 
-```
-@1D4ICCA+XU5eRJ :lww!
-@1D4ICCB+XU5eRJ :1D4ICCA+XU5eRJ 'x' 1,
-@1D4ICCC+XU5eRJ :1D4ICCB+XU5eRJ 'y' 'A',
-@1D4IDD0+XU5eRJ :lww!
-@1D4IDD1+XU5eRJ :1D4IDD0+XU5eRJ 'a' 3.14159,
-@1D4IDD2+XU5eRJ :1D4IDD0+XU5eRJ 'b' 'Y',
-.
-```
+Suppose, we'd like to correct a text "Helo world." into "Hello world!".
+Internally, that text is kept as a RON RGA object.
+We don't like to fiddle with RGA, so we make a write through a `txt` mapper by issuing an assertion:
+<pre><span class="line">  1 </span><span class="derived_id">@1l54hK-test</span> <span class="span">:txt</span> <span class="str_span">patch</span><span class="term">,</span> <span class="int">3</span> <span class="str_span">&apos;l&apos;</span> <span class="int">10</span> <span class="int">-1</span> <span class="int">10</span> <span class="str_span">&apos;!&apos;</span> <span class="term">!</span>
+</pre>
 
-A minimal frame would consist of just a header (and ending in `.`):
+## Queries
 
-```
-    @1D4ICCA+XU5eRJ :lww!.
-```
+Suppose, we'd like to read the hello-world text mentioned above.
+The,we should issue a query to a RON system:
+
+<pre><span class="line">  1 </span><span class="derived_id">@1l54hK-test</span> <span class="span">:txt</span> <span class="term">?</span>
+</pre>
+
+A query should be evaluated in the context of its frame, including all the effect of all the preceding ops.
 
 ## Compression
 
-Operations in frames could be compressed by omitting repeating UUIDs of matching types. E.g. if the object id of an operation matches the object id of the previous op, we can just skip it. This is purely mechanical compression that carries no semantic meaning.
+Within a frame, ops might be compressed.
+Various RON serializations may employ various compression tricks.
+The textual RON employs chain compression:
 
-```
-*lww #1D4ICCA+XU5eRJ @1D4ICCA+XU5eRJ :lww!
-*lww #1D4ICCA+XU5eRJ @1D4ICCB+XU5eRJ :1D4ICCA+XU5eRJ 'x' 1,
-*lww #1D4ICCA+XU5eRJ @1D4ICCC+XU5eRJ :1D4ICCB+XU5eRJ 'y' 'A',
-*lww #1D4IDD0+XU5eRJ @1D4IDD0+XU5eRJ :lww!
-*lww #1D4IDD0+XU5eRJ @1D4IDD1+XU5eRJ :1D4IDD0+XU5eRJ 'a' 3.14159,
-*lww #1D4IDD0+XU5eRJ @1D4IDD2+XU5eRJ :1D4IDD0+XU5eRJ 'b' 'Y',.
-```
+1. the reference UUID is skipped if it matches the id of the previous op,
+2. the id of the op is skipped if it is an increment of the the previous op id.
 
-As we can see, all the reducer UUIDs are the same, so we need only specify it on the first operation:
+This way, op spans only mention UUIDs in the first op, others are skipped. 
 
-```
-*lww #1D4ICCA+XU5eRJ @1D4ICCA+XU5eRJ :lww!
-     #1D4ICCA+XU5eRJ @1D4ICCB+XU5eRJ :1D4ICCA+XU5eRJ 'x' 1,
-     #1D4ICCA+XU5eRJ @1D4ICCC+XU5eRJ :1D4ICCB+XU5eRJ 'y' 'A',
-     #1D4IDD0+XU5eRJ @1D4IDD0+XU5eRJ :lww!
-     #1D4IDD0+XU5eRJ @1D4IDD1+XU5eRJ :1D4IDD0+XU5eRJ 'a' 3.14159,
-     #1D4IDD0+XU5eRJ @1D4IDD2+XU5eRJ :1D4IDD0+XU5eRJ 'b' 'Y',.
-```
+In this example, a frame contains a single chunk which is an object state consisting of a single three-op span:
 
-Object ids are the same on ops 1 thru 3, and similarly for ops 4 thru 6. Removing redundant ones, we get:
-
-```
-*lww #1D4ICCA+XU5eRJ @1D4ICCA+XU5eRJ :lww!
-                     @1D4ICCB+XU5eRJ :1D4ICCA+XU5eRJ 'x' 1,
-                     @1D4ICCC+XU5eRJ :1D4ICCB+XU5eRJ 'y' 'A',
-     #1D4IDD0+XU5eRJ @1D4IDD0+XU5eRJ :lww!
-                     @1D4IDD1+XU5eRJ :1D4IDD0+XU5eRJ 'a' 3.14159,
-                     @1D4IDD2+XU5eRJ :1D4IDD0+XU5eRJ 'b' 'Y',.
-```
-
-Finally, as we can see, the last two operations share the same reference id. Let’s drop the last one:
-
-```
-*lww #1D4ICCA+XU5eRJ @1D4ICCA+XU5eRJ :lww!
-                     @1D4ICCB+XU5eRJ :1D4ICCA+XU5eRJ 'x' 1,
-                     @1D4ICCC+XU5eRJ :1D4ICCB+XU5eRJ 'y' 'A',
-     #1D4IDD0+XU5eRJ @1D4IDD0+XU5eRJ :lww!
-                     @1D4IDD1+XU5eRJ :1D4IDD0+XU5eRJ 'a' 3.14159,
-                     @1D4IDD2+XU5eRJ                 'b' 'Y',.
-```
-
-With this simple technique we were able to reduce the size of the frame by 30%.
-
-## Frame substructures
-
-Depending on how ops are grouped, the following structures might be found inside a frame:
-
-*Chains* — sequences of consecutive ops from the same origin.
-
-*Chunks* — groups of reduced ops; a chunk starts with a header op, has zero or more reduced ops; a chunk may contain op chains, but not the other way around.
-
-*Yarn* — the log of all the operations from the same origin, in order.
-
-*Object* — one RON object is a causal tree of ops, where the object creation op is the root; the tree edges are op *references*. An object may be cleaned of irrelevant historical ops (gc’d), thus the “clean” frame is not the complete tree, but likely a subset thereof.
-
-<img class="fig" src="structure.jpg">
+<pre><span class="line">  1 </span><span class="id">@1D4ICCA+XU5eRJ</span> <span class="span">:lww</span><span class="term">,</span>
+<span class="line">  2 </span>     <span class="str_span">&apos;x&apos;</span> <span class="int">356</span><span class="term">,</span>
+<span class="line">  3 </span>     <span class="str_span">&apos;y&apos;</span> <span class="int">83</span><span class="term">;</span>
+<span class="line">  4 </span><span class="full_stop">.</span>
+</pre>
 
 ## Read next
 
