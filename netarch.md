@@ -102,6 +102,9 @@ Possible interests that shape the equlibrium:
 * clients pursue fast response times,
 * on-premise caches work for their clients.
 
+My purely scientific gut feeling is that node interests could be aligned if we treat top hub access as a priviledge granted for long exemplary service.
+(Well, if root hubs can handle the load themselves, this problem does not even exist.)
+
 Another interesting question is the timescale of network-building.
 Do we assume persistent client-server relations between nodes (like with DNS) or the network topology forms dynamically, from one run to another?
 Quite likely, both.
