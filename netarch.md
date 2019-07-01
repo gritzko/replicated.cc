@@ -82,3 +82,32 @@ Still, given everything is content-addressable and the names are cryptographic, 
 
 Last but not least, this network structure assumes persistent connections, hence it is possible to introduce business models to keep the network afloat. For the lack of strategic chokepoints, those business models will be (really) far from monopolistic.
 
+## Open questions and tunable parameters
+
+Technically, a tiered network may have a brilliant fully deterministic performance.
+Assuming the worst case is a query meeting the data in one of the hubs, and a network of "six handshakes", the response time is likely limited by three round-trips (query goes to the hubs, the response returns back).
+In case intermediate nodes are properly located, the combined RTT will be close to a single client-hub-client RTT.
+
+On the impementation side, assuming lightweight payloads (name system and/or peer discovery), each participant maintains a key-value (hash)table.
+Query processing is basically a read-lookup-forward cycle.
+
+The interesting question though is the dynamic equilibrium shaped by the selfish behavior of participants.
+(Note that there is no selfish behavior in DHT networks. Whatsoever.)
+
+Possible interests that shape the equlibrium:
+
+* publishers push their data upwards to make it available,
+* clients pull the data down to consume it,
+* hubs avoid repetitive queries and unwanted data,
+* clients pursue fast response times,
+* on-premise caches work for their clients.
+
+Another interesting question is the timescale of network-building.
+Do we assume persistent client-server relations between nodes (like with DNS) or the network topology forms dynamically, from one run to another?
+Quite likely, both.
+
+Overall, content-addressibility allows for nice separation of storage and ownership.
+Hence, the fact that the network is not entirely peer-to-peer is of secondary importance.
+Top-level hubs guarantee correctness as record keepers/ data sources of last resort.
+Essentially, the rest of the system optimizes response times and prevents repetitive querying.
+
