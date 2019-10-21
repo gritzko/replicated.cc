@@ -67,7 +67,15 @@ A replicated op log is the foundation of all this machinery.
 {:#log} Log
 : a causally ordered sequence of ops, like a database op log.
   While a separate yarn is linearly ordered (a Lamport process), a log of many yarns is partially ordered (distributed processes).
-  Hence, different replicas of a log may go in slightly different orders while obeying causality.
+  Hence, different Replicas of a log may go in slightly different orders while obeying causality.
+
+{:#branch} Branch
+: same as Replica, a Log ordering and all the derived forms.
+
+{:#replica} Replica
+: the state of the system, as seen from a certain origin.
+An ordering of the Log.
+A transitive closure of the origin's yarn.
 
 {:#graph} Graph
 : a group of objects referencing each other.
