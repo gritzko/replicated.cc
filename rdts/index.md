@@ -6,40 +6,66 @@ section: rdts
 
 # Replicated Data Types
 
-RDT are Swarm term for object types. Each object has an associated RDT specified at creation time. Swarm uses that RDT to correctly process individual operations and reduce them in a consistent object state.
+In RON, an RDT is the data type that an object >>>inherits from<<<. Each object has an associated RDT specified at creation time (e.g. the root op might be `:lww` or `:rga`). RON uses the rules associated with that RDT to correctly process individual operations and reduce them to a consistent object state.
 
-Internally RDT works as pure functions: `f(state_frame, change_frame) → new_state_frame`. Here frames are either empty frames or single ops or products of past reductions by the same RDT.
+Internally, RDTs works as pure functions: `f(state_frame, change_frame) → new_state_frame`. Where frames are either empty frames or single ops, or products of past reductions by the same RDT. A `change_frame` could be an op, a patch or a complete state.
 
-RDTs are:
+All RDTs are:
 
-- associative, e.g. `f(f(state, op1), op2) == f(state, patch)` where `patch == f(op1,op2)`,
-- commutative for concurrent ops (can tolerate causally consistent partial orders), e.g. `f(f(state,a),b) == f(f(state,b),a)`, assuming `a` and `b` originated concurrently at different replicas,
-- idempotent, e.g. `f(state, op1) == f(f(state, op1), op1) == f(state, f(op1, op1))`,
+- associative, e.g. `f(f(state_frame, op1), op2) == f(state_frame, patch)` where `patch == f(op1,op2)`,
+- commutative for concurrent ops (can tolerate causally consistent partial orders), e.g. `f(f(state_frame, a), b) == f(f(state_frame, b), a)`, assuming `a` and `b` originated concurrently at different replicas,
+- idempotent, e.g. `f(state_frame, op1) == f(f(state_frame, op1), op1) == f(state, f(op1, op1))`,
 - optionally, RDTs may have stronger guarantees, e.g. full commutativity (tolerates causality violations).
 
-A `change_frame` could be an op, a patch or a complete state. Hence, a baseline RDT can “switch gears” from pure op-based CRDT mode to state-based CRDT to delta-based:
+One of the central features of RDTs is the ability to “switch gears” from pure op-based CRDT mode, to patch-based CRDT, to state-based:
 
-- `f(state, op)` is op-based,
-- `f(state1, state2)` is state-based,
-- `f(state, patch)` is delta-based.
+<table style="margin: 0 auto">
+  <thead>
+  <tr>
+    <th>"Gear"</th>
+    <th>Function Application</th>
+    <th>When Useful</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Op-based</td>
+    <td><code>f(state, op)</code></td>
+    <td>Real-time Sync</td>
+  </tr>
+  <tr>
+    <td>Patch-based</td>
+    <td><code>f(state, patch)</code></td>
+    <td>Periodic Sync</td>
+  </tr>
+  <tr>
+    <td>State-based</td>
+    <td><code>f(state1, state2)</code></td>
+    <td>Full Reconciliation</td>
+  </tr>
+  </tbody>
+</table>
 
 ## Mappers
 
-A mappers are Swarm term for “views” in a database. A mapper translates a replicated object's state in RON format into other formats:
+A mapper is a RON term akin to a “view” in a database. A mapper translates a replicated object's state in RON format into other formats:
 
-- Mappers turn Swarm objects into JSON or XML documents, C++, JavaScript or other objects.
-- Mappers are two-way interfaces to raw RDTs. You can read object’s view through mappers and “write” into mappers. Mapper will convert all operations internally into RDT operations.
+- Mappers turn RON objects into JSON or XML documents, C++, JavaScript or other objects.
+- Mappers are two-way interfaces to raw RDTs. You can read a view of an object from its mapper and “write” into its mapper. A mapper will convert all operations internally into RON RDT operations.
 - Mappers can be pipelined, e.g. one can build a full RON → JSON → HTML [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) app using just mappers.
 
-## Built-in RDTs
+## Basic RDTs
 
 - [LWW: Last-Write-Wins Object](lww/)
-- [RGA: Replicated Growable Array](rga/)
-- [TXT: Collaborative text](txt/)
+- [RGA/CT: Replicated Growable Array / Causal Tree](rga/)
 - [Sets](set/)
 - [Counters](counter/)
-- [Binary blobs](blob/)
+
+## Basic mappers
+
+- [TXT: Collaborative text](txt/)
 
 ## See also
 
-[RON-RDT Composition](composition/).
+- [RON-RDT Composition](composition/)
+- [Binary blobs](blob/)

@@ -28,7 +28,7 @@ Yet another way to look at it: RON is like the [metric system](https://en.wikipe
 The [imperial system](https://en.wikipedia.org/wiki/Imperial_units)
 employed various usage-based units: foots, lines, furlongs, links, cables, etc.
 The metric system defines one unit (the meter), then derives other units from that.
-RON defines the immutable *op*, then derives other units from that,
+RON defines the immutable [operation](/specs/ops) ("op"), then derives other units from that,
 be that data structures (arrays, maps, sets, etc) or storage/transmission units
 (snapshots, logs, batches, patches, [etc](/specs/glossary)).
 
@@ -53,7 +53,7 @@ Key RON principles are:
 
 - **Immutability** - RON sees data as a collection of immutable timestamped ops. 
         In the example above, we have an object state consisting of ten ops 
-        (object creation op at line #1, the initial changeset #2 to #8,
+        (object creation op at line #1, seven ops in the initial changeset #2 to #8,
         another changeset of two ops #9/10 and #11).
         An op may be referenced, transmitted, stored, applied or rolled back,
         garbage collected, etc.
@@ -89,7 +89,7 @@ Key RON principles are:
         (the first plus 1) nor their references (always the preceding op).
         The binary variant of RON employs more sophisticated metadata
         compression techniques. 
-        Without the abbreviations, the object would look like a tabular log of ops, two
+        With no abbreviations, the object would look like a tabular log of ops, two
         metadata UUIDs per op:
 <pre style="font-size: 80%;">
 <span class="line">  1 </span><span class="id">@1fLDV00000+biQFvtGV</span> <span class="ref"> :lww</span> <span class="term">,</span>
