@@ -10,4 +10,4 @@ TODO
 
 ## Read next
 
-[Transactional/atomic changes](../changes).
+[Transactional/atomic changes](changes).
