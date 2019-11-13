@@ -29,7 +29,7 @@ At present, there are four different ways to represent RON structures:
   - [Atoms: integers, floats, strings](atoms/);
   - [Operations (ops)](ops/);
   - [Entire RON frames](frames/).
-3. [The *Binary* RON](binary/) is for machine-to-machine communication and persistence.
+3. [The *Binary* RON](binary) is for machine-to-machine communication and persistence.
 4. [*JSON/CBOR*](json/) is for JSON-centric systems.
 
 

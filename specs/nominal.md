@@ -12,7 +12,7 @@ Nominal RON is a simple memory layout that stores uncomressed RON ops. It serves
 - define the canonical representation for e.g. content hashing,
 - serve as an intermediary format in any conversions, mappings, filters and transformations.
 
-Normally, a serialized RON frame is read by an iterator/parser/cursor which creates a nominal-RON representation of each next op. 
+Normally, a serialized RON frame is read by an iterator/parser/cursor which creates a nominal-RON representation of each next op.
 A builder/serializer/writer converts a nominal-RON op into the resulting format.
 
 The nominal format per se is not intended as a frame serialization format, as it would be too inefficient.
@@ -145,4 +145,4 @@ Bytes 8-15 contain a *raw buffer* range (note the raw byte length may not match 
 
 ## Read next
 
-[Binary format](../binary/).
+[Binary format](../binary).
