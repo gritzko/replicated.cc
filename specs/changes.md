@@ -10,4 +10,4 @@ TODO
 
 ## Read next
 
-[Network protocol](../network/).
+[Network protocol](../network).

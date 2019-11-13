@@ -35,10 +35,10 @@ At present, there are four different ways to represent RON structures:
 
 ## RON crypto
 
-[Merkle hashing](hash/).
+[Merkle hashing](hash).
 
 ## RON Communication protocol
 
-[Transactional/atomic changes](changes/).
+[Transactional/atomic changes](changes).
 
-[Network protocol](network/).
+[Network protocol](network).
