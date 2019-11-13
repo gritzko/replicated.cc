@@ -5,9 +5,9 @@ title: Replicated Object Notation
 
 # Replicated Object Notation
 
-Replicated Object Notation (RON) is a format for *distributed live data*. 
+Replicated Object Notation (RON) is a format for *distributed live data*.
 RON's primary mission is continuous data synchronization.
-A RON object may naturally have any number of replicas, which may synchronize in real-time or intermittently. 
+A RON object may naturally have any number of replicas, which may synchronize in real-time or intermittently.
 [JSON](htp://json.org), [protobuf](https://developers.google.com/protocol-buffers/),
 and many other formats implicitly assume serialization of separate state *snapshots*.
 RON has versioning and addressing *metadata*, so state and updates can be always pieced together.
@@ -51,8 +51,8 @@ Here is a simple object serialized in RON:
 
 Key RON principles are:
 
-- **Immutability** - RON sees data as a collection of immutable timestamped ops. 
-        In the example above, we have an object state consisting of ten ops 
+- **Immutability** - RON sees data as a collection of immutable timestamped ops.
+        In the example above, we have an object state consisting of ten ops
         (object creation op at line #1, seven ops in the initial changeset #2 to #8,
         another changeset of two ops #9/10 and #11).
         An op may be referenced, transmitted, stored, applied or rolled back,
@@ -60,8 +60,8 @@ Key RON principles are:
         Every RON data structure (array, object, map, set, etc)
         is a collection of immutable ops.
         Similarly, every data storage or transmission unit is made of ops
-        (patch, state, chain, chunk, frame, object graph, log, yarn, 
-        [etc](/specs/glossary/)).
+        (patch, state, chain, chunk, frame, object graph, log, yarn,
+        [etc](/specs/glossary)).
 - **Addressability** of everything. Changes, versions, objects and every
         piece of data is uniquely identified and globally referenceable.
         Above, the first op has an id `1fLDV+biQFvtGV`, the second one is
@@ -79,7 +79,7 @@ Key RON principles are:
         for the object creation op at line #1 which references its data type `lww`
         That is last-write-wins, a simple key-value object.
         There are many other [types](/rdts).
-- **Efficiency**. 
+- **Efficiency**.
         An op is a very fine-grained unit of change.
         Thus, RON has to optimize per-op metadata overhead in numerous ways.
         Op ids get skipped if they go incrementally.
@@ -88,7 +88,7 @@ Key RON principles are:
         For example, ops at lines #2-#8 mention neither their own ids
         (the first plus 1) nor their references (always the preceding op).
         The binary variant of RON employs more sophisticated metadata
-        compression techniques. 
+        compression techniques.
         With no abbreviations, the object would look like a tabular log of ops, two
         metadata UUIDs per op:
 <pre style="font-size: 80%;">
@@ -108,9 +108,8 @@ RON's guiding vision is swarms of mobile devices communicating over unreliable w
 For more in-depth reading, please see:
 
 * an explanation of [RON UUIDs](/uuids/)
-* the [protocol glossary](/specs/glossary/) and [specification](/specs/), also its serializations: text-based (above), binary, JSON-based, CBOR, nominal
+* the [protocol glossary](/specs/glossary) and [specification](/specs/), also its serializations: text-based (above), binary, JSON-based, CBOR, nominal
 * [RON Replicated Data Types](/rdts/), an ["operational"](http://archagon.net/blog/2018/03/24/data-laced-with-history/)
         variant of [CRDTs](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type)
         able to operate in different modes (op-based, state-based, delta-enabled).
 * [SwarmDB](/swarm/), a reference implementation of a RON-based syncable key-value store.
-

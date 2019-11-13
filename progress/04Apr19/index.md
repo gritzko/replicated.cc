@@ -29,7 +29,7 @@ For each of the layers, we provide three deliverables:
 3. a reference implementation.
 
 Overall, the aim is to make CRDTs a simple universal instrument within the
-reach of every developer. Our work is online at 
+reach of every developer. Our work is online at
 [http://replicated.cc](http://replicated.cc).
 
 ## Progress report
@@ -47,7 +47,7 @@ reach of every developer. Our work is online at
 ```
 
 1. Replicated Object Notation: stable. The notation is subdivided into the
-[nominal format](http://replicated.cc/specs/nominal/) and various
+[nominal format](http://replicated.cc/specs/nominal) and various
 serialization formats. The nominal format is zero-liberty, bit-precise.
 Algorithms and hashes are defined on that. Serializations focus on
 practical issues: compression and performance (the binary format), human
@@ -70,7 +70,7 @@ readability (text) or compatibility (JSON/CBOR).
       Although, a proper formal bit-precise specification is future work.
     * RDT-algo: finished parts are frozen. The key element is the `O(NlogN)`
       iterator-heap merge algorithm.
-    * RDT-code: a variety of RDTs still need to be implemented. 
+    * RDT-code: a variety of RDTs still need to be implemented.
 
 3. Replica: theory solved, implementation in progress.
 
@@ -205,7 +205,7 @@ practical applicability of the results.  Regarding the computational
 complexity and storage size, we use three relevant bounds:
 
     * `D` the size of the payload data,
-    * `T` the maximum offline time allowed 
+    * `T` the maximum offline time allowed
         (used with *data rotation rate* `r`),
     * `L` the maximum offline op log size (`L=TrD`).
 
@@ -246,4 +246,3 @@ The entire project is planned for 12 months.
 
 The project budget is $250K, 80% salaries, 20% travel and other
 expenses.
-

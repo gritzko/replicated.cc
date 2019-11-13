@@ -7,7 +7,7 @@ in_section: specs
 # Frames
 
 A frame is a collection of ops (operations) applied/executed atomically: either all or nothing.
-A frame may contain a multitude of [chunks](/specs/glossary#chunk) - object states, separate ops, patches, queries and so on. 
+A frame may contain a multitude of [chunks](/specs/glossary#chunk) - object states, separate ops, patches, queries and so on.
 
 Frames can’t be split (but they can be joined together).
 
@@ -67,12 +67,12 @@ Probably, we should do it like this:
 Well, if there was any concurrent change, we just overwrote it.
 Screw them.
 
-OK, let's try it once again, but this time we mention the exact version for the offsets: 
+OK, let's try it once again, but this time we mention the exact version for the offsets:
 
 <pre><span class="line">  1 </span><span class="derived_id">@1l54hK-test</span> <span class="span">:txt</span> <span class="str_span">patch at 1l55ku+test</span><span class="term">,</span> <span class="int">3</span> <span class="str_span">&apos;l&apos;</span> <span class="int">10</span> <span class="int">-1</span> <span class="int">10</span> <span class="str_span">&apos;!&apos;</span> <span class="term">!</span>
 </pre>
 
-Should be OK... unless someone did exactly the same changes concurrently... or slightly different changes maybe. Either way, RON does not guarantee semantic convergence because that would require a [Turing-test](https://en.wikipedia.org/wiki/Turing_test) capable solver. RON only guarantees replicated data type convergence, so use it wisely. 
+Should be OK... unless someone did exactly the same changes concurrently... or slightly different changes maybe. Either way, RON does not guarantee semantic convergence because that would require a [Turing-test](https://en.wikipedia.org/wiki/Turing_test) capable solver. RON only guarantees replicated data type convergence, so use it wisely.
 
 ## Query chunks
 
@@ -93,9 +93,9 @@ The textual RON employs chain compression:
 1. the reference UUID is skipped if it matches the id of the previous op,
 2. the id of the op is skipped if it is an increment of the the previous op id.
 
-This way, op spans only mention UUIDs in the first op, others are skipped. 
+This way, op spans only mention UUIDs in the first op, others are skipped.
 
-In this example again, a frame contains a single chunk which is an object state consisting of a single three-op span. 
+In this example again, a frame contains a single chunk which is an object state consisting of a single three-op span.
 The header mentions the event id `1D4ICCA+XU5eRJ` and a reference id `lww`. The other two ops don't.
 
 <pre><span class="line">  1 </span><span class="id">@1D4ICCA+XU5eRJ</span> <span class="span">:lww</span><span class="term">,</span>
@@ -106,4 +106,4 @@ The header mentions the event id `1D4ICCA+XU5eRJ` and a reference id `lww`. The 
 
 ## Read next
 
-[Nominal format](../nominal/).
+[Nominal format](../nominal).

@@ -24,7 +24,7 @@ Serializations may take any number of liberties--compression, whitespace, etc.--
 
 At present, there are four different ways to represent RON structures:
 
-0. [The *Nominal* RON](nominal/) as the basis.
+0. [The *Nominal* RON](nominal) as the basis.
 1. The *Textual* RON for human-friendly output, commands, queries and debugging. See specifications for:
   - [Atoms: integers, floats, strings](atoms/);
   - [Operations (ops)](ops/);

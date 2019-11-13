@@ -12,7 +12,7 @@ Hence, the overhead of computing hashes becomes a part of the bigger issue of me
 The second challenge is the multitude of RON serializations.
 A hash of a frame serialized with a text mapper would be different from the hash of the same frame in CBOR, etc.
 Even within one serialization, there are various format options, such as whitespace and compression.
-For that reason, RON Merkle hashing is defined on the [nominal format](nominal/).
+For that reason, RON Merkle hashing is defined on the [nominal format](nominal).
 It primarily uses uncompressed 128-bit atoms, removing optional elements.
 
 Conveniently, the nominal format roughly matches the in-memory layout of a parsed op in many compiled languages (e.g. C++, go; partially Java).
@@ -55,4 +55,3 @@ The special case is strings, because:
 Thus, strings are fed as 128-bit atoms followed by arbitrary-length UTF-8 strings:
 * The atom has codepoint length and byte length values set, origin ranges cleared.
 * The string itself must be a correct UTF-8 sequence of the specified byte/codepoint length.
-
