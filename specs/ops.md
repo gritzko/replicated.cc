@@ -69,4 +69,4 @@ For example:
 
 ## Read next
 
-[Frames](../frames/).
+[Frames](../frames).

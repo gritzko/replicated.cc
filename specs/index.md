@@ -26,11 +26,11 @@ At present, there are four different ways to represent RON structures:
 
 0. [The *Nominal* RON](nominal) as the basis.
 1. The *Textual* RON for human-friendly output, commands, queries and debugging. See specifications for:
-  - [Atoms: integers, floats, strings](atoms/);
-  - [Operations (ops)](ops/);
-  - [Entire RON frames](frames/).
+  - [Atoms: integers, floats, strings](atoms);
+  - [Operations (ops)](ops);
+  - [Entire RON frames](frames).
 3. [The *Binary* RON](binary) is for machine-to-machine communication and persistence.
-4. [*JSON/CBOR*](json/) is for JSON-centric systems.
+4. [*JSON/CBOR*](json) is for JSON-centric systems.
 
 
 ## RON crypto

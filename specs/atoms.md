@@ -19,4 +19,4 @@ If UUID happen to serialize to a string that could also be interpreted as a numb
 
 ## Read next
 
-[Operations](../ops/).
+[Operations](../ops).

@@ -87,4 +87,4 @@ Floats are serialized as IEEE 754 floats (4-byte and 8-byte support is required,
 
 ## Read next
 
-[JSON/CBOR format](../json/).
+[JSON/CBOR format](../json).
