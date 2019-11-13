@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Atoms
+title: Binary format
 in_section: specs
 ---
 
