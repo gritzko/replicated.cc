@@ -13,11 +13,11 @@ But this rabbit hole is so much deeper!
 The same post lists [various issues](http://seriot.ch/parsing_json.php#25) JSON inherited from Unicode.
 First of all, there are many Unicode encodings out there.
 For example, your file is UTF-8 but your JavaScript runtime uses UTF-16 because it needs fixed-width characters.
-Each Unicode encoding has its peculiarities.
+But, UTF-16 is not *entirely* fixed-width as it uses [surrogate pairs](https://en.wikipedia.org/wiki/UTF-16#Code_points_from_U+010000_to_U+10FFFF) to encode codepoints beyond the [Basic Multilingual Plane (BMP)](https://en.wikipedia.org/wiki/Plane_(Unicode)#Basic_Multilingual_Plane).
+Each Unicode encoding has its own peculiarities.
 For example, UTF-8 allows for [overlong encodings](https://en.wikipedia.org/wiki/UTF-8#Overlong_encodings).
-Proper UTF-8 sequences may encode codepoints which are not valid Unicode.
-UTF-16 uses *surrogates* to encode codepoints beyond the [Basic Multilingual Plane (BMP)](https://en.wikipedia.org/wiki/Plane_(Unicode)#Basic_Multilingual_Plane).
-There is always a possibility a file might have a [byte order mark (BOM)](https://en.wikipedia.org/wiki/Byte_order_mark).
+Also, proper UTF-8 sequences may encode codepoints which are not valid Unicode.
+There is always a possibility that a file might have a [byte order mark (BOM)](https://en.wikipedia.org/wiki/Byte_order_mark).
 Java tends to use [*modified* UTF-8](https://en.wikipedia.org/wiki/UTF-8#Modified_UTF-8).
 Unicode encodings may use different endianness, etc etc.
 
@@ -29,7 +29,7 @@ If we recode a RON snippet from binary to text, reformat it, send it over networ
 Unfortunately, we can not mandate some single coding: we need binary and text, different forms of storage and different forms of compression all to be available.
 
 In turn, UTF-32 hashing makes it necessary to recode all strings for integrity checking.
-That is in addition to any recoding the underlying runtime may need (e.g. UTF-8 <-> UTF-16).
+That is in addition to any recoding the underlying runtime may need (e.g. UTF-8 <-> UTF-16 for JVM and v8).
 
 Note that the only thing we are trying to achieve here is a bitwise reliable serialization.
 If we'd like to render or edit that Unicode text, that is a [much bigger topic](https://lord.io/blog/2019/text-editing-hates-you-too/).
