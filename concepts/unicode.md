@@ -26,7 +26,7 @@ Other forms are just too lax!
 For codings other than UTF-32, we can't reasonably expect every implementation to produce bit-precise results, especially if we consider various adversarial scenarios.
 There are way too many subtleties.
 If we recode a RON snippet from binary to text, reformat it, send it over network, store in binary, read it back, then the result must verify to exactly the same SHA hash.
-Unfortunately, we can not mandate single coding: we need binary and text, different forms of storage and different forms of compression all to be available.
+Unfortunately, we can not mandate some single coding: we need binary and text, different forms of storage and different forms of compression all to be available.
 
 In turn, UTF-32 hashing makes it necessary to recode all strings for integrity checking.
 That is in addition to any recoding the underlying runtime may need (e.g. UTF-8 <-> UTF-16).
@@ -142,3 +142,4 @@ Still, I wonder whether we can move in the opposite direction at all?
 Let's call it the SCRU principle: Support the Critical, Reject the Unnecessary.
 *SCRU Unicode 1.0* is BMP in two-byte fixed-width little-endian coding.
 End of the spec.
+
