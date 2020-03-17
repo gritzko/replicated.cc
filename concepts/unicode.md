@@ -108,7 +108,7 @@ So, what was the point?
 Scripts and languages are easy to design; JRR Tolkien invented several, just for fun.
 But, they are insanely expensive to support: people must use them to keep them afloat.
 [The meaning of a word is its use in the language.](https://philosophyforchange.wordpress.com/2014/03/11/meaning-is-use-wittgenstein-on-the-limits-of-language/)
-Millions of new characters will not appear out of nowhere. 
+Thousands of new characters will not appear out of nowhere. 
 You have to wait another thousand years for that!
 
 So, what can we do about it all?
@@ -127,12 +127,13 @@ Exactly the same logic applies to any interoperability standard.
 
 Consider Ethernet.
 It was blasted by critics for its simplicity - and it won the world.
+IPv4? Same story.
 Or, consider HTTP 1.1.
 Very simple, won the world.
 Was HTTP/2 better?
 Well, it was not simpler, for sure.
 Some say, it makes the Web an extension of the Google's internal RPC system.
-Endpoints of the Web are increasingly controlled by just a handful of entities, so interoperability may no longer be the topmost priority anymore.
+Endpoints of the Web are increasingly controlled by just a few entities, so interoperability may no longer be the topmost priority anymore.
 These days, we have two browsers left and that may not be the final number.
 Even Microsoft can not afford to maintain one!
 
