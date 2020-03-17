@@ -16,14 +16,14 @@ For example, your file is UTF-8 but your JavaScript runtime uses UTF-16 because 
 Each Unicode encoding has its peculiarities.
 For example, UTF-8 allows for [overlong encodings](https://en.wikipedia.org/wiki/UTF-8#Overlong_encodings).
 Proper UTF-8 sequences may encode codepoints which are not valid Unicode.
-UTF-16 uses *surrogates* to encode codepoints beyond the [Basic Multilingual Plane](https://en.wikipedia.org/wiki/Plane_(Unicode)#Basic_Multilingual_Plane).
+UTF-16 uses *surrogates* to encode codepoints beyond the [Basic Multilingual Plane (BMP)](https://en.wikipedia.org/wiki/Plane_(Unicode)#Basic_Multilingual_Plane).
 There is always a possibility a file might have a [byte order mark (BOM)](https://en.wikipedia.org/wiki/Byte_order_mark).
 Java tends to use [*modified* UTF-8](https://en.wikipedia.org/wiki/UTF-8#Modified_UTF-8).
 Unicode encodings may use different endianness, etc etc.
 
 As a result, RON uses UTF-32 strings to define its hashing functions.
 Other forms are just too lax!
-For codings other than UTF-32, we can't reasonably expect every implementation to produce bit-precise results, including in adversarial scenarios.
+For codings other than UTF-32, we can't reasonably expect every implementation to produce bit-precise results, especially if we consider various adversarial scenarios.
 There are way too many subtleties.
 If we recode a RON snippet from binary to text, reformat it, send it over network, store in binary, read it back, then the result must verify to exactly the same SHA hash.
 Unfortunately, we can not mandate single coding: we need binary and text, different forms of storage and different forms of compression all to be available.
@@ -32,9 +32,9 @@ In turn, UTF-32 hashing makes it necessary to recode all strings for integrity c
 That is in addition to any recoding the underlying runtime may need (e.g. UTF-8 <-> UTF-16).
 
 Note that the only thing we are trying to achieve here is a bitwise reliable serialization.
-If we'd like to render or edit that Unicode, that might be a [much bigger topic](https://lord.io/blog/2019/text-editing-hates-you-too/).
+If we'd like to render or edit that Unicode text, that is a [much bigger topic](https://lord.io/blog/2019/text-editing-hates-you-too/).
 
-Initially, Unicode was envisioned as a simple fixed-width two-byte per character coding, see [UCS-2](https://en.wikipedia.org/wiki/Universal_Coded_Character_Set).
+Initially, Unicode was envisioned as a simple fixed-width two-byte-per-character coding, see [UCS-2](https://en.wikipedia.org/wiki/Universal_Coded_Character_Set).
 With such a coding, there is not much space left for subtleties.
 It was the version 2.0 in 1996 when the hell broke loose.
 Unicode 2.0 extended beyond two-byte BMP thus bringing us a multitude of encodings, all with their pitfalls and subtleties and conversions and signalling and everything else.
@@ -106,7 +106,7 @@ We bear the costs, but who benefits from that?
 We can't even say it is some vocal minority because they are no longer vocal, for thousands of years and counting.
 So, what was the point?
 Scripts and languages are easy to design; JRR Tolkien invented several, just for fun.
-But, they are insanely expensive to support: people must talk to each other to keep them afloat.
+But, they are insanely expensive to support: people must use them to keep them afloat.
 [The meaning of a word is its use in the language.](https://philosophyforchange.wordpress.com/2014/03/11/meaning-is-use-wittgenstein-on-the-limits-of-language/)
 Millions of new characters will not appear out of nowhere. 
 You have to wait another thousand years for that!
@@ -138,8 +138,7 @@ Even Microsoft can not afford to maintain one!
 
 Another take: extending an interoperability standard means sabotaging it.
 
-Still I wonder whether we can move in the opposite direction at all?
-Let's call it the SCRU principle: Support the Core, leave the Rest Unsupported (forever).
-What is SCRU Unicode then?
-It is basically BMP in two-byte fixed-width little-endian coding.
-Likely gzipped, but never recoded.
+Still, I wonder whether we can move in the opposite direction at all?
+Let's call it the SCRU principle: Support the Critical, Reject the Unnecessary.
+*SCRU Unicode 1.0* is BMP in two-byte fixed-width little-endian coding.
+End of the spec.
