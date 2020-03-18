@@ -151,7 +151,7 @@ Endpoints of the Web are increasingly controlled by just a few entities, so inte
 These days, we have two browsers left and that may not be the final number.
 Even Microsoft can not afford to maintain one!
 
-Another take: extending an interoperability standard means [sabotaging](https://en.wikipedia.org/wiki/Embrace,_extend,_and_extinguish) it.
+Another take: extending an interoperability standard may [sabotage](https://en.wikipedia.org/wiki/Embrace,_extend,_and_extinguish) it.
 
 Still, I wonder whether we can move in the opposite direction at all.
 Let's call it the SCRU principle: Support the Critical, Reject the Unnecessary.
