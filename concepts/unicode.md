@@ -96,13 +96,13 @@ There are also Emojis, but Wikipedia is not rich in those, for obvious reasons.
 Twitter and Instagram must be an Emoji heaven.
 To test that hypothesis, I fed a random Twitter firehose dump to the same utiilty.
 ```
-ASCII   symbols 213254309
-BMP     symbols 63982851
+ASCII   symbols 219094253
+BMP     symbols 65359274
 nonBMP  symbols 0
-surrogatsymbols 2825092
-invalid symbols 6477
-all     symbols 277243637
-broken  symbols 3692028
+surrogatsymbols 3030076
+invalid symbols 7762
+all     symbols 284461289
+broken  symbols 81924
 total   bytes   618271154
 ```
 On Twitter, about 0.5% of characters are non-BMP (Emojis). 
