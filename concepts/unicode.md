@@ -86,22 +86,36 @@ total   bytes   8287802079
 ```
 
 As we see, the use of non-BMP codepoints is *FIVE ORDERS OF MAGNITUDE LOWER!!!*
-So no, people don't need it that much.
-That is easy to comprehend, as non-BMP planes mostly contain extinct languages and other very-rarely-used things.
-There are also Emojis, but Wikipedia is not rich in those, for obvious reasons.
-
-That is extremely annoying to see!
+So no, people don't need it that much, and that is extremely annoying to see.
 The [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle) says 20% cost gives 80% value.
 Well.
 With Unicode, it is more like 99.999% of costs gives 0.001% of value. Or vice-versa.
 
-Today's Unicode supports Emoji.
-Some may question the wisdom of bundling Emojis into Unicode as their coloring and clustering logic differs drastically from what alphabets and scripts normally do.
-Skipping that, the Unicode Consortium site [lists 1680 emojis people actually use](https://home.unicode.org/emoji/emoji-frequency/).
+That is easy to comprehend, as non-BMP planes mostly contain extinct languages and other very-rarely-used things.
+There are also Emojis, but Wikipedia is not rich in those, for obvious reasons.
+Twitter and Instagram must be an Emoji heaven.
+To test that hypothesis, I fed a random Twitter firehose dump to the same utiilty.
+```
+ASCII   symbols 213254309
+BMP     symbols 63982851
+nonBMP  symbols 0
+surrogatsymbols 2825092
+invalid symbols 6477
+all     symbols 277243637
+broken  symbols 3692028
+total   bytes   618271154
+```
+On Twitter, about 0.5% of characters are non-BMP (Emojis). 
+That is just couple orders of magnitude difference.
+Much better!
+Still I wonder, was it possible to cram Emojis into BMP?
+Of course, some people may question the very wisdom of bundling Emojis into Unicode as their coloring and clustering logic differs drastically from what alphabets and scripts normally do.
+But let's skip that.
+The Unicode Consortium site [lists 1680 emojis people actually use](https://home.unicode.org/emoji/emoji-frequency/).
 That is less than the size of the private-use BMP range: F8FF-E000=18FF or 6400 in decimal.
-If we need some frivolous use cases in messenger apps, why don't we declare it private-use, I wonder?
+If we need some frivolous use cases in messenger apps, why don't we put Emojis into that private-use range, so the support can be optional?
 
-Unicode supports Gothic and Linear B.
+Unicode also supports Gothic, Linear B and a multitude of other extinct languages.
 We bear the costs, but who benefits from that?
 We can't even say it is some vocal minority because they are no longer vocal, for thousands of years and counting.
 So, what was the point?
@@ -126,7 +140,7 @@ Exactly the same logic applies to any interoperability standard.
 **A good standard is 80/20 and final.**
 
 Consider Ethernet.
-It was blasted by critics for its simplicity - and it won the world.
+Critics blasted it for its simplicity - and it won the world.
 IPv4? Same story.
 Or, consider HTTP 1.1.
 Very simple, won the world.
@@ -139,7 +153,7 @@ Even Microsoft can not afford to maintain one!
 
 Another take: extending an interoperability standard means sabotaging it.
 
-Still, I wonder whether we can move in the opposite direction at all?
+Still, I wonder whether we can move in the opposite direction at all.
 Let's call it the SCRU principle: Support the Critical, Reject the Unnecessary.
 *SCRU Unicode 1.0* is BMP in two-byte fixed-width little-endian coding.
 End of the spec.
