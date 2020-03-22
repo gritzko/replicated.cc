@@ -27,8 +27,10 @@ For codings other than UTF-32, we can't reasonably expect every implementation t
 There are way too many subtleties.
 If we recode a RON snippet from binary to text, reformat it, send it over network, store in binary, read it back, then the result must verify to exactly the same SHA hash.
 Unfortunately, we can not mandate some single coding: we need binary and text, different forms of storage and different forms of compression all to be available.
+So, we have to consider all the possible combinations, like "slash-u escape gets parsed into a UTF-16 string that gets serialized into unescaped UTF-8, then becomes UTF-16 again"...
+and that's sad.
 
-In turn, UTF-32 hashing makes it necessary to recode all strings for integrity checking.
+UTF-32 hashing makes it necessary to recode all strings for integrity checking.
 That is in addition to any recoding the underlying runtime may need (e.g. UTF-8 <-> UTF-16 for JVM and v8).
 
 Note that the only thing we are trying to achieve here is a bitwise reliable serialization.
@@ -126,8 +128,7 @@ Thousands of new characters will not appear out of nowhere.
 You have to wait another thousand years for that!
 
 So, what can we do about it all?
-We can not change Unicode.
-That ship has sailed in 1996, I guess.
+We can not change Unicode; that ship had sailed in 1996.
 Still, what conclusions can we make?
 
 Unicode belongs to the same family of interoperability standards as IP or HTTP or Ethernet.
